@@ -217,19 +217,19 @@ export default function MadLibsGame() {
   return (
     <GameWrapper title="Mad-Libs Stories" progress={progress}>
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-display font-bold text-gray-900">Fill in the Story</h2>
-          <p className="text-sm text-gray-400 mt-1">Pick the right word - wrong ones are funny!</p>
+      <div className="flex items-center justify-between mb-4 md:mb-6">
+        <div className="min-w-0">
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">Fill in the Story</h2>
+          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">Pick the right word - wrong ones are funny!</p>
         </div>
-        <div className="badge-green">
+        <div className="badge-green flex-shrink-0">
           Story {currentStory + 1} / {STORIES.length}
         </div>
       </div>
 
       {/* Story Text */}
-      <div className="p-6 bg-white rounded-2xl border border-gray-100 shadow-card mb-6">
-        <div className="text-lg md:text-xl leading-relaxed font-body">
+      <div className="p-4 md:p-6 bg-white rounded-xl md:rounded-2xl border border-gray-100 shadow-card mb-4 md:mb-6">
+        <div className="text-base md:text-xl leading-relaxed font-body">
           {(() => {
             let blankIdx = 0;
             return story.template.map((part, i) => {
@@ -263,26 +263,25 @@ export default function MadLibsGame() {
 
       {/* Wrong Reaction */}
       {wrongReaction && (
-        <div className="mb-6 p-5 bg-orange-50 rounded-2xl border border-orange-200 text-center animate-funny-shake">
-          <p className="text-4xl mb-2">{wrongReaction.emoji}</p>
-          <p className="text-orange-700 font-display font-bold">{wrongReaction.text}</p>
-          <p className="text-sm text-orange-500 mt-1">Try another word!</p>
+        <div className="mb-4 md:mb-6 p-4 md:p-5 bg-orange-50 rounded-xl md:rounded-2xl border border-orange-200 text-center animate-funny-shake">
+          <p className="text-3xl md:text-4xl mb-1 md:mb-2">{wrongReaction.emoji}</p>
+          <p className="text-sm md:text-base text-orange-700 font-display font-bold">{wrongReaction.text}</p>
+          <p className="text-xs md:text-sm text-orange-500 mt-1">Try another word!</p>
         </div>
       )}
 
       {/* Options */}
       {!isStoryComplete && (
-        <div className="mb-6">
-          <p className="text-sm text-gray-400 mb-3 text-center">Pick the right word:</p>
-          <div className="flex flex-wrap gap-3 justify-center">
+        <div className="mb-4 md:mb-6">
+          <p className="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 text-center">Pick the right word:</p>
+          <div className="flex flex-wrap gap-2 md:gap-3 justify-center">
             {story.blanks[currentBlank]?.options.map((option) => (
               <button
                 key={option}
                 onClick={() => handleOptionClick(option)}
-                className="px-6 py-3 bg-white rounded-xl border-2 border-gray-200
-                           font-display font-bold text-gray-700
-                           shadow-card hover:shadow-card-hover hover:-translate-y-1
-                           active:scale-95 transition-all duration-200 cursor-pointer"
+                className="px-4 md:px-6 py-2.5 md:py-3 bg-white rounded-lg md:rounded-xl border-2 border-gray-200
+                           font-display font-bold text-sm md:text-base text-gray-700
+                           shadow-card active:scale-95 transition-all duration-200 cursor-pointer"
               >
                 {option}
               </button>

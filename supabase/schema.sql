@@ -5,6 +5,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS users_gamification (
   user_id UUID PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
   avatar_svg_url TEXT,
+  display_name TEXT,
+  avatar_emoji TEXT,
+  accent_color TEXT,
   total_xp INTEGER DEFAULT 0 NOT NULL,
   current_streak INTEGER DEFAULT 0 NOT NULL,
   last_activity_date DATE,

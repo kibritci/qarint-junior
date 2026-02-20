@@ -37,42 +37,51 @@ const games = [
     gradient: 'from-emerald-500 to-teal-600',
     bgLight: 'bg-emerald-50',
   },
+  {
+    id: 'picture-quiz',
+    title: 'Picture Quiz',
+    subtitle: 'Name the picture!',
+    href: '/games/picture-quiz',
+    emoji: '🖼️',
+    gradient: 'from-sky-500 to-cyan-600',
+    bgLight: 'bg-sky-50',
+  },
 ];
 
 export default function GamesPage() {
   return (
-    <div className="p-6 md:p-8">
+    <div className="p-4 md:p-8">
       <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6 md:mb-8">
           <div className="flex items-center gap-2 mb-1">
-            <span className="text-sm text-gray-400">Games</span>
+            <span className="text-xs md:text-sm text-gray-400">Games</span>
           </div>
-          <h1 className="text-3xl font-display font-bold text-gray-900 mb-2">Mini Games</h1>
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2">Mini Games</h1>
           <div className="badge-blue">
             <span>Cambridge YLE Aligned</span>
           </div>
         </div>
 
         {/* Game Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5">
           {games.map((game, i) => (
             <Link
               key={game.id}
               href={game.href}
-              className="card-game group p-5 animate-slide-up"
+              className="card-game group p-4 md:p-5 animate-slide-up"
               style={{ animationDelay: `${i * 80}ms`, animationFillMode: 'both' }}
             >
               {/* Icon */}
-              <div className={`w-14 h-14 ${game.bgLight} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <span className="text-2xl">{game.emoji}</span>
+              <div className={`w-11 h-11 md:w-14 md:h-14 ${game.bgLight} rounded-xl flex items-center justify-center mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <span className="text-xl md:text-2xl">{game.emoji}</span>
               </div>
 
               {/* Text */}
-              <h2 className="text-base font-display font-bold text-gray-900 mb-1">
+              <h2 className="text-sm md:text-base font-display font-bold text-gray-900 mb-0.5 md:mb-1">
                 {game.title}
               </h2>
-              <p className="text-sm text-gray-400">
+              <p className="text-xs md:text-sm text-gray-400">
                 {game.subtitle}
               </p>
             </Link>

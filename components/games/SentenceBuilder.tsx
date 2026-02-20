@@ -152,36 +152,36 @@ export default function SentenceBuilder() {
   return (
     <GameWrapper title="Sentence Builder" progress={progress}>
       {/* Info */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-display font-bold text-gray-900">Build the Sentence</h2>
-          <p className="text-sm text-gray-400 mt-1">Tap words in the correct order</p>
+      <div className="flex items-center justify-between mb-4 md:mb-6">
+        <div className="min-w-0">
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">Build the Sentence</h2>
+          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">Tap words in the correct order</p>
         </div>
-        <div className="badge-blue">
+        <div className="badge-blue flex-shrink-0">
           {currentIndex + 1} / {SENTENCES.length}
         </div>
       </div>
 
       {/* Hint */}
-      <div className="mb-6 p-4 bg-amber-50 rounded-xl border border-amber-200">
-        <p className="text-sm text-amber-700 font-medium">
+      <div className="mb-4 md:mb-6 p-3 md:p-4 bg-amber-50 rounded-xl border border-amber-200">
+        <p className="text-xs md:text-sm text-amber-700 font-medium">
           💡 Hint: {sentence.hint}
         </p>
       </div>
 
       {/* Drop Zones */}
-      <div className="flex flex-wrap gap-3 mb-8 min-h-[60px] p-4 bg-gray-50 rounded-2xl border-2 border-dashed border-gray-200">
+      <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 min-h-[52px] md:min-h-[60px] p-3 md:p-4 bg-gray-50 rounded-xl md:rounded-2xl border-2 border-dashed border-gray-200">
         {placedWords.map((word, index) => (
           <button
             key={index}
             onClick={() => handleSlotClick(index)}
             className={`
-              min-w-[80px] h-12 px-4 rounded-xl border-2 font-display font-bold text-sm
+              min-w-[60px] md:min-w-[80px] h-10 md:h-12 px-3 md:px-4 rounded-lg md:rounded-xl border-2 font-display font-bold text-xs md:text-sm
               transition-all duration-300
               ${wrongSlots.includes(index)
                 ? 'animate-spring-back border-red-300 bg-red-50 text-red-600'
                 : word
-                  ? 'border-primary-200 bg-white text-gray-800 shadow-sm hover:border-red-300 cursor-pointer'
+                  ? 'border-primary-200 bg-white text-gray-800 shadow-sm active:scale-95 cursor-pointer'
                   : 'border-dashed border-gray-300 bg-white text-gray-300'
               }
             `}
@@ -193,15 +193,14 @@ export default function SentenceBuilder() {
 
       {/* Word Pool */}
       {!isCorrect && (
-        <div className="flex flex-wrap gap-3 mb-6 justify-center">
+        <div className="flex flex-wrap gap-2 md:gap-3 mb-4 md:mb-6 justify-center">
           {availableWords.map((word, i) => (
             <button
               key={`${word}-${i}`}
               onClick={() => handleWordClick(word)}
-              className="px-5 h-12 bg-white rounded-xl border-2 border-gray-200
-                         font-display font-bold text-sm text-gray-700
-                         shadow-card hover:shadow-card-hover hover:-translate-y-0.5
-                         active:scale-95 transition-all duration-200 cursor-pointer"
+              className="px-4 md:px-5 h-10 md:h-12 bg-white rounded-lg md:rounded-xl border-2 border-gray-200
+                         font-display font-bold text-xs md:text-sm text-gray-700
+                         shadow-card active:scale-95 transition-all duration-200 cursor-pointer"
             >
               {word}
             </button>
@@ -210,16 +209,16 @@ export default function SentenceBuilder() {
       )}
 
       {/* Actions */}
-      <div className="flex justify-center gap-4">
+      <div className="flex justify-center gap-3 md:gap-4">
         {isCorrect ? (
-          <button onClick={nextSentence} className="btn-primary text-lg px-8">
-            {currentIndex + 1 >= SENTENCES.length ? 'Finish' : 'Next Sentence →'}
+          <button onClick={nextSentence} className="btn-primary text-base md:text-lg px-6 md:px-8">
+            {currentIndex + 1 >= SENTENCES.length ? 'Finish' : 'Next →'}
           </button>
         ) : (
           <button
             onClick={checkAnswer}
             disabled={placedWords.includes(null)}
-            className="btn-primary text-lg px-8 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="btn-primary text-base md:text-lg px-6 md:px-8 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Check Answer
           </button>

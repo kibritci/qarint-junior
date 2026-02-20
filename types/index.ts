@@ -11,6 +11,9 @@ export interface VocabularyWord {
 export interface UserGamification {
   user_id: string;
   avatar_svg_url: string | null;
+  display_name: string | null;
+  avatar_emoji: string | null;
+  accent_color: string | null;
   total_xp: number;
   current_streak: number;
   last_activity_date: string | null;

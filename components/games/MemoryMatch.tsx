@@ -156,20 +156,20 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
   return (
     <GameWrapper title="Memory Match" progress={progress}>
       {/* Game Info */}
-      <div className="flex items-center justify-between mb-6">
-        <div>
-          <h2 className="text-2xl font-display font-bold text-gray-900">Memory Match</h2>
-          <p className="text-sm text-gray-400 mt-1">Match English words with their pictures</p>
+      <div className="flex items-center justify-between mb-4 md:mb-6">
+        <div className="min-w-0">
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">Memory Match</h2>
+          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">Match words with pictures</p>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           <div className="text-center">
-            <p className="text-2xl font-display font-bold text-gray-900">{moves}</p>
-            <p className="text-xs text-gray-400">Moves</p>
+            <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{moves}</p>
+            <p className="text-[10px] md:text-xs text-gray-400">Moves</p>
           </div>
-          <div className="w-px h-8 bg-gray-200" />
+          <div className="w-px h-6 md:h-8 bg-gray-200" />
           <div className="text-center">
-            <p className="text-2xl font-display font-bold text-primary">{matches}/{totalPairs}</p>
-            <p className="text-xs text-gray-400">Matched</p>
+            <p className="text-xl md:text-2xl font-display font-bold text-primary">{matches}/{totalPairs}</p>
+            <p className="text-[10px] md:text-xs text-gray-400">Matched</p>
           </div>
         </div>
       </div>
@@ -189,7 +189,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
       )}
 
       {/* Card Grid */}
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
         {cards.map((card, index) => {
           const isShaking = shakingCards.includes(index);
           const isRevealed = card.isFlipped || card.isMatched;
@@ -200,14 +200,14 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
               onClick={() => handleCardClick(index)}
               disabled={card.isMatched || isChecking}
               className={`
-                aspect-square rounded-2xl border-2 flex items-center justify-center p-3
+                aspect-square rounded-xl md:rounded-2xl border-2 flex items-center justify-center p-2 md:p-3
                 transition-all duration-300 ease-out cursor-pointer select-none
                 ${isShaking ? 'animate-funny-shake' : ''}
                 ${card.isMatched
                   ? 'border-green-300 bg-green-50 scale-95 opacity-60'
                   : isRevealed
                     ? 'border-primary-200 bg-white shadow-game scale-[1.02]'
-                    : 'border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 hover:border-gray-300 hover:shadow-md hover:scale-[1.02]'
+                    : 'border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 hover:border-gray-300 hover:shadow-md active:scale-95'
                 }
                 disabled:cursor-default
               `}
@@ -215,7 +215,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
               {isRevealed ? (
                 <div className="animate-flip-in">
                   {card.type === 'word' ? (
-                    <span className="text-lg md:text-xl font-display font-bold text-gray-800">
+                    <span className="text-sm md:text-xl font-display font-bold text-gray-800 break-all leading-tight">
                       {card.word}
                     </span>
                   ) : (
@@ -223,12 +223,12 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
                     <img
                       src={`https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/${card.openmoji_hex}.svg`}
                       alt={card.word}
-                      className="w-12 h-12 md:w-16 md:h-16"
+                      className="w-10 h-10 md:w-16 md:h-16"
                     />
                   )}
                 </div>
               ) : (
-                <span className="text-3xl opacity-30 group-hover:opacity-50 transition-opacity">❓</span>
+                <span className="text-2xl md:text-3xl opacity-30 transition-opacity">❓</span>
               )}
             </button>
           );

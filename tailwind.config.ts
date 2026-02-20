@@ -78,6 +78,10 @@ const config: Config = {
           "0%": { transform: "translateY(20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        "slide-in-left": {
+          "0%": { transform: "translateX(-100%)" },
+          "100%": { transform: "translateX(0)" },
+        },
         "wiggle": {
           "0%, 100%": { transform: "rotate(0deg)" },
           "25%": { transform: "rotate(-8deg)" },
@@ -94,6 +98,7 @@ const config: Config = {
         "gold-dust": "gold-dust 0.8s ease-out forwards",
         "pulse-glow": "pulse-glow 2s infinite",
         "slide-up": "slide-up 0.4s ease-out",
+        "slide-in-left": "slide-in-left 0.25s ease-out",
         "wiggle": "wiggle 0.3s ease-in-out",
       },
       boxShadow: {

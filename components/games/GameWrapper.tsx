@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ArrowLeftIcon, HeartIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { HeartIcon, XMarkIcon } from '@heroicons/react/24/solid';
 
 interface GameWrapperProps {
   title: string;
@@ -20,13 +20,13 @@ export default function GameWrapper({
   maxLives = 3,
 }: GameWrapperProps) {
   return (
-    <div className="min-h-[calc(100vh-57px)] flex flex-col">
+    <div className="min-h-screen md:min-h-[calc(100vh-4rem)] flex flex-col">
       {/* Game Header */}
-      <div className="sticky top-[57px] z-40 bg-white border-b border-gray-100 px-6 py-3">
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
+      <div className="sticky top-0 md:top-16 z-40 bg-white border-b border-gray-100 px-4 md:px-6 py-3 safe-area-top">
+        <div className="max-w-4xl mx-auto flex items-center gap-3 md:gap-4">
           <Link
             href="/games"
-            className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+            className="p-2 rounded-lg hover:bg-gray-100 transition-colors flex-shrink-0"
           >
             <XMarkIcon className="w-5 h-5 text-gray-400" />
           </Link>
@@ -43,11 +43,11 @@ export default function GameWrapper({
 
           {/* Lives */}
           {lives !== undefined && (
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1 flex-shrink-0">
               {Array.from({ length: maxLives }).map((_, i) => (
                 <HeartIcon
                   key={i}
-                  className={`w-5 h-5 transition-all duration-300 ${
+                  className={`w-4 h-4 md:w-5 md:h-5 transition-all duration-300 ${
                     i < lives ? 'text-red-500' : 'text-gray-200'
                   }`}
                 />
@@ -58,7 +58,7 @@ export default function GameWrapper({
       </div>
 
       {/* Game Content */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-4 md:p-6">
         <div className="max-w-4xl mx-auto">
           {children}
         </div>

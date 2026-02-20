@@ -28,6 +28,10 @@ yarn-error.log*
 .env*.local
 .env
 
+# quiz images (served via public/ but too large for git)
+/public/quiz-images/
+/scripts/quiz-images/
+
 # vercel
 .vercel
 

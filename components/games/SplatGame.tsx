@@ -167,14 +167,14 @@ export default function SplatGame() {
   if (!isPlaying && !isGameOver) {
     return (
       <GameWrapper title="Splat Word Hunt" progress={0}>
-        <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-          <div className="text-6xl mb-6 animate-bounce-in">🎯</div>
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-3">Splat Word Hunt</h2>
-          <p className="text-gray-500 mb-2 max-w-md">
+        <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4">
+          <div className="text-5xl md:text-6xl mb-4 md:mb-6 animate-bounce-in">🎯</div>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 md:mb-3">Splat Word Hunt</h2>
+          <p className="text-sm md:text-base text-gray-500 mb-2 max-w-md">
             Bubbles will float up with words inside. Tap only the ones that belong to the category!
           </p>
-          <p className="text-sm text-gray-400 mb-8">60 seconds - no point loss for wrong taps</p>
-          <button onClick={startGame} className="btn-primary text-lg px-8 py-4">
+          <p className="text-xs md:text-sm text-gray-400 mb-6 md:mb-8">60 seconds - no point loss for wrong taps</p>
+          <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
             Start Game
           </button>
         </div>
@@ -201,26 +201,26 @@ export default function SplatGame() {
   return (
     <GameWrapper title="Splat Word Hunt" progress={progress}>
       {/* Category + Timer + Score */}
-      <div className="flex items-center justify-between mb-4">
-        <div>
-          <p className="text-sm text-gray-400">Find all</p>
-          <h2 className="text-2xl font-display font-bold text-gray-900">{category.name}</h2>
+      <div className="flex items-center justify-between mb-3 md:mb-4">
+        <div className="min-w-0">
+          <p className="text-xs md:text-sm text-gray-400">Find all</p>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{category.name}</h2>
         </div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           <div className="text-center">
-            <p className="text-2xl font-display font-bold text-primary">{timeLeft}s</p>
-            <p className="text-xs text-gray-400">Time</p>
+            <p className="text-xl md:text-2xl font-display font-bold text-primary">{timeLeft}s</p>
+            <p className="text-[10px] md:text-xs text-gray-400">Time</p>
           </div>
-          <div className="w-px h-8 bg-gray-200" />
+          <div className="w-px h-6 md:h-8 bg-gray-200" />
           <div className="text-center">
-            <p className="text-2xl font-display font-bold text-gray-900">{score}</p>
-            <p className="text-xs text-gray-400">Score</p>
+            <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{score}</p>
+            <p className="text-[10px] md:text-xs text-gray-400">Score</p>
           </div>
         </div>
       </div>
 
       {/* Game Area */}
-      <div className="relative w-full h-[60vh] bg-gradient-to-b from-blue-50 to-sky-100 rounded-2xl overflow-hidden border border-blue-100">
+      <div className="relative w-full h-[65vh] md:h-[60vh] bg-gradient-to-b from-blue-50 to-sky-100 rounded-2xl overflow-hidden border border-blue-100 touch-manipulation">
         {bubbles.map((bubble) =>
           bubble.popped ? null : (
             <button
@@ -228,13 +228,13 @@ export default function SplatGame() {
               onClick={() => handleBubbleClick(bubble)}
               className={`
                 absolute flex flex-col items-center justify-center
-                w-20 h-20 md:w-24 md:h-24 rounded-full
+                w-16 h-16 md:w-24 md:h-24 rounded-full
                 bg-white shadow-lg border-2
                 transition-transform duration-150
                 cursor-pointer select-none
                 ${bubble.wrongPop
                   ? 'animate-funny-shake border-red-300 bg-red-50'
-                  : 'border-white/80 hover:scale-110'
+                  : 'border-white/80 active:scale-90'
                 }
               `}
               style={{
@@ -247,9 +247,9 @@ export default function SplatGame() {
               <img
                 src={`https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/${bubble.emoji}.svg`}
                 alt={bubble.word}
-                className="w-8 h-8 md:w-10 md:h-10"
+                className="w-7 h-7 md:w-10 md:h-10"
               />
-              <span className="text-[10px] md:text-xs font-display font-bold text-gray-700 mt-0.5">
+              <span className="text-[9px] md:text-xs font-display font-bold text-gray-700 mt-0.5 leading-none">
                 {bubble.word}
               </span>
             </button>
