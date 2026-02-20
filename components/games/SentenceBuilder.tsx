@@ -96,7 +96,7 @@ export default function SentenceBuilder() {
     } else {
       setWrongSlots(wrong);
       setTimeout(() => {
-        const newPlaced = [...placedWords];
+        const newPlaced: (string | null)[] = [...placedWords];
         wrong.forEach((i) => {
           newPlaced[i] = null;
         });
