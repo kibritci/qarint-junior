@@ -1,0 +1,36 @@
+---
+description: Core development rules for Qarint Junior
+globs: "**/*.{ts,tsx,css}"
+---
+
+# Qarint Junior - Core Development Rules
+
+## Design System
+- Use `rounded-2xl` for cards and containers
+- Use `shadow-card` / `shadow-card-hover` for elevation
+- Use `font-display` (Nunito) for headings, `font-body` (Inter) for body text
+- Primary color: `#E11D48` (pinkish-red)
+- Backgrounds: white and very light gray (`gray-50`)
+- All vectors via OpenMoji CDN: `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/{HEX}.svg`
+- UI icons: Heroicons (`@heroicons/react`)
+
+## Cultural Safety (STRICT)
+- ALL content must adhere to Islamic and family values
+- NEVER generate content involving: alcohol, gambling, violence, dating, inappropriate themes
+- Approved themes: family, respect, honesty, kindness, sharing, Ramadan, nature, school
+- Dummy data examples: "I help my mother", "We share our food", "I respect my elders"
+
+## Productive Failure
+- NEVER deduct points for wrong answers
+- Use `animate-funny-shake` CSS animation on wrong answers
+- Make failing fun with slapstick humor to encourage retries
+
+## Audio
+- Use `window.speechSynthesis` (Web Speech API) for reading words aloud
+- Language: `en-US`, rate: `0.8`
+
+## Tech Stack
+- Next.js 14+ App Router, TypeScript strict mode
+- Zustand for client state, Server Actions for DB writes
+- Supabase for database with RLS policies
+- Tailwind CSS for styling, canvas-confetti for celebrations

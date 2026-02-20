@@ -1,0 +1,66 @@
+# Qarint Junior - Core Development Rules
+
+## Cultural Safety & Values (STRICT)
+- ALL generated dummy data, vocabulary, UI text, and scenarios MUST strictly adhere to Islamic and strong family values
+- Examples: honesty, respecting parents, helping elders, sharing, Ramadan celebrations
+- NO inappropriate, violent, LGBT, or culturally insensitive content
+- When filtering content, always prioritize family values and Islamic principles
+
+## Curriculum Base
+- Use Cambridge YLE (Pre A1 Starters, A1 Movers, A2 Flyers) standard for vocabulary difficulty
+- All vocabulary must be age-appropriate for children 4-12 years old
+
+## UI/UX Design System (STRICT ADHERENCE)
+
+### Sidebar
+- Minimalist, light gray/white background
+- Active state (e.g., "Games") must have:
+  - Subtle gray background
+  - Pinkish-red text/icon color (#EF4444 or similar)
+
+### Topbar
+- Must be sticky (position: sticky)
+- Display Blue Lightning icon (⚡) for `current_streak`
+- Display Orange Fire icon (🔥) for `total_xp`
+- Use Heroicons for UI elements
+
+### Game Cards
+- White backgrounds
+- Large rounded corners: `rounded-2xl` (16px)
+- Subtle shadows: `shadow-sm`
+- Bold dark titles
+- Light gray subtitles
+
+### Assets
+- Heroicons for UI elements
+- OpenMoji (via CDN: jsDelivr) for all game illustrations
+- Format: `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/{HEX_CODE}.svg`
+
+## Mechanics & Accessibility
+
+### Productive Failure (Slapstick)
+- NEVER deduct points for wrong answers
+- Trigger "slapstick" CSS animation (`animate-funny-shake`) on wrong answers
+- Make failing fun and encourage retries
+- Use exaggerated, funny shaking or bouncing effects
+
+### Audio
+- Automatically use `window.speechSynthesis` (Web Speech API) to read English words aloud
+- Trigger on card click/interaction
+- Use English (en-US) voice
+
+## Technical Stack
+- Next.js 14+ (App Router)
+- TypeScript
+- Tailwind CSS
+- Zustand for state management
+- Supabase for database and auth
+- Framer Motion for animations (if needed)
+- @dnd-kit/core for drag & drop
+
+## Code Quality
+- Use TypeScript strictly
+- Follow Next.js App Router conventions
+- Implement proper error handling
+- Use Server Actions for database operations
+- Implement Row Level Security (RLS) in Supabase
