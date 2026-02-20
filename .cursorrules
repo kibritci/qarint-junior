@@ -1,10 +1,10 @@
 # Qarint Junior - Core Development Rules
 
 ## Cultural Safety & Values (STRICT)
-- ALL generated dummy data, vocabulary, UI text, and scenarios MUST strictly adhere to Islamic and strong family values
-- Examples: honesty, respecting parents, helping elders, sharing, Ramadan celebrations
-- NO inappropriate, violent, LGBT, or culturally insensitive content
-- When filtering content, always prioritize family values and Islamic principles
+- ALL generated dummy data, vocabulary, UI text, and scenarios MUST be safe and age-appropriate for children
+- Examples: honesty, respecting parents, helping elders, sharing, kindness
+- NO inappropriate, violent, or culturally insensitive content
+- When filtering content, always prioritize family values and child safety
 
 ## Curriculum Base
 - Use Cambridge YLE (Pre A1 Starters, A1 Movers, A2 Flyers) standard for vocabulary difficulty

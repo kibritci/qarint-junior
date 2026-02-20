@@ -18,4 +18,4 @@
 
 ## Sentence Data
 Stored in component as `SENTENCES` array with `{ words: string[], hint: string }`.
-All sentences reinforce Islamic and family values.
+All sentences reinforce family values and positive character traits.

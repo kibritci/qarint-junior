@@ -5,6 +5,7 @@ import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
 import GameWrapper from './GameWrapper';
+import { VOCABULARY, getWordsByCategory, CATEGORIES as ALL_CATS } from '@/lib/data/cambridgeYLE';
 
 interface Bubble {
   id: number;
@@ -18,38 +19,24 @@ interface Bubble {
   wrongPop: boolean;
 }
 
-const CATEGORIES = [
-  {
-    name: 'Family',
-    correct: [
-      { word: 'mother', emoji: '1F469' },
-      { word: 'father', emoji: '1F468' },
-      { word: 'family', emoji: '1F46A' },
-      { word: 'respect', emoji: '1F64F' },
-    ],
-    wrong: [
-      { word: 'tree', emoji: '1F333' },
-      { word: 'sun', emoji: '2600' },
-      { word: 'flower', emoji: '1F33C' },
-      { word: 'star', emoji: '2B50' },
-    ],
-  },
-  {
-    name: 'Nature',
-    correct: [
-      { word: 'tree', emoji: '1F333' },
-      { word: 'flower', emoji: '1F33C' },
-      { word: 'sun', emoji: '2600' },
-      { word: 'moon', emoji: '1F314' },
-    ],
-    wrong: [
-      { word: 'mother', emoji: '1F469' },
-      { word: 'father', emoji: '1F468' },
-      { word: 'honest', emoji: '1F9D1' },
-      { word: 'respect', emoji: '1F64F' },
-    ],
-  },
-];
+function buildCategories() {
+  const gameCats = ['animals', 'food', 'family', 'nature', 'clothes', 'transport', 'sports', 'home'];
+  return gameCats
+    .filter((cat) => getWordsByCategory(cat).length >= 4)
+    .map((cat) => {
+      const words = getWordsByCategory(cat).filter((w) => !w.openmoji_hex.includes('-'));
+      const otherWords = VOCABULARY.filter((w) => w.category !== cat && !w.openmoji_hex.includes('-'));
+      const shuffledCorrect = [...words].sort(() => Math.random() - 0.5).slice(0, 6);
+      const shuffledWrong = [...otherWords].sort(() => Math.random() - 0.5).slice(0, 6);
+      return {
+        name: cat.charAt(0).toUpperCase() + cat.slice(1),
+        correct: shuffledCorrect.map((w) => ({ word: w.word, emoji: w.openmoji_hex })),
+        wrong: shuffledWrong.map((w) => ({ word: w.word, emoji: w.openmoji_hex })),
+      };
+    });
+}
+
+const CATEGORIES = buildCategories();
 
 function speakWord(word: string) {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {

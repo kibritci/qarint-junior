@@ -1,6 +1,6 @@
 /**
  * Content filtering for Qarint Junior.
- * Ensures all content adheres to Islamic family values and is age-appropriate.
+ * Ensures all content is safe and age-appropriate for children.
  */
 
 const BLOCKED_TOPICS = [
@@ -15,7 +15,6 @@ const BLOCKED_TOPICS = [
 
 const APPROVED_THEMES = [
   'family', 'respect', 'honesty', 'kindness', 'sharing',
-  'prayer', 'ramadan', 'eid', 'mosque', 'quran',
   'nature', 'animals', 'food', 'school', 'home',
   'colors', 'numbers', 'body', 'clothes', 'actions',
   'gratitude', 'patience', 'cooperation', 'generosity',

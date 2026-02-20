@@ -1,13 +1,13 @@
 # Qarint Junior
 
-Gamified English learning platform for Muslim children (ages 4-12).
+Gamified English learning platform for children (ages 4-12).
 
 ## Features
 
 - 🎮 4 Mini Games (Memory Match, Splat Word Hunt, Sentence Builder, Mad-Libs)
 - 🏆 Gamification System (XP, Streak, Leaderboard)
 - 📚 Cambridge YLE Aligned Curriculum
-- 🎨 Safe, Family-Values Based Content
+- 🎨 Safe, Age-Appropriate Content
 - 🔊 Web Speech API for pronunciation
 
 ## Tech Stack

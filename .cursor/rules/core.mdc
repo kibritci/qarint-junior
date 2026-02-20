@@ -15,9 +15,9 @@ globs: "**/*.{ts,tsx,css}"
 - UI icons: Heroicons (`@heroicons/react`)
 
 ## Cultural Safety (STRICT)
-- ALL content must adhere to Islamic and family values
+- ALL content must be safe and age-appropriate for children (ages 4-12)
 - NEVER generate content involving: alcohol, gambling, violence, dating, inappropriate themes
-- Approved themes: family, respect, honesty, kindness, sharing, Ramadan, nature, school
+- Approved themes: family, respect, honesty, kindness, sharing, nature, school
 - Dummy data examples: "I help my mother", "We share our food", "I respect my elders"
 
 ## Productive Failure

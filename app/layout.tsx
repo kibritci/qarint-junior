@@ -5,7 +5,7 @@ import Topbar from "./components/layout/Topbar";
 
 export const metadata: Metadata = {
   title: "Qarint Junior - Gamified English Learning",
-  description: "Safe-space English learning platform for Muslim children",
+  description: "Fun and safe English learning platform for children",
 };
 
 export default function RootLayout({

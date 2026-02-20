@@ -56,7 +56,7 @@ const STORIES: Story[] = [
   },
   {
     id: 3,
-    template: ['During Ramadan, we', '_____', 'our food with neighbors. It makes everyone', '_____', '!'],
+    template: ['At the picnic, we', '_____', 'our food with friends. It makes everyone', '_____', '!'],
     blanks: [
       {
         index: 1,

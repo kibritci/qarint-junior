@@ -1,9 +1,9 @@
 import { createClient } from '@/lib/supabase/server';
 import MemoryMatch from '@/components/games/MemoryMatch';
 import { VocabularyWord } from '@/types';
-import { VOCABULARY } from '@/lib/data/cambridgeYLE';
+import { getWordsForGame, WordEntry } from '@/lib/data/cambridgeYLE';
 
-function mapToVocabularyWord(entry: typeof VOCABULARY[number], index: number): VocabularyWord {
+function mapToVocabularyWord(entry: WordEntry, index: number): VocabularyWord {
   return {
     id: String(index + 1),
     word: entry.word,
@@ -18,24 +18,24 @@ function mapToVocabularyWord(entry: typeof VOCABULARY[number], index: number): V
 async function getVocabularyWords(): Promise<VocabularyWord[]> {
   try {
     const supabase = await createClient();
+    const categories = ['animals', 'food', 'family', 'home', 'clothes', 'transport'];
+    const randomCat = categories[Math.floor(Math.random() * categories.length)];
+
     const { data, error } = await supabase
       .from('vocabulary_words')
       .select('*')
-      .limit(10);
+      .eq('category', randomCat)
+      .limit(8);
 
-    if (!error && data && data.length > 0) {
-      return data;
+    if (!error && data && data.length >= 6) {
+      return data.slice(0, 6);
     }
   } catch {
     // Fallback to local data
   }
 
-  // Use local Cambridge YLE data as fallback, pick random 10
-  const shuffled = [...VOCABULARY]
-    .filter((w) => !w.openmoji_hex.includes('-'))
-    .sort(() => Math.random() - 0.5)
-    .slice(0, 10);
-  return shuffled.map(mapToVocabularyWord);
+  const words = getWordsForGame(6);
+  return words.map(mapToVocabularyWord);
 }
 
 export default async function MemoryMatchPage() {
