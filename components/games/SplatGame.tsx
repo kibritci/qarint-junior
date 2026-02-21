@@ -50,14 +50,9 @@ function buildCategories(): CategoryOption[] {
     });
 }
 
-function speakWord(word: string) {
-  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.9;
-    window.speechSynthesis.speak(utterance);
-  }
+/** Seslendirme geçici kapalı (ileride kaliteli TTS denenecek). */
+function speakWord(_word: string) {
+  // no-op
 }
 
 interface SplatGameProps {

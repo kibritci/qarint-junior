@@ -116,14 +116,9 @@ const WRONG_REACTIONS: Record<string, { emoji: string; text: string }> = {
   shoes: { emoji: '👟', text: 'Grandma took a sip of shoes and spit them out!' },
 };
 
-function speakWord(word: string) {
-  if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(word);
-    utterance.lang = 'en-US';
-    utterance.rate = 0.85;
-    window.speechSynthesis.speak(utterance);
-  }
+/** Seslendirme geçici kapalı (ileride kaliteli TTS denenecek). */
+function speakWord(_word: string) {
+  // no-op
 }
 
 export default function MadLibsGame() {
