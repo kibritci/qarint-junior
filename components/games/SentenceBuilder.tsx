@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
@@ -56,8 +56,20 @@ export default function SentenceBuilder() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const hasCelebratedRef = useRef(false);
 
   const t = useTranslations('games.sentenceBuilder');
+
+  useEffect(() => {
+    if (isComplete && !hasCelebratedRef.current) {
+      hasCelebratedRef.current = true;
+      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
+    }
+  }, [isComplete]);
+
+  useEffect(() => {
+    if (!isComplete) hasCelebratedRef.current = false;
+  }, [isComplete]);
   const { addXp } = useGameStore();
   const sentence = SENTENCES[currentIndex];
 
@@ -114,7 +126,6 @@ export default function SentenceBuilder() {
     if (next >= SENTENCES.length) {
       setIsComplete(true);
       updateGamification(totalScore, 'sentence-builder');
-      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
       return;
     }
     setCurrentIndex(next);
