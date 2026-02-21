@@ -28,6 +28,11 @@
     "footer404EasterEgg": "İtirilmiş səhifə 🐣",
     "unlock": "Kilidi aç"
   },
+  "lostPage": {
+    "title": "İtirilmiş səhifə",
+    "description": "Bu səhifə yoxdur, amma sən tapdın! Ana səhifəyə qayıt.",
+    "goHome": "Ana Səhifəyə"
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "Siz ilk test istifadəçilərimizdənsiniz — rəyiniz növbəti versiyanı formalaşdırır!",

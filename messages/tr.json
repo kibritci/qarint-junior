@@ -28,6 +28,11 @@
     "footer404EasterEgg": "Kayıp sayfa 🐣",
     "unlock": "Kilidi Aç"
   },
+  "lostPage": {
+    "title": "Kayıp sayfa",
+    "description": "Bu sayfa yok, ama sen buldun! Ana sayfaya dön.",
+    "goHome": "Ana Sayfaya Dön"
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "İlk test kullanıcılarımızdan birisiniz — geri bildiriminiz bir sonraki sürümü şekillendirir!",

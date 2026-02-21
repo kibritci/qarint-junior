@@ -20,30 +20,28 @@ export default async function Home() {
       <div className="px-4 pt-0 pb-4 md:px-8 md:pt-0 md:pb-8">
         <div className="max-w-4xl mx-auto">
           {/* Don't break the chain — weekly streak */}
-        <div className="mb-6 md:mb-8 max-w-[570px] mx-auto">
-          <div className="flex flex-col items-center -mt-2">
-            <div className="relative flex justify-center">
-              <StreakFireRive streakCount={currentStreak} />
-            </div>
-            <h2 className="text-center text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100 mt-1 mb-2">
-              {t('chainBreakTitle')}
-            </h2>
-            <p className="text-center text-sm text-gray-600 dark:text-gray-300 mb-1">
-              {t('chainBreakHint')}
-            </p>
-            <div className="flex items-center justify-center gap-1.5 mb-4">
-              <svg className="h-4 w-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
-              </svg>
-              <span className="text-sm font-bold text-green-600 dark:text-green-400">{t('xpPerDay')}</span>
-            </div>
-            <ChainStreak
-              lastActivityDate={lastActivityDate}
-              currentStreak={currentStreak}
-              showRewardLabel
-              compact={false}
-            />
+        <div className="mb-6 md:mb-8 max-w-[570px] mx-auto flex flex-col items-center -mt-2">
+          <div className="relative flex justify-center">
+            <StreakFireRive streakCount={currentStreak} />
           </div>
+          <h2 className="text-center text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100 mt-1 mb-2">
+            {t('chainBreakTitle')}
+          </h2>
+          <p className="text-center text-sm text-gray-600 dark:text-gray-300 mb-1">
+            {t('chainBreakHint')}
+          </p>
+          <div className="flex items-center justify-center gap-1.5 mb-4">
+            <svg className="h-4 w-4 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+            </svg>
+            <span className="text-sm font-bold text-green-600 dark:text-green-400">{t('xpPerDay')}</span>
+          </div>
+          <ChainStreak
+            lastActivityDate={lastActivityDate}
+            currentStreak={currentStreak}
+            showRewardLabel
+            compact={false}
+          />
         </div>
 
         {/* Quick Stats */}

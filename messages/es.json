@@ -28,6 +28,11 @@
     "footer404EasterEgg": "Página perdida 🐣",
     "unlock": "Desbloquear"
   },
+  "lostPage": {
+    "title": "Página perdida",
+    "description": "Esta página no existe, ¡pero la encontraste! Vuelve al inicio.",
+    "goHome": "Ir al inicio"
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "¡Eres uno de nuestros primeros probadores — tu opinión da forma a la próxima versión!",

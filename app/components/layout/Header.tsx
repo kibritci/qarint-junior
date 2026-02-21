@@ -36,6 +36,7 @@ const mainNavItems = [
 ];
 
 const desktopNavItems = [
+  { nameKey: 'nav.home', href: '/', icon: HomeIcon },
   { nameKey: 'nav.games', href: '/games', icon: PuzzlePieceIcon },
   { nameKey: 'nav.leaderboard', href: '/leaderboard', icon: TrophyIcon },
 ];
@@ -125,7 +126,7 @@ export default function Header() {
             />
           </Link>
 
-          {/* Orta: Desktop nav (Oyunlar, Liderlik) — sayfaya ortalanmış */}
+          {/* Orta: Desktop nav (Ana Sayfa, Oyunlar, Liderlik) — sayfaya ortalanmış */}
           <nav className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center p-1 rounded-full bg-gray-100 dark:bg-gray-800" role="tablist">
             {desktopNavItems.map((item) => {
               const Icon = item.icon;
