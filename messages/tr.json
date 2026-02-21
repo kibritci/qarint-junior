@@ -32,6 +32,30 @@
     "pageLabel": "Oyunlar",
     "miniGames": "Mini Oyunlar",
     "cambridgeBadge": "Cambridge YLE Uyumlu",
+    "selectTopic": "Konu seç",
+    "selectLevel": "Seviye",
+    "pickGame": "Oyunu seç",
+    "topics": {
+      "any": "Tümü",
+      "animals": "Hayvanlar",
+      "nature": "Doğa",
+      "food": "Yemek",
+      "family": "Aile",
+      "home": "Ev",
+      "clothes": "Kıyafetler",
+      "transport": "Ulaşım",
+      "body": "Vücut",
+      "colours": "Renkler",
+      "sports": "Spor",
+      "school": "Okul",
+      "toys": "Oyuncaklar"
+    },
+    "levels": {
+      "any": "Tümü",
+      "pre_a1_starters": "Kolay",
+      "a1_movers": "Orta",
+      "a2_flyers": "Zor"
+    },
     "titles": {
       "memoryMatch": "Hafıza Eşleştirme",
       "splatWordHunt": "Kelime Avı",
@@ -58,6 +82,8 @@
     "splatWordHunt": {
       "title": "Kelime Avı",
       "description": "Doğru kelimenin balonlarını patlat!",
+      "intro": "İçinde kelimeler olan baloncuklar yukarı çıkacak. Sadece ilgili kategoriye ait olanlara dokun! Kategori oyun alanının sol üstünde gösterilir.",
+      "introHint": "60 saniye — yanlış dokunuşta puan düşmez",
       "findAll": "Hepsini bul",
       "time": "Süre",
       "score": "Skor",
@@ -70,6 +96,7 @@
       "title": "Cümle Kur",
       "buildSentence": "Cümleyi Kur",
       "tapOrder": "Kelimelere doğru sırayla dokun",
+      "hintLabel": "İpucu",
       "totalPointsEarned": "toplam kazanılan puan",
       "finish": "Bitir",
       "next": "Sonraki →",
@@ -80,6 +107,10 @@
     "madLibs": {
       "title": "Mad-Libs Hikayeler",
       "fillInStory": "Hikayeyi Doldur",
+      "pickRightWordHint": "Doğru kelimeyi seç — yanlışlar eğlenceli!",
+      "pickRightWord": "Doğru kelimeyi seç:",
+      "tryAnotherWord": "Başka bir kelime dene!",
+      "storyCompleteGreatJob": "Hikaye tamam! Aferin!",
       "totalPointsEarned": "toplam kazanılan puan",
       "finishAllStories": "Tüm Hikayeleri Bitir",
       "nextStory": "Sonraki Hikaye →",
@@ -89,6 +120,7 @@
     },
     "pictureQuiz": {
       "title": "Resim Bilgisi",
+      "whatIsThis": "Bu nedir?",
       "tapPlayToStart": "Başlamak için Oyna'ya dokun!",
       "amazing": "Harika!",
       "goodJob": "Aferin!",
@@ -140,16 +172,20 @@
   "profileHeader": {
     "editAvatar": "Avatarı düzenle"
   },
-  "leaderboard": {
-    "title": "Liderlik",
-    "description": "Bu hafta diğer öğrencilerle karşılaştır",
-    "weeklyLeaderboard": "Haftalık Liderlik",
-    "emptyTitle": "Bu hafta henüz kimse yok.",
-    "emptyHint": "XP kazanıp burada görünmek için oyun oyna!",
-    "player": "Oyuncu",
-    "you": "(Sen)",
-    "xp": "XP"
-  },
+"leaderboard": {
+      "heroTitle": "Harika gidiyorsun!",
+      "heroSubtitle": "Haftalık sıralamada neredesin? Oyun oyna, XP kazan, listede yüksel.",
+      "title": "Liderlik",
+      "description": "Bu hafta diğer öğrencilerle karşılaştır",
+      "weeklyLeaderboard": "Haftalık Liderlik",
+      "topThree": "Haftanın top 3'ü",
+      "participantsThisWeek": "Bu hafta {count} kişi oynadı",
+      "emptyTitle": "Bu hafta henüz kimse yok.",
+      "emptyHint": "XP kazanıp burada görünmek için oyun oyna!",
+      "player": "Oyuncu",
+      "you": "(Sen)",
+      "xp": "XP"
+    },
   "login": {
     "logIn": "Giriş Yap",
     "signUp": "Kayıt Ol",
@@ -173,7 +209,13 @@
     "locked": "Kilitli ({seconds}s)",
     "createAccount": "Hesap Oluştur",
     "attemptsRemaining": "{count} deneme hakkı kaldı",
-    "footer": "Çocuklar için güvenli ve eğlenceli İngilizce öğrenme"
+    "footer": "Çocuklar için güvenli ve eğlenceli İngilizce öğrenme",
+    "onboarding": {
+      "headline": "Qarint Junior ile neler yapabilirsin?",
+      "feature1": "Eğlenceli mini oyunlar oyna, yeni kelimeler öğren",
+      "feature2": "XP ve rozet kazan, liderlik tablosunda yüksel",
+      "feature3": "Güvenli ve arkadaş canlısı — çocuklar için"
+    }
   },
   "loginLayout": {
     "title": "Giriş Yap",
@@ -183,6 +225,7 @@
     "welcomeTitle": "Hoş geldin",
     "welcomeSubtitle": "Eğlenceli oyunlarla İngilizce öğren, puan kazan, şampiyon ol!",
     "letsGo": "Başla!",
+    "skipForNow": "Şimdi atla",
     "chooseAvatar": "Avatarını Seç",
     "pickCharacter": "Seni temsil eden bir karakter seç!",
     "continue": "Devam",

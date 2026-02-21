@@ -32,6 +32,30 @@
     "pageLabel": "Games",
     "miniGames": "Mini Games",
     "cambridgeBadge": "Cambridge YLE Aligned",
+    "selectTopic": "Select topic",
+    "selectLevel": "Level",
+    "pickGame": "Pick a game",
+    "topics": {
+      "any": "Any",
+      "animals": "Animals",
+      "nature": "Nature",
+      "food": "Food",
+      "family": "Family",
+      "home": "Home",
+      "clothes": "Clothes",
+      "transport": "Transport",
+      "body": "Body",
+      "colours": "Colours",
+      "sports": "Sports",
+      "school": "School",
+      "toys": "Toys"
+    },
+    "levels": {
+      "any": "Any",
+      "pre_a1_starters": "Easy",
+      "a1_movers": "Medium",
+      "a2_flyers": "Hard"
+    },
     "titles": {
       "memoryMatch": "Memory Match",
       "splatWordHunt": "Splat Word Hunt",
@@ -58,6 +82,8 @@
     "splatWordHunt": {
       "title": "Splat Word Hunt",
       "description": "Pop the bubbles with the correct word!",
+      "intro": "Bubbles will float up with words inside. Tap only the ones that belong to the category! The category is shown at the top left of the game area.",
+      "introHint": "60 seconds — no point loss for wrong taps",
       "findAll": "Find all",
       "time": "Time",
       "score": "Score",
@@ -70,6 +96,7 @@
       "title": "Sentence Builder",
       "buildSentence": "Build the Sentence",
       "tapOrder": "Tap words in the correct order",
+      "hintLabel": "Hint",
       "totalPointsEarned": "total points earned",
       "finish": "Finish",
       "next": "Next →",
@@ -80,6 +107,10 @@
     "madLibs": {
       "title": "Mad-Libs Stories",
       "fillInStory": "Fill in the Story",
+      "pickRightWordHint": "Pick the right word — wrong ones are funny!",
+      "pickRightWord": "Pick the right word:",
+      "tryAnotherWord": "Try another word!",
+      "storyCompleteGreatJob": "Story complete! Great job!",
       "totalPointsEarned": "total points earned",
       "finishAllStories": "Finish All Stories",
       "nextStory": "Next Story →",
@@ -89,6 +120,7 @@
     },
     "pictureQuiz": {
       "title": "Picture Quiz",
+      "whatIsThis": "What is this?",
       "tapPlayToStart": "Tap Play to start!",
       "amazing": "Amazing!",
       "goodJob": "Good job!",
@@ -140,16 +172,20 @@
   "profileHeader": {
     "editAvatar": "Edit avatar"
   },
-  "leaderboard": {
-    "title": "Leaderboard",
-    "description": "See how you compare to other students this week",
-    "weeklyLeaderboard": "Weekly Leaderboard",
-    "emptyTitle": "No one on the board yet this week.",
-    "emptyHint": "Play games to earn XP and appear here!",
-    "player": "Player",
-    "you": "(You)",
-    "xp": "XP"
-  },
+"leaderboard": {
+      "heroTitle": "You're doing great!",
+      "heroSubtitle": "See where you rank this week. Play games, earn XP, and climb the list.",
+      "title": "Leaderboard",
+      "description": "See how you compare to other students this week",
+      "weeklyLeaderboard": "Weekly Leaderboard",
+      "topThree": "Top 3 this week",
+      "participantsThisWeek": "{count} players this week",
+      "emptyTitle": "No one on the board yet this week.",
+      "emptyHint": "Play games to earn XP and appear here!",
+      "player": "Player",
+      "you": "(You)",
+      "xp": "XP"
+    },
   "login": {
     "logIn": "Log In",
     "signUp": "Sign Up",
@@ -173,7 +209,13 @@
     "locked": "Locked ({seconds}s)",
     "createAccount": "Create Account",
     "attemptsRemaining": "{count} attempts remaining",
-    "footer": "Safe and fun English learning for children"
+    "footer": "Safe and fun English learning for children",
+    "onboarding": {
+      "headline": "What you can do with Qarint Junior",
+      "feature1": "Play fun mini-games and learn new words",
+      "feature2": "Earn XP, badges and climb the leaderboard",
+      "feature3": "Safe and friendly — made for kids"
+    }
   },
   "loginLayout": {
     "title": "Log In",
@@ -183,6 +225,7 @@
     "welcomeTitle": "Welcome to",
     "welcomeSubtitle": "Learn English through fun games, earn points, and become a champion!",
     "letsGo": "Let's Go!",
+    "skipForNow": "Skip for now",
     "chooseAvatar": "Choose Your Avatar",
     "pickCharacter": "Pick a character that represents you!",
     "continue": "Continue",

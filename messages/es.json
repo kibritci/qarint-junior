@@ -32,6 +32,30 @@
     "pageLabel": "Juegos",
     "miniGames": "Mini juegos",
     "cambridgeBadge": "Alineado con Cambridge YLE",
+    "selectTopic": "Elegir tema",
+    "selectLevel": "Nivel",
+    "pickGame": "Elegir juego",
+    "topics": {
+      "any": "Todos",
+      "animals": "Animales",
+      "nature": "Naturaleza",
+      "food": "Comida",
+      "family": "Familia",
+      "home": "Casa",
+      "clothes": "Ropa",
+      "transport": "Transporte",
+      "body": "Cuerpo",
+      "colours": "Colores",
+      "sports": "Deportes",
+      "school": "Colegio",
+      "toys": "Juguetes"
+    },
+    "levels": {
+      "any": "Todos",
+      "pre_a1_starters": "Fácil",
+      "a1_movers": "Medio",
+      "a2_flyers": "Difícil"
+    },
     "titles": {
       "memoryMatch": "Memoria",
       "splatWordHunt": "Caza de palabras",
@@ -47,10 +71,10 @@
       "pictureQuiz": "¡Di el nombre de la imagen!"
     },
     "memoryMatch": { "title": "Memoria", "description": "Empareja palabras con imágenes", "moves": "Movimientos", "matched": "Parejas", "playAgain": "Jugar de nuevo" },
-    "splatWordHunt": { "title": "Caza de palabras", "description": "¡Revienta las burbujas con la palabra correcta!", "findAll": "Encuentra todas", "time": "Tiempo", "score": "Puntos", "pointsEarned": "puntos ganados", "timesUp": "¡Se acabó el tiempo!", "playAgain": "Jugar de nuevo", "play": "Jugar" },
-    "sentenceBuilder": { "title": "Construir oraciones", "buildSentence": "Construye la oración", "tapOrder": "Toca las palabras en el orden correcto", "totalPointsEarned": "puntos totales ganados", "finish": "Terminar", "next": "Siguiente →", "correctSentence": "Correcto", "amazing": "¡Genial!", "playAgain": "Jugar de nuevo" },
-    "madLibs": { "title": "Historias Mad-Libs", "fillInStory": "Rellena la historia", "totalPointsEarned": "puntos totales ganados", "finishAllStories": "Terminar todas las historias", "nextStory": "Siguiente historia →", "playAgain": "Jugar de nuevo", "oopsTryAgain": "¡Ups! ¡Inténtalo de nuevo!" },
-    "pictureQuiz": { "title": "Quiz de imágenes", "tapPlayToStart": "¡Toca Jugar para empezar!", "amazing": "¡Genial!", "goodJob": "¡Bien hecho!", "keepPracticing": "¡Sigue practicando!", "correct": "Correcto", "xpEarned": "XP ganados", "accuracy": "Precisión", "playAgain": "Jugar de nuevo", "play": "Jugar", "timesUp": "¡Se acabó el tiempo!", "notQuite": "¡Casi! La respuesta es: {answer}", "correctFeedback": "¡Correcto! +{xp} XP", "completedIn": "Completado en {seconds}s" }
+    "splatWordHunt": { "title": "Caza de palabras", "description": "¡Revienta las burbujas con la palabra correcta!", "intro": "Subirán burbujas con palabras. ¡Toca solo las de la categoría! La categoría se muestra arriba a la izquierda.", "introHint": "60 segundos — no pierdes puntos por toques incorrectos", "findAll": "Encuentra todas", "time": "Tiempo", "score": "Puntos", "pointsEarned": "puntos ganados", "timesUp": "¡Se acabó el tiempo!", "playAgain": "Jugar de nuevo", "play": "Jugar" },
+    "sentenceBuilder": { "title": "Construir oraciones", "buildSentence": "Construye la oración", "tapOrder": "Toca las palabras en el orden correcto", "hintLabel": "Pista", "totalPointsEarned": "puntos totales ganados", "finish": "Terminar", "next": "Siguiente →", "correctSentence": "Correcto", "amazing": "¡Genial!", "playAgain": "Jugar de nuevo" },
+    "madLibs": { "title": "Historias Mad-Libs", "fillInStory": "Rellena la historia", "pickRightWordHint": "Elige la palabra correcta — ¡las incorrectas son divertidas!", "pickRightWord": "Elige la palabra correcta:", "tryAnotherWord": "¡Prueba otra palabra!", "storyCompleteGreatJob": "¡Historia completa! ¡Bien hecho!", "totalPointsEarned": "puntos totales ganados", "finishAllStories": "Terminar todas las historias", "nextStory": "Siguiente historia →", "playAgain": "Jugar de nuevo", "oopsTryAgain": "¡Ups! ¡Inténtalo de nuevo!" },
+    "pictureQuiz": { "title": "Quiz de imágenes", "whatIsThis": "¿Qué es esto?", "tapPlayToStart": "¡Toca Jugar para empezar!", "amazing": "¡Genial!", "goodJob": "¡Bien hecho!", "keepPracticing": "¡Sigue practicando!", "correct": "Correcto", "xpEarned": "XP ganados", "accuracy": "Precisión", "playAgain": "Jugar de nuevo", "play": "Jugar", "timesUp": "¡Se acabó el tiempo!", "notQuite": "¡Casi! La respuesta es: {answer}", "correctFeedback": "¡Correcto! +{xp} XP", "completedIn": "Completado en {seconds}s" }
   },
   "profile": {
     "title": "Perfil",
@@ -87,9 +111,13 @@
   },
   "profileHeader": { "editAvatar": "Editar avatar" },
   "leaderboard": {
+    "heroTitle": "¡Lo estás haciendo genial!",
+    "heroSubtitle": "Mira en qué puesto estás esta semana. Juega, gana XP y sube en la lista.",
     "title": "Clasificación",
     "description": "Compara con otros estudiantes esta semana",
     "weeklyLeaderboard": "Clasificación semanal",
+    "topThree": "Top 3 de la semana",
+    "participantsThisWeek": "{count} jugadores esta semana",
     "emptyTitle": "Aún no hay nadie esta semana.",
     "emptyHint": "¡Juega para ganar XP y aparecer aquí!",
     "player": "Jugador",
@@ -119,13 +147,20 @@
     "locked": "Bloqueado ({seconds}s)",
     "createAccount": "Crear cuenta",
     "attemptsRemaining": "{count} intentos restantes",
-    "footer": "Aprendizaje de inglés seguro y divertido para niños"
+    "footer": "Aprendizaje de inglés seguro y divertido para niños",
+    "onboarding": {
+      "headline": "¿Qué puedes hacer con Qarint Junior?",
+      "feature1": "Juega a mini-juegos y aprende palabras nuevas",
+      "feature2": "Gana XP e insignias y sube en el ranking",
+      "feature3": "Seguro y amigable — hecho para niños"
+    }
   },
   "loginLayout": { "title": "Iniciar sesión", "description": "Inicia sesión o crea una cuenta para aprender inglés con Qarint Junior." },
   "onboarding": {
     "welcomeTitle": "Bienvenido a",
     "welcomeSubtitle": "¡Aprende inglés con juegos divertidos, gana puntos y conviértete en campeón!",
     "letsGo": "¡Vamos!",
+    "skipForNow": "Omitir por ahora",
     "chooseAvatar": "Elige tu avatar",
     "pickCharacter": "¡Elige un personaje que te represente!",
     "continue": "Continuar",

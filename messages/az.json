@@ -32,6 +32,30 @@
     "pageLabel": "Oyunlar",
     "miniGames": "Mini oyunlar",
     "cambridgeBadge": "Cambridge YLE uyğundur",
+    "selectTopic": "Mövzu seç",
+    "selectLevel": "Səviyyə",
+    "pickGame": "Oyunu seç",
+    "topics": {
+      "any": "Hamısı",
+      "animals": "Heyvanlar",
+      "nature": "Təbiət",
+      "food": "Yemək",
+      "family": "Ailə",
+      "home": "Ev",
+      "clothes": "Geyimlər",
+      "transport": "Nəqliyyat",
+      "body": "Bədən",
+      "colours": "Rənglər",
+      "sports": "İdman",
+      "school": "Məktəb",
+      "toys": "Oyuncaqlar"
+    },
+    "levels": {
+      "any": "Hamısı",
+      "pre_a1_starters": "Asan",
+      "a1_movers": "Orta",
+      "a2_flyers": "Çətin"
+    },
     "titles": {
       "memoryMatch": "Yaddaş uyğunluğu",
       "splatWordHunt": "Sözləri tap",
@@ -47,10 +71,10 @@
       "pictureQuiz": "Şəklin adını deyin!"
     },
     "memoryMatch": { "title": "Yaddaş uyğunluğu", "description": "Sözləri şəkillərlə uyğunlaşdırın", "moves": "Gediş", "matched": "Uyğun", "playAgain": "Yenidən oyna" },
-    "splatWordHunt": { "title": "Sözləri tap", "description": "Düzgün sözün balonlarını partladın!", "findAll": "Hamısını tap", "time": "Vaxt", "score": "Xal", "pointsEarned": "qazanılan xal", "timesUp": "Vaxt bitdi!", "playAgain": "Yenidən oyna", "play": "Oyna" },
-    "sentenceBuilder": { "title": "Cümlə qur", "buildSentence": "Cümləni qurun", "tapOrder": "Sözlərə düzgün ardıcıllıqla toxunun", "totalPointsEarned": "ümumi qazanılan xal", "finish": "Bitir", "next": "Növbəti →", "correctSentence": "Düzgün", "amazing": "Əla!", "playAgain": "Yenidən oyna" },
-    "madLibs": { "title": "Mad-Libs hekayələr", "fillInStory": "Hekayəni doldurun", "totalPointsEarned": "ümumi qazanılan xal", "finishAllStories": "Bütün hekayələri bitir", "nextStory": "Növbəti hekayə →", "playAgain": "Yenidən oyna", "oopsTryAgain": "Ups! Yenidən cəhd edin!" },
-    "pictureQuiz": { "title": "Şəkil viktorinası", "tapPlayToStart": "Başlamaq üçün Oyna-ya toxunun!", "amazing": "Əla!", "goodJob": "Aferin!", "keepPracticing": "Məşq etməyə davam edin!", "correct": "Düzgün", "xpEarned": "Qazanılan XP", "accuracy": "Dəqiqlik", "playAgain": "Yenidən oyna", "play": "Oyna", "timesUp": "Vaxt bitdi!", "notQuite": "Tam deyil! Cavab: {answer}", "correctFeedback": "Düzgün! +{xp} XP", "completedIn": "{seconds} saniyədə tamamlandı" }
+    "splatWordHunt": { "title": "Sözləri tap", "description": "Düzgün sözün balonlarını partladın!", "intro": "Sözlər olan balonlar yuxarı qalxacaq. Yalnız uyğun kateqoriyaya aid olanlara toxunun! Kateqoriya oyun sahəsinin sol yuxarısında göstərilir.", "introHint": "60 saniyə — səhv toxunuşda xal itirməzsiniz", "findAll": "Hamısını tap", "time": "Vaxt", "score": "Xal", "pointsEarned": "qazanılan xal", "timesUp": "Vaxt bitdi!", "playAgain": "Yenidən oyna", "play": "Oyna" },
+    "sentenceBuilder": { "title": "Cümlə qur", "buildSentence": "Cümləni qurun", "tapOrder": "Sözlərə düzgün ardıcıllıqla toxunun", "hintLabel": "İpucu", "totalPointsEarned": "ümumi qazanılan xal", "finish": "Bitir", "next": "Növbəti →", "correctSentence": "Düzgün", "amazing": "Əla!", "playAgain": "Yenidən oyna" },
+    "madLibs": { "title": "Mad-Libs hekayələr", "fillInStory": "Hekayəni doldurun", "pickRightWordHint": "Düzgün sözü seçin — səhvlər gülməlidir!", "pickRightWord": "Düzgün sözü seçin:", "tryAnotherWord": "Başqa söz sınayın!", "storyCompleteGreatJob": "Hekayə tamamlandı! Əla!", "totalPointsEarned": "ümumi qazanılan xal", "finishAllStories": "Bütün hekayələri bitir", "nextStory": "Növbəti hekayə →", "playAgain": "Yenidən oyna", "oopsTryAgain": "Ups! Yenidən cəhd edin!" },
+    "pictureQuiz": { "title": "Şəkil viktorinası", "whatIsThis": "Bu nədir?", "tapPlayToStart": "Başlamaq üçün Oyna-ya toxunun!", "amazing": "Əla!", "goodJob": "Aferin!", "keepPracticing": "Məşq etməyə davam edin!", "correct": "Düzgün", "xpEarned": "Qazanılan XP", "accuracy": "Dəqiqlik", "playAgain": "Yenidən oyna", "play": "Oyna", "timesUp": "Vaxt bitdi!", "notQuite": "Tam deyil! Cavab: {answer}", "correctFeedback": "Düzgün! +{xp} XP", "completedIn": "{seconds} saniyədə tamamlandı" }
   },
   "profile": {
     "title": "Profil",
@@ -87,9 +111,13 @@
   },
   "profileHeader": { "editAvatar": "Avatarı redaktə et" },
   "leaderboard": {
+    "heroTitle": "Əla gedirsin!",
+    "heroSubtitle": "Həftəlik sıralamada haradasan? Oyun oyna, XP qazan, siyahıda qalx.",
     "title": "Liderlər",
     "description": "Bu həftə digər tələbələrlə müqayisə olun",
     "weeklyLeaderboard": "Həftəlik liderlər",
+    "topThree": "Həftənin top 3-ü",
+    "participantsThisWeek": "Bu həftə {count} nəfər oynadı",
     "emptyTitle": "Bu həftə hələ heç kim yoxdur.",
     "emptyHint": "XP qazanmaq və burada görünmək üçün oyun oynayın!",
     "player": "Oyuncu",
@@ -119,13 +147,20 @@
     "locked": "Bloklanıb ({seconds}s)",
     "createAccount": "Hesab yarat",
     "attemptsRemaining": "{count} cəhd qaldı",
-    "footer": "Uşaqlar üçün təhlükəsiz və əyləncəli ingilis dili öyrənmə"
+    "footer": "Uşaqlar üçün təhlükəsiz və əyləncəli ingilis dili öyrənmə",
+    "onboarding": {
+      "headline": "Qarint Junior ilə nələr edə bilərsən?",
+      "feature1": "Əyləncəli mini oyunlar oyna, yeni sözlər öyrən",
+      "feature2": "XP və nişanlar qazan, liderlər cədvəlində qalx",
+      "feature3": "Təhlükəsiz və dostcasına — uşaqlar üçün"
+    }
   },
   "loginLayout": { "title": "Daxil ol", "description": "Qarint Junior ilə ingilis dilini öyrənməyə başlamaq üçün daxil olun və ya hesab yaradın." },
   "onboarding": {
     "welcomeTitle": "Xoş gəldin",
     "welcomeSubtitle": "Əyləncəli oyunlarla ingilis dilini öyrənin, xal qazanın, çempion olun!",
     "letsGo": "Başla!",
+    "skipForNow": "İndi keç",
     "chooseAvatar": "Avatarınızı seçin",
     "pickCharacter": "Sizi təmsil edən personajı seçin!",
     "continue": "Davam",
