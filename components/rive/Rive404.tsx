@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRive } from '@rive-app/react-canvas';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { useTranslations } from 'next-intl';
 
 const SRC = '/rive/broken-egg.riv';
@@ -12,13 +12,22 @@ export default function Rive404() {
   const t = useTranslations('lostPage');
   const [loaded, setLoaded] = useState(false);
   const { RiveComponent } = useRive(
-    { src: SRC, stateMachines: STATE_MACHINE, autoplay: true, onLoad: () => setLoaded(true) },
+    {
+      src: SRC,
+      stateMachines: STATE_MACHINE,
+      autoplay: true,
+      onLoad: () => setLoaded(true),
+      layout: new Layout({
+        fit: Fit.Cover,
+        alignment: Alignment.Center,
+      }),
+    },
     { shouldResizeCanvasToContainer: true }
   );
 
   return (
     <div className="flex flex-col items-center pt-0 pb-10 md:pb-14 px-4 w-full max-w-[500px] mx-auto -mt-1">
-      <div className="relative w-full max-w-[500px] aspect-[400/449] flex items-center justify-center overflow-hidden leading-none shrink-0 [&_canvas]:block [&_canvas]:align-bottom">
+      <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center overflow-hidden leading-none shrink-0 [&_canvas]:block [&_canvas]:object-cover">
         <RiveComponent
           className="w-full h-full"
           style={{ width: '100%', height: '100%', opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}
