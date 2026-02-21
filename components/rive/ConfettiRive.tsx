@@ -40,7 +40,7 @@ export default function ConfettiRive({ onComplete }: ConfettiRiveProps) {
       className="fixed inset-0 z-[9999] pointer-events-none flex items-center justify-center"
       aria-hidden
     >
-      <div className="absolute inset-0 w-full h-full" style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}>
+      <div className="absolute inset-0 w-full h-full" style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.1s' }}>
         <RiveComponent className="w-full h-full" style={{ width: '100%', height: '100%' }} />
       </div>
     </div>

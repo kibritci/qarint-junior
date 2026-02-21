@@ -1,30 +1,59 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
+import { useRive } from '@rive-app/react-canvas';
 
 const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';
+const MASCOT_SRC = '/rive/mascot.riv';
 
-/**
- * Mascot artık Rive kullanmıyor: sayfa geçişlerinde Rive cleanup "e.delete is not a function"
- * hatası veriyordu. Statik emoji ile hem hata giderildi hem görsel korundu.
- */
+function MascotAsset({ onError }: { onError: () => void }) {
+  const { rive, RiveComponent } = useRive(
+    {
+      src: MASCOT_SRC,
+      artboard: 'Artboard',
+      stateMachines: 'State Machine 1',
+      autoplay: true,
+      onLoadError: onError,
+    },
+    { shouldResizeCanvasToContainer: true }
+  );
+
+  if (rive === null) {
+    return (
+      <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl" aria-hidden>
+        🦁
+      </div>
+    );
+  }
+
+  return (
+    <RiveComponent
+      className="w-full h-full"
+      style={{ width: '100%', height: '100%' }}
+    />
+  );
+}
+
 export default function RiveMascot() {
   const pathname = usePathname();
   const t = useTranslations('home');
   const [bubbleOpen, setBubbleOpen] = useState(false);
+  const [useFallback, setUseFallback] = useState(false);
 
-  if (pathname === '/login' || pathname.startsWith('/auth')) return null;
-
+  const isAuth = pathname === '/login' || pathname.startsWith('/auth');
   const hideOnGames = pathname === '/games';
+  const handleMascotError = useCallback(() => setUseFallback(true), []);
 
   return (
     <div
-      className={`fixed bottom-0 left-0 z-30 flex flex-col items-start w-fit transition-opacity ${hideOnGames ? 'opacity-0 pointer-events-none' : ''}`}
+      className={`fixed bottom-0 left-0 z-30 flex flex-col items-start w-fit transition-opacity ${
+        isAuth ? 'opacity-0 pointer-events-none invisible' : ''
+      } ${hideOnGames ? 'opacity-0 pointer-events-none' : ''}`}
       style={{ touchAction: 'manipulation' }}
-      aria-hidden={hideOnGames}
-      onMouseEnter={() => setBubbleOpen(true)}
+      aria-hidden={isAuth || hideOnGames}
+      onMouseEnter={() => !hideOnGames && setBubbleOpen(true)}
       onMouseLeave={() => setBubbleOpen(false)}
     >
       <div
@@ -51,11 +80,15 @@ export default function RiveMascot() {
       </div>
 
       <div
-        className="w-28 h-28 md:w-32 md:h-32 flex items-center justify-center cursor-pointer select-none text-4xl md:text-5xl"
+        className="w-28 h-28 md:w-32 md:h-32 flex items-center justify-center cursor-pointer select-none text-4xl md:text-5xl overflow-hidden"
         onClick={() => setBubbleOpen((o) => !o)}
         aria-hidden
       >
-        🦁
+        {useFallback ? (
+          <span>🦁</span>
+        ) : (
+          <MascotAsset onError={handleMascotError} />
+        )}
       </div>
     </div>
   );

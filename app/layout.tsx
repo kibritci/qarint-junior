@@ -93,6 +93,9 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} className={nunito.variable} suppressHydrationWarning>
+      <head>
+        <link rel="preload" href="/rive/confetti-no-loop.riv" as="fetch" />
+      </head>
       <body className={nunito.className}>
         <ThemeProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
