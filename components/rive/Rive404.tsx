@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRive } from '@rive-app/react-canvas';
 import { useTranslations } from 'next-intl';
 
-const SRC = '/rive/404-sad.riv';
+const SRC = '/rive/broken-egg.riv';
 const STATE_MACHINE = 'State Machine 1';
 
 export default function Rive404() {

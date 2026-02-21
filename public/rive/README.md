@@ -7,7 +7,7 @@ Bu klasöre şu dosyaları ekleyin:
 | Dosya | Kullanım |
 |--------|----------|
 | `mascot.riv` | Sol alttaki karakter (State Machine 1; Follow, Hover, Unhover) |
-| `404-sad.riv` | 404 sayfası (State Machine 1, otomatik) |
+| `broken-egg.riv` | 404 / kayıp sayfa (State Machine 1, otomatik) |
 | `logo-loading.riv` | Sayfa yükleme animasyonu (döngü) |
 | `streak-fire.riv` | Ana sayfa seri ateşi (animation: "Streak Fire") |
 
