@@ -17,7 +17,7 @@ export default function Rive404() {
   );
 
   return (
-    <div className="flex flex-col items-center pt-0 pb-10 md:pb-14 px-4 w-full max-w-[770px] mx-auto">
+    <div className="flex flex-col items-center pt-0 pb-10 md:pb-14 px-4 w-full max-w-[500px] mx-auto">
       <div className="relative w-full max-w-[500px] aspect-square mb-0 flex items-center justify-center overflow-hidden">
         <RiveComponent
           className="w-full h-full object-cover"
