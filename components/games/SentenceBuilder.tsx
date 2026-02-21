@@ -61,10 +61,12 @@ export default function SentenceBuilder() {
   const t = useTranslations('games.sentenceBuilder');
 
   useEffect(() => {
-    if (isComplete && !hasCelebratedRef.current) {
+    if (!isComplete || hasCelebratedRef.current) return;
+    const tid = setTimeout(() => {
       hasCelebratedRef.current = true;
       confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
-    }
+    }, 350);
+    return () => clearTimeout(tid);
   }, [isComplete]);
 
   useEffect(() => {

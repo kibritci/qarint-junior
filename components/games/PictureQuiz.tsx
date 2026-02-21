@@ -48,10 +48,12 @@ export default function PictureQuiz() {
   const { addXp } = useGameStore();
 
   useEffect(() => {
-    if (phase === 'results' && !hasCelebratedRef.current) {
+    if (phase !== 'results' || hasCelebratedRef.current) return;
+    const tid = setTimeout(() => {
       hasCelebratedRef.current = true;
       confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
-    }
+    }, 350);
+    return () => clearTimeout(tid);
   }, [phase]);
 
   useEffect(() => {

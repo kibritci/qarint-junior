@@ -9,8 +9,8 @@ export default function LeaderboardConfetti() {
 
   useEffect(() => {
     if (hasFired.current) return;
-    hasFired.current = true;
     const tid = setTimeout(() => {
+      hasFired.current = true;
       confetti({ particleCount: 120, spread: 100, origin: { y: 0.35 } });
       setTimeout(() => {
         confetti({ particleCount: 80, spread: 80, origin: { x: 0.2, y: 0.4 } });

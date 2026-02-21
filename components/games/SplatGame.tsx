@@ -88,10 +88,12 @@ export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
   const { addXp } = useGameStore();
 
   useEffect(() => {
-    if (isGameOver && !hasCelebratedRef.current) {
+    if (!isGameOver || hasCelebratedRef.current) return;
+    const tid = setTimeout(() => {
       hasCelebratedRef.current = true;
       confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
-    }
+    }, 350);
+    return () => clearTimeout(tid);
   }, [isGameOver]);
 
   useEffect(() => {
