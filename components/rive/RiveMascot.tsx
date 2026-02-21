@@ -1,30 +1,39 @@
 'use client';
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useRive } from '@rive-app/react-canvas';
 
 const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';
 const MASCOT_SRC = '/rive/mascot.riv';
+const MASCOT_LOAD_GRACE_MS = 2500;
 
-function MascotAsset({ onError }: { onError: () => void }) {
+function MascotAsset({
+  onError,
+  minimal,
+}: {
+  onError: (err?: unknown) => void;
+  minimal?: boolean;
+}) {
   const [showFallback, setShowFallback] = useState(false);
   const { rive, RiveComponent } = useRive(
-    {
-      src: MASCOT_SRC,
-      artboard: 'Artboard',
-      stateMachines: 'State Machine 1',
-      autoplay: true,
-      onLoadError: onError,
-    },
+    minimal
+      ? { src: MASCOT_SRC, autoplay: true, onLoadError: onError }
+      : {
+          src: MASCOT_SRC,
+          artboard: 'Artboard',
+          stateMachines: 'State Machine 1',
+          autoplay: true,
+          onLoadError: onError,
+        },
     { shouldResizeCanvasToContainer: true }
   );
 
-  // Rive bazen ilk frame'de null kalıyor; kısa süre beklemeden emoji gösterme
+  // Rive bazen ilk frame'de null kalıyor; production'da ağ yavaş olabilir
   useEffect(() => {
     if (rive !== null) return;
-    const t = setTimeout(() => setShowFallback(true), 1200);
+    const t = setTimeout(() => setShowFallback(true), MASCOT_LOAD_GRACE_MS);
     return () => clearTimeout(t);
   }, [rive]);
 
@@ -57,10 +66,22 @@ export default function RiveMascot() {
   const t = useTranslations('home');
   const [bubbleOpen, setBubbleOpen] = useState(false);
   const [useFallback, setUseFallback] = useState(false);
+  const [tryMinimal, setTryMinimal] = useState(false);
+  const triedMinimalRef = useRef(false);
 
   const isAuth = pathname === '/login' || pathname.startsWith('/auth');
   const hideOnGames = pathname === '/games';
-  const handleMascotError = useCallback(() => setUseFallback(true), []);
+  const handleMascotError = useCallback((err?: unknown) => {
+    if (typeof window !== 'undefined' && err) {
+      console.warn('[RiveMascot] Load error:', err);
+    }
+    if (triedMinimalRef.current) {
+      setUseFallback(true);
+    } else {
+      triedMinimalRef.current = true;
+      setTryMinimal(true);
+    }
+  }, []);
 
   return (
     <div
@@ -103,7 +124,7 @@ export default function RiveMascot() {
         {useFallback ? (
           <span>🦁</span>
         ) : (
-          <MascotAsset onError={handleMascotError} />
+          <MascotAsset onError={handleMascotError} minimal={tryMinimal} />
         )}
       </div>
     </div>

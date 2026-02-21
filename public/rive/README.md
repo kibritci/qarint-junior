@@ -6,7 +6,7 @@ Bu klasöre şu dosyaları ekleyin:
 
 | Dosya | Kullanım |
 |--------|----------|
-| `mascot.riv` | Sol alttaki karakter (State Machine 1; Follow, Hover, Unhover) |
+| `mascot.riv` | Sol alttaki feedback maskotu (State Machine 1; Follow, Hover, Unhover). Feedback modülündeki dosyayı buraya kopyalayın. |
 | `broken-egg.riv` | 404 / kayıp sayfa (State Machine 1, otomatik) |
 | `logo-loading.riv` | Sayfa yükleme animasyonu (döngü) |
 | `streak-fire.riv` | Ana sayfa seri ateşi (animation: "Streak Fire") |

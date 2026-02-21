@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
 import { useGameStore } from '@/store/gameStore';
@@ -97,6 +97,15 @@ const STORIES: Story[] = [
   },
 ];
 
+function shuffleOptions<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 const WRONG_REACTIONS: Record<string, { emoji: string; text: string }> = {
   eat: { emoji: '🦷', text: 'He tried to eat the bridge and broke his teeth!' },
   pencil: { emoji: '✏️', text: 'A pencil can\'t build bridges... silly!' },
@@ -132,9 +141,15 @@ export default function MadLibsGame() {
   const [isAllComplete, setIsAllComplete] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
 
   const { addXp } = useGameStore();
   const story = STORIES[currentStory];
+
+  useEffect(() => {
+    const opts = story?.blanks[currentBlank]?.options ?? [];
+    setShuffledOptions(shuffleOptions(opts));
+  }, [currentStory, currentBlank, story]);
 
   const initStory = (index: number) => {
     setCurrentStory(index);
@@ -280,7 +295,7 @@ export default function MadLibsGame() {
         <div className="mb-4 md:mb-6">
           <p className="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 text-center">{t('pickRightWord')}</p>
           <div className="flex flex-wrap gap-2 md:gap-3 justify-center">
-            {story.blanks[currentBlank]?.options.map((option) => (
+            {shuffledOptions.map((option) => (
               <button
                 key={option}
                 onClick={() => handleOptionClick(option)}
