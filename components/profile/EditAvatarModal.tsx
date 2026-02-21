@@ -2,6 +2,7 @@
 
 import { useState, useRef } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { AVATAR_EMOJIS } from '@/lib/constants/avatar';
 import { updateProfile } from '@/actions/gamification';
@@ -9,23 +10,12 @@ import { createClient } from '@/lib/supabase/client';
 
 const MAX_AVATAR_BYTES = 500 * 1024; // 500 KB
 
-function getAccentBg(colorId: string | null): string {
-  if (!colorId) return 'bg-primary-100';
-  const map: Record<string, string> = {
-    primary: 'bg-primary-100', rose: 'bg-rose-100', amber: 'bg-amber-100',
-    emerald: 'bg-emerald-100', sky: 'bg-sky-100', violet: 'bg-violet-100',
-    orange: 'bg-orange-100', pink: 'bg-pink-100',
-  };
-  return map[colorId] ?? 'bg-primary-100';
-}
-
 interface EditAvatarModalProps {
   open: boolean;
   onClose: () => void;
   onSaved: () => void;
   currentAvatarUrl: string | null;
   currentAvatarEmoji: string | null;
-  accentColor: string | null;
   userId: string;
 }
 
@@ -35,9 +25,9 @@ export default function EditAvatarModal({
   onSaved,
   currentAvatarUrl,
   currentAvatarEmoji,
-  accentColor,
   userId,
 }: EditAvatarModalProps) {
+  const t = useTranslations('profile');
   const [tab, setTab] = useState<'emoji' | 'photo'>('emoji');
   const [selectedEmoji, setSelectedEmoji] = useState<string | null>(currentAvatarEmoji ?? '🦁');
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -57,11 +47,11 @@ export default function EditAvatarModal({
       return;
     }
     if (!file.type.startsWith('image/')) {
-      setError('Please choose an image file.');
+      setError(t('pleaseChooseImage'));
       return;
     }
     if (file.size > MAX_AVATAR_BYTES) {
-      setError(`Image must be under ${MAX_AVATAR_BYTES / 1024} KB.`);
+      setError(t('imageTooBig', { size: MAX_AVATAR_BYTES / 1024 }));
       return;
     }
     setPhotoFile(file);
@@ -95,7 +85,7 @@ export default function EditAvatarModal({
       onSaved();
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to save.');
+      setError(err instanceof Error ? err.message : t('failedToSave'));
     } finally {
       setSaving(false);
     }
@@ -112,7 +102,7 @@ export default function EditAvatarModal({
     >
       <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between p-4 border-b border-gray-100">
-          <h3 className="text-lg font-display font-bold text-gray-900">Edit avatar</h3>
+          <h3 className="text-lg font-display font-bold text-gray-900">{t('editAvatar')}</h3>
           <button type="button" onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100">
             <XMarkIcon className="w-5 h-5 text-gray-500" />
           </button>
@@ -125,14 +115,14 @@ export default function EditAvatarModal({
               onClick={() => setTab('emoji')}
               className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${tab === 'emoji' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'}`}
             >
-              Emoji
+              {t('emoji')}
             </button>
             <button
               type="button"
               onClick={() => setTab('photo')}
               className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${tab === 'photo' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'}`}
             >
-              Photo
+              {t('photo')}
             </button>
           </div>
 
@@ -171,10 +161,10 @@ export default function EditAvatarModal({
                     <Image src={photoPreview} alt="Preview" fill className="object-cover" unoptimized />
                   </div>
                 ) : (
-                  'Choose a photo'
+                  t('choosePhoto')
                 )}
               </button>
-              <p className="text-[11px] text-gray-400 mt-2 text-center">Max 500 KB</p>
+              <p className="text-[11px] text-gray-400 mt-2 text-center">{t('maxSize', { size: 500 })}</p>
             </div>
           )}
 
@@ -183,7 +173,7 @@ export default function EditAvatarModal({
 
         <div className="p-4 border-t border-gray-100 flex gap-2">
           <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50">
-            Cancel
+            {t('cancel')}
           </button>
           <button
             type="button"
@@ -191,7 +181,7 @@ export default function EditAvatarModal({
             disabled={saving || (tab === 'photo' && !photoFile && !currentAvatarUrl)}
             className="flex-1 py-2.5 rounded-xl btn-primary text-sm disabled:opacity-50"
           >
-            {saving ? 'Saving...' : 'Save'}
+            {saving ? t('saving') : t('save')}
           </button>
         </div>
       </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
@@ -43,6 +44,7 @@ export default function PictureQuiz() {
   const [totalTime, setTotalTime] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
+  const t = useTranslations('games.pictureQuiz');
   const { addXp } = useGameStore();
 
   const currentQuestion = questions[currentIndex];
@@ -146,18 +148,18 @@ export default function PictureQuiz() {
   // Start Screen
   if (phase === 'idle') {
     return (
-      <GameWrapper title="Picture Quiz" progress={0}>
+      <GameWrapper title={t('title')} progress={0}>
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4">
           <div className="text-5xl md:text-6xl mb-4 md:mb-6 animate-bounce-in">🖼️</div>
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 md:mb-3">Picture Quiz</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 md:mb-3">{t('title')}</h2>
           <p className="text-sm md:text-base text-gray-500 mb-2 max-w-md">
-            Look at the picture and pick the correct English word! You have {TIME_PER_QUESTION} seconds for each question.
+            {t('tapPlayToStart')}
           </p>
           <p className="text-xs md:text-sm text-gray-400 mb-6 md:mb-8">
             {QUESTIONS_PER_ROUND} questions per round &middot; Answer fast for bonus XP!
           </p>
           <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
-            Start Quiz
+            {t('play')}
           </button>
         </div>
       </GameWrapper>
@@ -168,10 +170,10 @@ export default function PictureQuiz() {
   if (phase === 'results') {
     const accuracy = Math.round((correctCount / questions.length) * 100);
     const emoji = accuracy >= 80 ? '🏆' : accuracy >= 50 ? '👏' : '💪';
-    const message = accuracy >= 80 ? 'Amazing!' : accuracy >= 50 ? 'Good job!' : 'Keep practicing!';
+    const message = accuracy >= 80 ? t('amazing') : accuracy >= 50 ? t('goodJob') : t('keepPracticing');
 
     return (
-      <GameWrapper title="Picture Quiz" progress={100}>
+      <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4 animate-bounce-in">
           <div className="text-5xl md:text-6xl mb-3 md:mb-4">{emoji}</div>
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-4 md:mb-6">{message}</h2>
@@ -179,22 +181,22 @@ export default function PictureQuiz() {
           <div className="grid grid-cols-3 gap-3 md:gap-5 mb-6 md:mb-8 w-full max-w-sm">
             <div className="bg-green-50 rounded-xl p-3 md:p-4">
               <p className="text-2xl md:text-3xl font-display font-black text-green-600">{correctCount}</p>
-              <p className="text-[10px] md:text-xs text-green-500 font-medium">Correct</p>
+              <p className="text-[10px] md:text-xs text-green-500 font-medium">{t('correct')}</p>
             </div>
             <div className="bg-primary-50 rounded-xl p-3 md:p-4">
               <p className="text-2xl md:text-3xl font-display font-black text-primary">{score}</p>
-              <p className="text-[10px] md:text-xs text-primary-400 font-medium">XP Earned</p>
+              <p className="text-[10px] md:text-xs text-primary-400 font-medium">{t('xpEarned')}</p>
             </div>
             <div className="bg-blue-50 rounded-xl p-3 md:p-4">
               <p className="text-2xl md:text-3xl font-display font-black text-blue-600">{accuracy}%</p>
-              <p className="text-[10px] md:text-xs text-blue-500 font-medium">Accuracy</p>
+              <p className="text-[10px] md:text-xs text-blue-500 font-medium">{t('accuracy')}</p>
             </div>
           </div>
 
-          <p className="text-sm text-gray-400 mb-6">Completed in {totalTime}s</p>
+          <p className="text-sm text-gray-400 mb-6">{t('completedIn', { seconds: totalTime })}</p>
 
           <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
-            Play Again
+            {t('playAgain')}
           </button>
         </div>
       </GameWrapper>
@@ -208,7 +210,7 @@ export default function PictureQuiz() {
   const timerColor = timeLeft <= 2 ? 'bg-red-500' : timeLeft <= 4 ? 'bg-amber-500' : 'bg-green-500';
 
   return (
-    <GameWrapper title="Picture Quiz" progress={progress}>
+    <GameWrapper title={t('title')} progress={progress}>
       {/* Question counter */}
       <div className="flex items-center justify-between mb-3 md:mb-4">
         <h2 className="text-lg md:text-xl font-display font-bold text-gray-900">
@@ -287,13 +289,13 @@ export default function PictureQuiz() {
           {isCorrectAnswer ? (
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full border border-green-200">
               <span className="text-green-600 font-display font-bold text-sm">
-                ✓ Correct! +{timeLeft >= 4 ? XP_CORRECT + XP_FAST_BONUS : XP_CORRECT} XP
+                ✓ {t('correctFeedback', { xp: timeLeft >= 4 ? XP_CORRECT + XP_FAST_BONUS : XP_CORRECT })}
               </span>
             </div>
           ) : (
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-orange-50 rounded-full border border-orange-200">
               <span className="text-orange-600 font-display font-bold text-sm">
-                {selectedAnswer === '__timeout__' ? '⏱ Time\'s up!' : '✗ Not quite!'} The answer is: {currentQuestion.correct}
+                {selectedAnswer === '__timeout__' ? `⏱ ${t('timesUp')}` : `✗ ${t('notQuite', { answer: currentQuestion.correct })}`}
               </span>
             </div>
           )}

@@ -2,23 +2,24 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { Avatar } from '@/components/ui';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 
 const AVATARS = [
-  { emoji: '🦁', label: 'Lion' },
-  { emoji: '🚀', label: 'Astronaut' },
-  { emoji: '🤖', label: 'Robot' },
-  { emoji: '🦊', label: 'Fox' },
-  { emoji: '🐱', label: 'Cat' },
-  { emoji: '🦋', label: 'Butterfly' },
-  { emoji: '🐻', label: 'Bear' },
-  { emoji: '🦉', label: 'Owl' },
-  { emoji: '🐬', label: 'Dolphin' },
-  { emoji: '🦄', label: 'Unicorn' },
-  { emoji: '🌟', label: 'Star' },
-  { emoji: '🎈', label: 'Balloon' },
+  { emoji: '🦁', labelKey: 'avatarLabels.lion' as const },
+  { emoji: '🚀', labelKey: 'avatarLabels.astronaut' as const },
+  { emoji: '🤖', labelKey: 'avatarLabels.robot' as const },
+  { emoji: '🦊', labelKey: 'avatarLabels.fox' as const },
+  { emoji: '🐱', labelKey: 'avatarLabels.cat' as const },
+  { emoji: '🦋', labelKey: 'avatarLabels.butterfly' as const },
+  { emoji: '🐻', labelKey: 'avatarLabels.bear' as const },
+  { emoji: '🦉', labelKey: 'avatarLabels.owl' as const },
+  { emoji: '🐬', labelKey: 'avatarLabels.dolphin' as const },
+  { emoji: '🦄', labelKey: 'avatarLabels.unicorn' as const },
+  { emoji: '🌟', labelKey: 'avatarLabels.star' as const },
+  { emoji: '🎈', labelKey: 'avatarLabels.balloon' as const },
 ];
 
 function speakText(text: string) {
@@ -32,6 +33,9 @@ function speakText(text: string) {
 }
 
 export default function OnboardingFlow() {
+  const t = useTranslations('onboarding');
+  const tGames = useTranslations('games');
+  const tCommon = useTranslations('common');
   const [step, setStep] = useState(0);
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
   const router = useRouter();
@@ -71,14 +75,14 @@ export default function OnboardingFlow() {
       <div className="min-h-[80vh] flex flex-col items-center justify-center text-center p-8 animate-slide-up">
         <div className="text-8xl mb-6 animate-bounce-in">🎉</div>
         <h1 className="text-4xl font-display font-black text-gray-900 mb-3">
-          Welcome to<br />
+          {t('welcomeTitle')}<br />
           <span className="text-primary">Qarint Junior!</span>
         </h1>
         <p className="text-lg text-gray-500 mb-8 max-w-md">
-          Learn English through fun games, earn points, and become a champion!
+          {t('welcomeSubtitle')}
         </p>
         <button onClick={handleStart} className="btn-primary text-lg px-10 py-4 animate-pulse-glow">
-          Let&apos;s Go!
+          {t('letsGo')}
         </button>
       </div>
     );
@@ -88,8 +92,8 @@ export default function OnboardingFlow() {
   if (step === 1) {
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-slide-up">
-        <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Choose Your Avatar</h2>
-        <p className="text-gray-500 mb-8">Pick a character that represents you!</p>
+        <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('chooseAvatar')}</h2>
+        <p className="text-gray-500 mb-8">{t('pickCharacter')}</p>
 
         <div className="grid grid-cols-4 gap-4 mb-8">
           {AVATARS.map((avatar, i) => (
@@ -104,7 +108,7 @@ export default function OnboardingFlow() {
                 selected={selectedAvatar === avatar.emoji}
                 onClick={() => handleAvatarSelect(avatar.emoji)}
               />
-              <span className="text-xs text-gray-400">{avatar.label}</span>
+              <span className="text-xs text-gray-400">{t(avatar.labelKey)}</span>
             </div>
           ))}
         </div>
@@ -114,7 +118,7 @@ export default function OnboardingFlow() {
           disabled={!selectedAvatar}
           className="btn-primary text-lg px-10 py-4 disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          Continue
+          {t('continue')}
         </button>
       </div>
     );
@@ -122,44 +126,44 @@ export default function OnboardingFlow() {
 
   // Step 2: Tutorial
   if (step === 2) {
+    const tutorialGames = [
+      { icon: '🧩', titleKey: 'titles.memoryMatch', descKey: 'memoryMatchDesc' as const },
+      { icon: '🎯', titleKey: 'titles.splatWordHunt', descKey: 'splatWordHuntDesc' as const },
+      { icon: '✍️', titleKey: 'titles.sentenceBuilder', descKey: 'sentenceBuilderDesc' as const },
+    ];
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-slide-up">
         <div className="text-6xl mb-6">{selectedAvatar}</div>
-        <h2 className="text-3xl font-display font-bold text-gray-900 mb-3">How to Play</h2>
+        <h2 className="text-3xl font-display font-bold text-gray-900 mb-3">{t('howToPlay')}</h2>
         <p className="text-gray-500 mb-8 max-w-md text-center">
-          Tap on &quot;Games&quot; to find fun mini-games. Match words, build sentences, and earn XP!
+          {t('howToPlayDesc')}
         </p>
 
         <div className="w-full max-w-md space-y-4 mb-8">
-          {[
-            { icon: '🧩', title: 'Memory Match', desc: 'Match English words with pictures' },
-            { icon: '🎯', title: 'Splat Word Hunt', desc: 'Pop the correct word bubbles' },
-            { icon: '✍️', title: 'Sentence Builder', desc: 'Put words in the right order' },
-          ].map((game, i) => (
+          {tutorialGames.map((game, i) => (
             <div
-              key={game.title}
+              key={game.descKey}
               className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-card animate-slide-up"
               style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
             >
               <div className="text-2xl">{game.icon}</div>
               <div>
-                <p className="font-display font-bold text-gray-900">{game.title}</p>
-                <p className="text-sm text-gray-400">{game.desc}</p>
+                <p className="font-display font-bold text-gray-900">{tGames(game.titleKey)}</p>
+                <p className="text-sm text-gray-400">{t(game.descKey)}</p>
               </div>
             </div>
           ))}
         </div>
 
-        {/* Animated hand pointer */}
         <div className="relative mb-6">
           <div className="w-48 h-14 bg-primary-50 rounded-xl border-2 border-primary-200 flex items-center justify-center">
-            <span className="font-display font-bold text-primary">Games</span>
+            <span className="font-display font-bold text-primary">{tCommon('nav.games')}</span>
           </div>
           <div className="absolute -bottom-4 right-4 text-2xl animate-bounce">👆</div>
         </div>
 
         <button onClick={handleTutorialDone} className="btn-primary text-lg px-10 py-4">
-          I Got It!
+          {t('iGotIt')}
         </button>
       </div>
     );
@@ -169,24 +173,24 @@ export default function OnboardingFlow() {
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-bounce-in">
       <div className="text-8xl mb-4">🏆</div>
-      <h2 className="text-3xl font-display font-black text-gray-900 mb-2">First Achievement!</h2>
-      <p className="text-gray-500 mb-6">You earned your first rewards!</p>
+      <h2 className="text-3xl font-display font-black text-gray-900 mb-2">{t('firstAchievement')}</h2>
+      <p className="text-gray-500 mb-6">{t('firstRewards')}</p>
 
       <div className="flex items-center gap-6 mb-8">
         <div className="flex flex-col items-center p-4 bg-orange-50 rounded-xl border border-orange-200 animate-pop-in">
           <span className="text-3xl mb-1">🔥</span>
           <span className="text-2xl font-display font-black text-orange-600">+10</span>
-          <span className="text-xs text-orange-500 font-semibold">XP Earned</span>
+          <span className="text-xs text-orange-500 font-semibold">{t('xpEarned')}</span>
         </div>
         <div className="flex flex-col items-center p-4 bg-blue-50 rounded-xl border border-blue-200 animate-pop-in" style={{ animationDelay: '200ms' }}>
           <span className="text-3xl mb-1">⚡</span>
           <span className="text-2xl font-display font-black text-blue-600">1</span>
-          <span className="text-xs text-blue-500 font-semibold">Day Streak</span>
+          <span className="text-xs text-blue-500 font-semibold">{t('dayStreak')}</span>
         </div>
       </div>
 
       <button onClick={handleFinish} className="btn-primary text-lg px-10 py-4">
-        Start Playing!
+        {t('startPlaying')}
       </button>
     </div>
   );

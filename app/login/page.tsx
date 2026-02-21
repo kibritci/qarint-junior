@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
+import { useTranslations } from 'next-intl';
 import { createClient } from '@/lib/supabase/client';
 
 type Mode = 'login' | 'register';
@@ -21,8 +22,8 @@ declare global {
   }
 }
 
-function getPasswordStrength(pw: string): { level: 0 | 1 | 2 | 3; label: string; color: string } {
-  if (!pw) return { level: 0, label: '', color: '' };
+function getPasswordStrength(pw: string): { level: 0 | 1 | 2 | 3; labelKey: 'weak' | 'medium' | 'strong'; color: string } {
+  if (!pw) return { level: 0, labelKey: 'weak', color: '' };
   let score = 0;
   if (pw.length >= 6) score++;
   if (pw.length >= 10) score++;
@@ -30,12 +31,13 @@ function getPasswordStrength(pw: string): { level: 0 | 1 | 2 | 3; label: string;
   if (/\d/.test(pw)) score++;
   if (/[^A-Za-z0-9]/.test(pw)) score++;
 
-  if (score <= 1) return { level: 1, label: 'Weak', color: 'bg-red-400' };
-  if (score <= 3) return { level: 2, label: 'Medium', color: 'bg-amber-400' };
-  return { level: 3, label: 'Strong', color: 'bg-green-500' };
+  if (score <= 1) return { level: 1, labelKey: 'weak', color: 'bg-red-400' };
+  if (score <= 3) return { level: 2, labelKey: 'medium', color: 'bg-amber-400' };
+  return { level: 3, labelKey: 'strong', color: 'bg-green-500' };
 }
 
 export default function LoginPage() {
+  const t = useTranslations('login');
   const [mode, setMode] = useState<Mode>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -103,7 +105,7 @@ export default function LoginPage() {
     setFailedAttempts(next);
     if (next >= MAX_ATTEMPTS) {
       setLockoutUntil(Date.now() + LOCKOUT_SECONDS * 1000);
-      setError(`Too many attempts. Please wait ${LOCKOUT_SECONDS} seconds.`);
+      setError(t('tooManyAttempts'));
     }
   }, [failedAttempts]);
 
@@ -112,7 +114,7 @@ export default function LoginPage() {
     if (isLockedOut) return;
 
     if (hasTurnstile && !captchaToken) {
-      setError('Please complete the security check.');
+      setError(t('completeSecurityCheck'));
       return;
     }
 
@@ -133,7 +135,7 @@ export default function LoginPage() {
           },
         });
         if (error) throw error;
-        setSuccess('Account created! Check your email to verify, then log in.');
+        setSuccess(t('accountCreated'));
         setMode('login');
         setPassword('');
       } else {
@@ -180,7 +182,7 @@ export default function LoginPage() {
             className="mx-auto mb-3"
             priority
           />
-          <p className="text-sm text-gray-400">Learn English through fun games</p>
+          <p className="text-sm text-gray-400">{t('tagline')}</p>
         </div>
 
         {/* Card */}
@@ -195,7 +197,7 @@ export default function LoginPage() {
                   : 'text-gray-400 hover:text-gray-600'
               }`}
             >
-              Log In
+              {t('logIn')}
             </button>
             <button
               onClick={() => { setMode('register'); setError(null); setSuccess(null); setPassword(''); resetCaptcha(); }}
@@ -205,16 +207,16 @@ export default function LoginPage() {
                   : 'text-gray-400 hover:text-gray-600'
               }`}
             >
-              Sign Up
+              {t('signUp')}
             </button>
           </div>
 
           {/* Lockout Warning */}
           {isLockedOut && (
             <div className="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-xl text-center">
-              <p className="text-sm font-bold text-amber-700">Account temporarily locked</p>
+              <p className="text-sm font-bold text-amber-700">{t('accountLocked')}</p>
               <p className="text-xs text-amber-600 mt-1">
-                Try again in <span className="font-mono font-bold">{lockoutCountdown}s</span>
+                {t('tryAgainIn', { seconds: lockoutCountdown })}
               </p>
             </div>
           )}
@@ -225,7 +227,7 @@ export default function LoginPage() {
               {error}
               {failedAttempts > 0 && failedAttempts < MAX_ATTEMPTS && mode === 'login' && (
                 <p className="text-xs text-red-400 mt-1">
-                  {MAX_ATTEMPTS - failedAttempts} attempts remaining
+                  {t('attemptsRemaining', { count: MAX_ATTEMPTS - failedAttempts })}
                 </p>
               )}
             </div>
@@ -243,13 +245,13 @@ export default function LoginPage() {
             {mode === 'register' && (
               <div>
                 <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-                  Name
+                  {t('name')}
                 </label>
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="Your name"
+                  placeholder={t('namePlaceholder')}
                   className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm
                              placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40
                              transition-all duration-200"
@@ -259,13 +261,13 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-                Email
+                {t('email')}
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="hello@example.com"
+                placeholder={t('emailPlaceholder')}
                 required
                 autoComplete="email"
                 className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm
@@ -276,13 +278,13 @@ export default function LoginPage() {
 
             <div>
               <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
-                Password
+                {t('password')}
               </label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t('passwordPlaceholder')}
                 required
                 minLength={6}
                 autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
@@ -309,8 +311,8 @@ export default function LoginPage() {
                     : pwStrength.level === 2 ? 'text-amber-500'
                     : 'text-green-600'
                   }`}>
-                    {pwStrength.label}
-                    {pwStrength.level === 1 && ' — add numbers, uppercase or symbols'}
+                    {t(pwStrength.labelKey)}
+                    {pwStrength.level === 1 && t('addNumbersUppercase')}
                   </p>
                 </div>
               )}
@@ -327,12 +329,12 @@ export default function LoginPage() {
               className="w-full btn-primary py-3.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading
-                ? 'Please wait...'
+                ? t('pleaseWait')
                 : isLockedOut
-                  ? `Locked (${lockoutCountdown}s)`
+                  ? t('locked', { seconds: lockoutCountdown })
                   : mode === 'login'
-                    ? 'Log In'
-                    : 'Create Account'
+                    ? t('logIn')
+                    : t('createAccount')
               }
             </button>
           </form>
@@ -340,7 +342,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <p className="text-center text-xs text-gray-400 mt-6">
-          Safe and fun English learning for children
+          {t('footer')}
         </p>
       </div>
     </div>

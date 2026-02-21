@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   HomeIcon,
   PuzzlePieceIcon,
@@ -16,43 +17,29 @@ import {
 import { BoltIcon, FireIcon } from '@heroicons/react/24/solid';
 import { createClient } from '@/lib/supabase/client';
 import { getUserGamification } from '@/actions/gamification';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 const mainNavItems = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Games', href: '/games', icon: PuzzlePieceIcon },
-  { name: 'Leaderboard', href: '/leaderboard', icon: TrophyIcon },
+  { nameKey: 'nav.home', href: '/', icon: HomeIcon },
+  { nameKey: 'nav.games', href: '/games', icon: PuzzlePieceIcon },
+  { nameKey: 'nav.leaderboard', href: '/leaderboard', icon: TrophyIcon },
 ];
 
 const bottomNavItems = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Games', href: '/games', icon: PuzzlePieceIcon },
-  { name: 'Leaderboard', href: '/leaderboard', icon: TrophyIcon },
-  { name: 'Profile', href: '/profile', icon: UserCircleIcon },
+  { nameKey: 'nav.home', href: '/', icon: HomeIcon },
+  { nameKey: 'nav.games', href: '/games', icon: PuzzlePieceIcon },
+  { nameKey: 'nav.leaderboard', href: '/leaderboard', icon: TrophyIcon },
+  { nameKey: 'nav.profile', href: '/profile', icon: UserCircleIcon },
 ];
-
-function getAccentBg(colorId: string | null): string {
-  if (!colorId) return 'bg-primary-100';
-  const map: Record<string, string> = {
-    primary: 'bg-primary-100',
-    rose: 'bg-rose-100',
-    amber: 'bg-amber-100',
-    emerald: 'bg-emerald-100',
-    sky: 'bg-sky-100',
-    violet: 'bg-violet-100',
-    orange: 'bg-orange-100',
-    pink: 'bg-pink-100',
-  };
-  return map[colorId] ?? 'bg-primary-100';
-}
 
 export default function Header() {
   const pathname = usePathname();
+  const t = useTranslations('common');
   const [profileOpen, setProfileOpen] = useState(false);
   const [userName, setUserName] = useState<string>('');
   const [userEmail, setUserEmail] = useState<string>('');
   const [avatarEmoji, setAvatarEmoji] = useState<string>('🦁');
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
-  const [accentColor, setAccentColor] = useState<string | null>(null);
   const [totalXp, setTotalXp] = useState(0);
   const [currentStreak, setCurrentStreak] = useState(0);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -70,7 +57,7 @@ export default function Header() {
       if (!user) return;
       setUserEmail(user.email ?? '');
       setUserName(
-        user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? 'Student'
+        user.user_metadata?.display_name ?? user.email?.split('@')[0] ?? t('fallbackStudent')
       );
       const { data } = await getUserGamification();
       if (data) {
@@ -79,7 +66,6 @@ export default function Header() {
         if (data.display_name) setUserName(data.display_name);
         if (data.avatar_emoji) setAvatarEmoji(data.avatar_emoji);
         if (data.avatar_svg_url) setAvatarUrl(data.avatar_svg_url);
-        if (data.accent_color) setAccentColor(data.accent_color);
       }
     };
     load();
@@ -108,10 +94,10 @@ export default function Header() {
       <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100 safe-area-top">
         <div className="flex items-center justify-between h-14 md:h-16 px-4 md:px-6">
           {/* Logo */}
-          <Link href="/" className="flex items-center shrink-0" aria-label="Qarint Junior Home">
+          <Link href="/" className="flex items-center shrink-0" aria-label={t('ariaHome')}>
             <Image
               src="/logo-qarint.svg"
-              alt="Qarint Junior"
+              alt={t('altLogo')}
               width={110}
               height={32}
               className="h-8 w-auto md:h-9"
@@ -126,20 +112,21 @@ export default function Header() {
               const active = isActive(item.href);
               return (
                 <Link
-                  key={item.name}
+                  key={item.nameKey}
                   href={item.href}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors
                     ${active ? 'bg-primary-50 text-primary' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`}
                 >
                   <Icon className="w-4 h-4" />
-                  {item.name}
+                  {t(item.nameKey)}
                 </Link>
               );
             })}
           </nav>
 
-          {/* Right: Stats + Profile */}
+          {/* Right: Language + Stats + Profile */}
           <div className="flex items-center gap-2 md:gap-4">
+            <LanguageSwitcher />
             {/* XP & Streak - desktop */}
             <div className="hidden sm:flex items-center gap-2">
               <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-blue-50 rounded-full">
@@ -161,7 +148,7 @@ export default function Header() {
                 aria-expanded={profileOpen}
                 aria-haspopup="true"
               >
-                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-lg shrink-0 overflow-hidden ${!avatarUrl ? getAccentBg(accentColor) : ''}`}>
+                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-lg shrink-0 overflow-hidden ${!avatarUrl ? 'bg-gray-100' : ''}`}>
                   {avatarUrl ? (
                     <Image src={avatarUrl} alt="" width={36} height={36} className="w-full h-full object-cover" unoptimized />
                   ) : (
@@ -169,7 +156,7 @@ export default function Header() {
                   )}
                 </div>
                 <span className="hidden md:block text-sm font-semibold text-gray-900 truncate max-w-[120px]">
-                  {userName || 'Profile'}
+                  {userName || t('nav.profile')}
                 </span>
                 <ChevronDownIcon
                   className={`w-4 h-4 text-gray-400 shrink-0 transition-transform ${profileOpen ? 'rotate-180' : ''}`}
@@ -182,7 +169,7 @@ export default function Header() {
                   role="menu"
                 >
                   <div className="px-4 py-3 border-b border-gray-100">
-                    <p className="text-sm font-semibold text-gray-900 truncate">{userName || 'Student'}</p>
+                    <p className="text-sm font-semibold text-gray-900 truncate">{userName || t('fallbackStudent')}</p>
                     <p className="text-xs text-gray-500 truncate">{userEmail}</p>
                   </div>
                   <Link
@@ -192,7 +179,7 @@ export default function Header() {
                     role="menuitem"
                   >
                     <UserCircleIcon className="w-5 h-5 text-gray-400" />
-                    Profile & settings
+                    {t('profileMenu.profileSettings')}
                   </Link>
                   <Link
                     href="/profile#password"
@@ -201,7 +188,7 @@ export default function Header() {
                     role="menuitem"
                   >
                     <KeyIcon className="w-5 h-5 text-gray-400" />
-                    Change password
+                    {t('profileMenu.changePassword')}
                   </Link>
                   <div className="border-t border-gray-100 my-1" />
                   <button
@@ -211,7 +198,7 @@ export default function Header() {
                     role="menuitem"
                   >
                     <ArrowRightStartOnRectangleIcon className="w-5 h-5 text-red-400" />
-                    Sign out
+                    {t('profileMenu.signOut')}
                   </button>
                 </div>
               )}
@@ -231,13 +218,13 @@ export default function Header() {
             const active = isActive(item.href);
             return (
               <Link
-                key={item.name}
+                key={item.nameKey}
                 href={item.href}
                 className={`flex flex-col items-center gap-0.5 px-3 py-1 rounded-lg min-w-[64px] transition-colors
                   ${active ? 'text-primary' : 'text-gray-400'}`}
               >
                 <Icon className="w-6 h-6" />
-                <span className="text-[10px] font-semibold">{item.name}</span>
+                <span className="text-[10px] font-semibold">{t(item.nameKey)}</span>
               </Link>
             );
           })}

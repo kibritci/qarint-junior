@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
@@ -49,6 +50,7 @@ function speakWord(word: string) {
 }
 
 export default function SplatGame() {
+  const t = useTranslations('games.splatWordHunt');
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -166,7 +168,7 @@ export default function SplatGame() {
 
   if (!isPlaying && !isGameOver) {
     return (
-      <GameWrapper title="Splat Word Hunt" progress={0}>
+      <GameWrapper title={t('title')} progress={0}>
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4">
           <div className="text-5xl md:text-6xl mb-4 md:mb-6 animate-bounce-in">🎯</div>
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 md:mb-3">Splat Word Hunt</h2>
@@ -175,7 +177,7 @@ export default function SplatGame() {
           </p>
           <p className="text-xs md:text-sm text-gray-400 mb-6 md:mb-8">60 seconds - no point loss for wrong taps</p>
           <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
-            Start Game
+            {t('play')}
           </button>
         </div>
       </GameWrapper>
@@ -184,14 +186,14 @@ export default function SplatGame() {
 
   if (isGameOver) {
     return (
-      <GameWrapper title="Splat Word Hunt" progress={100}>
+      <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Time&apos;s Up!</h2>
+          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('timesUp')}</h2>
           <p className="text-5xl font-display font-black text-primary mb-2">{score}</p>
-          <p className="text-gray-500 mb-8">points earned</p>
+          <p className="text-gray-500 mb-8">{t('pointsEarned')}</p>
           <button onClick={startGame} className="btn-primary text-lg px-8 py-4">
-            Play Again
+            {t('playAgain')}
           </button>
         </div>
       </GameWrapper>
@@ -199,22 +201,21 @@ export default function SplatGame() {
   }
 
   return (
-    <GameWrapper title="Splat Word Hunt" progress={progress}>
-      {/* Category + Timer + Score */}
+    <GameWrapper title={t('title')} progress={progress}>
       <div className="flex items-center justify-between mb-3 md:mb-4">
         <div className="min-w-0">
-          <p className="text-xs md:text-sm text-gray-400">Find all</p>
+          <p className="text-xs md:text-sm text-gray-400">{t('findAll')}</p>
           <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{category.name}</h2>
         </div>
         <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           <div className="text-center">
             <p className="text-xl md:text-2xl font-display font-bold text-primary">{timeLeft}s</p>
-            <p className="text-[10px] md:text-xs text-gray-400">Time</p>
+            <p className="text-[10px] md:text-xs text-gray-400">{t('time')}</p>
           </div>
           <div className="w-px h-6 md:h-8 bg-gray-200" />
           <div className="text-center">
             <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{score}</p>
-            <p className="text-[10px] md:text-xs text-gray-400">Score</p>
+            <p className="text-[10px] md:text-xs text-gray-400">{t('score')}</p>
           </div>
         </div>
       </div>

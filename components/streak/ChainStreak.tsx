@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   getCurrentWeekDates,
   getWeekDatesFromMonday,
@@ -44,6 +45,8 @@ export default function ChainStreak({
   showRewardLabel = true,
   compact = false,
 }: ChainStreakProps) {
+  const locale = useLocale();
+  const t = useTranslations('streak');
   const today = new Date().toISOString().split('T')[0];
   const weekDates = weekStart
     ? getWeekDatesFromMonday(weekStart)
@@ -51,7 +54,7 @@ export default function ChainStreak({
   const activeSet = weekStart && activeDates.length >= 0
     ? new Set(weekDates.filter((d) => activeDates.includes(d)))
     : getActiveDatesInStreak(lastActivityDate, currentStreak, today);
-  const links = getWeeklyChainLinkTypes(weekDates, activeSet, today);
+  const links = getWeeklyChainLinkTypes(weekDates, activeSet, today, locale);
 
   const size = compact ? 32 : 40;
   const gap = compact ? 'gap-0.5' : 'gap-1';
@@ -65,7 +68,7 @@ export default function ChainStreak({
             {/* Sabit yükseklik: +500 görünse de görünmese de halkalar aynı hizada */}
             <div className="h-5 min-h-5 flex items-center justify-center mb-0.5">
               {showRewardLabel && active && i === lastActiveIndex ? (
-                <span className="text-[10px] font-bold text-green-600">+500</span>
+                <span className="text-[10px] font-bold text-green-600">{t('rewardLabel')}</span>
               ) : null}
             </div>
             <Image

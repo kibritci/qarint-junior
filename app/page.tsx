@@ -1,8 +1,12 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 import { getUserGamification } from '@/actions/gamification';
 import ChainStreak from '@/components/streak/ChainStreak';
+import { GAMES, GAME_ID_TO_TITLE_KEY } from '@/lib/gamesConfig';
 
 export default async function Home() {
+  const t = await getTranslations('home');
+  const tGames = await getTranslations('games');
   const { data: gamification } = await getUserGamification();
   const totalXp = gamification?.total_xp ?? 0;
   const currentStreak = gamification?.current_streak ?? 0;
@@ -15,10 +19,10 @@ export default async function Home() {
         <div className="flex items-center justify-between bg-amber-50 border border-amber-200 rounded-xl px-4 py-2.5 mb-4 md:mb-5">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-amber-400 text-white text-[10px] font-bold uppercase tracking-wider">
-              Beta
+              {t('beta')}
             </span>
             <p className="text-xs text-amber-700">
-              You&apos;re one of our first testers — your feedback shapes the next version!
+              {t('betaMessage')}
             </p>
           </div>
           <a
@@ -27,14 +31,13 @@ export default async function Home() {
             rel="noopener noreferrer"
             className="text-xs font-semibold text-amber-600 hover:text-amber-800 whitespace-nowrap ml-3 underline underline-offset-2"
           >
-            Send Feedback
+            {t('sendFeedback')}
           </a>
         </div>
 
         {/* Don't break the chain — weekly streak */}
         <div className="mb-6 md:mb-8">
           <div className="flex flex-col items-center">
-            {/* Ateş ikonu + streak sayısı */}
             <div className="relative mb-3">
               <img
                 src="/streak/fire-streak-icon.svg"
@@ -47,22 +50,22 @@ export default async function Home() {
                 className="absolute inset-0 flex items-center justify-center pt-2"
                 aria-hidden
               >
-                <span className="font-black text-xl text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] md:text-2xl tabular-nums">
+                <span className="font-display font-black text-xl text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] md:text-2xl tabular-nums pt-6 text-center align-bottom">
                   {currentStreak}
                 </span>
               </div>
             </div>
             <h2 className="text-center text-xl md:text-2xl font-display font-bold text-gray-900 mb-2">
-              Zinciri Kırma!
+              {t('chainBreakTitle')}
             </h2>
             <p className="text-center text-sm text-gray-600 mb-1">
-              Play at least once each day this week.
+              {t('chainBreakHint')}
             </p>
             <div className="flex items-center justify-center gap-1.5 mb-4">
               <svg className="h-4 w-4 text-green-600" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
               </svg>
-              <span className="text-sm font-bold text-green-600">+500 XP per day</span>
+              <span className="text-sm font-bold text-green-600">{t('xpPerDay')}</span>
             </div>
             <ChainStreak
               lastActivityDate={lastActivityDate}
@@ -82,7 +85,7 @@ export default async function Home() {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{currentStreak}</p>
-                <p className="text-[10px] md:text-xs text-gray-400">Day Streak</p>
+                <p className="text-[10px] md:text-xs text-gray-400">{t('dayStreak')}</p>
               </div>
             </div>
           </div>
@@ -93,7 +96,7 @@ export default async function Home() {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{totalXp}</p>
-                <p className="text-[10px] md:text-xs text-gray-400">Total XP</p>
+                <p className="text-[10px] md:text-xs text-gray-400">{t('totalXp')}</p>
               </div>
             </div>
           </div>
@@ -104,31 +107,25 @@ export default async function Home() {
               </div>
               <div>
                 <p className="text-xl md:text-2xl font-display font-bold text-gray-900">5</p>
-                <p className="text-[10px] md:text-xs text-gray-400">Games</p>
+                <p className="text-[10px] md:text-xs text-gray-400">{t('games')}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Quick Play */}
-        <h2 className="text-lg md:text-xl font-display font-bold text-gray-900 mb-3 md:mb-4">Quick Play</h2>
+        <h2 className="text-lg md:text-xl font-display font-bold text-gray-900 mb-3 md:mb-4">{t('quickPlay')}</h2>
         <div className="grid grid-cols-3 md:grid-cols-5 gap-3 md:gap-4">
-          {[
-            { name: 'Memory Match', emoji: '🧩', href: '/games/memory-match', bg: 'bg-violet-50' },
-            { name: 'Splat Hunt', emoji: '🎯', href: '/games/splat-word-hunt', bg: 'bg-rose-50' },
-            { name: 'Sentence Builder', emoji: '✍️', href: '/games/sentence-builder', bg: 'bg-amber-50' },
-            { name: 'Mad-Libs', emoji: '📖', href: '/games/mad-libs', bg: 'bg-emerald-50' },
-            { name: 'Picture Quiz', emoji: '🖼️', href: '/games/picture-quiz', bg: 'bg-sky-50' },
-          ].map((game) => (
+          {GAMES.map((game) => (
             <Link
-              key={game.name}
+              key={game.id}
               href={game.href}
               className="card-game p-3 md:p-4 text-center"
             >
-              <div className={`w-10 h-10 md:w-12 md:h-12 ${game.bg} rounded-xl flex items-center justify-center mx-auto mb-1.5 md:mb-2`}>
+              <div className={`w-10 h-10 md:w-12 md:h-12 ${game.bgLight} rounded-xl flex items-center justify-center mx-auto mb-1.5 md:mb-2`}>
                 <span className="text-lg md:text-xl">{game.emoji}</span>
               </div>
-              <p className="text-xs md:text-sm font-display font-semibold text-gray-700">{game.name}</p>
+              <p className="text-xs md:text-sm font-display font-semibold text-gray-700">{tGames(`titles.${GAME_ID_TO_TITLE_KEY[game.id] ?? game.id}`)}</p>
             </Link>
           ))}
         </div>

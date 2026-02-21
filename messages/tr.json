@@ -1,0 +1,222 @@
+{
+  "common": {
+    "nav": {
+      "home": "Ana Sayfa",
+      "games": "Oyunlar",
+      "leaderboard": "Liderlik",
+      "profile": "Profil"
+    },
+    "profileMenu": {
+      "profileSettings": "Profil ve ayarlar",
+      "changePassword": "Şifre değiştir",
+      "signOut": "Çıkış yap"
+    },
+    "fallbackStudent": "Öğrenci",
+    "ariaHome": "Qarint Junior Ana Sayfa",
+    "altLogo": "Qarint Junior",
+    "selectLanguage": "Dil seç"
+  },
+  "home": {
+    "beta": "Beta",
+    "betaMessage": "İlk test kullanıcılarımızdan birisiniz — geri bildiriminiz bir sonraki sürümü şekillendirir!",
+    "sendFeedback": "Geri Bildirim Gönder",
+    "chainBreakTitle": "Zinciri Kırma!",
+    "chainBreakHint": "Bu hafta her gün en az bir kez oyna.",
+    "xpPerDay": "Günde +500 XP",
+    "dayStreak": "Gün Serisi",
+    "totalXp": "Toplam XP",
+    "games": "Oyunlar",
+    "quickPlay": "Hızlı Oyun"
+  },
+  "games": {
+    "pageLabel": "Oyunlar",
+    "miniGames": "Mini Oyunlar",
+    "cambridgeBadge": "Cambridge YLE Uyumlu",
+    "titles": {
+      "memoryMatch": "Hafıza Eşleştirme",
+      "splatWordHunt": "Kelime Avı",
+      "sentenceBuilder": "Cümle Kur",
+      "madLibs": "Mad-Libs Hikayeler",
+      "pictureQuiz": "Resim Bilgisi"
+    },
+    "subtitles": {
+      "memoryMatch": "Kelimeleri resimlerle eşleştir",
+      "splatWordHunt": "Doğru balonları patlat!",
+      "sentenceBuilder": "Sürükleyerek cümle kur",
+      "madLibs": "Eğlenceli boşlukları doldur!",
+      "pictureQuiz": "Resmin adını söyle!"
+    },
+    "memoryMatch": {
+      "title": "Hafıza Eşleştirme",
+      "description": "Kelimeleri resimlerle eşleştir",
+      "moves": "Hamle",
+      "matched": "Eşleşen",
+      "playAgain": "Tekrar Oyna",
+      "congratulations": "Tebrikler!",
+      "completedInMoves": "Oyunu {moves} hamlede tamamladın!"
+    },
+    "splatWordHunt": {
+      "title": "Kelime Avı",
+      "description": "Doğru kelimenin balonlarını patlat!",
+      "findAll": "Hepsini bul",
+      "time": "Süre",
+      "score": "Skor",
+      "pointsEarned": "kazanılan puan",
+      "timesUp": "Süre Doldu!",
+      "playAgain": "Tekrar Oyna",
+      "play": "Oyna"
+    },
+    "sentenceBuilder": {
+      "title": "Cümle Kur",
+      "buildSentence": "Cümleyi Kur",
+      "tapOrder": "Kelimelere doğru sırayla dokun",
+      "totalPointsEarned": "toplam kazanılan puan",
+      "finish": "Bitir",
+      "next": "Sonraki →",
+      "correctSentence": "Doğru",
+      "amazing": "Harika!",
+      "playAgain": "Tekrar Oyna"
+    },
+    "madLibs": {
+      "title": "Mad-Libs Hikayeler",
+      "fillInStory": "Hikayeyi Doldur",
+      "totalPointsEarned": "toplam kazanılan puan",
+      "finishAllStories": "Tüm Hikayeleri Bitir",
+      "nextStory": "Sonraki Hikaye →",
+      "playAgain": "Tekrar Oyna",
+      "oopsTryAgain": "Hata! Tekrar dene!",
+      "allStoriesComplete": "Tüm hikayeler tamamlandı!"
+    },
+    "pictureQuiz": {
+      "title": "Resim Bilgisi",
+      "tapPlayToStart": "Başlamak için Oyna'ya dokun!",
+      "amazing": "Harika!",
+      "goodJob": "Aferin!",
+      "keepPracticing": "Pratik yapmaya devam et!",
+      "correct": "Doğru",
+      "xpEarned": "Kazanılan XP",
+      "accuracy": "Doğruluk",
+      "playAgain": "Tekrar Oyna",
+      "play": "Oyna",
+      "timesUp": "Süre doldu!",
+      "notQuite": "Tam değil! Cevap: {answer}",
+      "correctFeedback": "Doğru! +{xp} XP",
+      "completedIn": "{seconds} saniyede tamamlandı"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "description": "Adını, avatarını ve rengini özelleştir. Liderlik tablosunda böyle görüneceksin.",
+    "chainBreakTitle": "Zinciri Kırma",
+    "chainSwipeDescription": "Haftalar arasında kaydırın — ilk haftadan bu hafta + 1'e kadar.",
+    "totalXp": "Toplam XP",
+    "dayStreak": "Gün Serisi",
+    "displayName": "Görünen ad",
+    "displayNamePlaceholder": "Adın",
+    "profileSaved": "Profil kaydedildi!",
+    "saveProfile": "Profil kaydet",
+    "saving": "Kaydediliyor...",
+    "changePassword": "Şifre değiştir",
+    "changePasswordHint": "Hesabın için yeni bir şifre belirle. Oturumun açık kalacak.",
+    "currentPassword": "Mevcut şifre",
+    "newPassword": "Yeni şifre",
+    "confirmPassword": "Yeni şifreyi onayla",
+    "passwordMinLength": "Şifre en az 6 karakter olmalı.",
+    "passwordsDoNotMatch": "Şifreler eşleşmiyor.",
+    "passwordUpdated": "Şifre güncellendi.",
+    "updatePassword": "Şifreyi güncelle",
+    "updating": "Güncelleniyor...",
+    "editAvatar": "Avatarı düzenle",
+    "emoji": "Emoji",
+    "photo": "Fotoğraf",
+    "choosePhoto": "Fotoğraf seç",
+    "maxSize": "Maks. {size} KB",
+    "pleaseChooseImage": "Lütfen bir resim dosyası seçin.",
+    "imageTooBig": "Resim {size} KB'dan küçük olmalı.",
+    "failedToSave": "Kaydedilemedi.",
+    "cancel": "İptal",
+    "save": "Kaydet"
+  },
+  "profileHeader": {
+    "editAvatar": "Avatarı düzenle"
+  },
+  "leaderboard": {
+    "title": "Liderlik",
+    "description": "Bu hafta diğer öğrencilerle karşılaştır",
+    "weeklyLeaderboard": "Haftalık Liderlik",
+    "emptyTitle": "Bu hafta henüz kimse yok.",
+    "emptyHint": "XP kazanıp burada görünmek için oyun oyna!",
+    "player": "Oyuncu",
+    "you": "(Sen)",
+    "xp": "XP"
+  },
+  "login": {
+    "logIn": "Giriş Yap",
+    "signUp": "Kayıt Ol",
+    "tagline": "Eğlenceli oyunlarla İngilizce öğren",
+    "accountLocked": "Hesap geçici olarak kilitlendi",
+    "tryAgainIn": "{seconds} saniye sonra tekrar dene",
+    "completeSecurityCheck": "Lütfen güvenlik kontrolünü tamamla.",
+    "tooManyAttempts": "Çok fazla deneme. 30 saniye bekleyin.",
+    "accountCreated": "Hesap oluşturuldu! Giriş yapmak için e-postanı doğrula.",
+    "name": "Ad",
+    "namePlaceholder": "Adın",
+    "email": "E-posta",
+    "emailPlaceholder": "ornek@email.com",
+    "password": "Şifre",
+    "passwordPlaceholder": "••••••••",
+    "weak": "Zayıf",
+    "medium": "Orta",
+    "strong": "Güçlü",
+    "addNumbersUppercase": " — rakam, büyük harf veya sembol ekle",
+    "pleaseWait": "Lütfen bekleyin...",
+    "locked": "Kilitli ({seconds}s)",
+    "createAccount": "Hesap Oluştur",
+    "attemptsRemaining": "{count} deneme hakkı kaldı",
+    "footer": "Çocuklar için güvenli ve eğlenceli İngilizce öğrenme"
+  },
+  "loginLayout": {
+    "title": "Giriş Yap",
+    "description": "Qarint Junior ile İngilizce öğrenmeye başlamak için giriş yap veya hesap oluştur."
+  },
+  "onboarding": {
+    "welcomeTitle": "Hoş geldin",
+    "welcomeSubtitle": "Eğlenceli oyunlarla İngilizce öğren, puan kazan, şampiyon ol!",
+    "letsGo": "Başla!",
+    "chooseAvatar": "Avatarını Seç",
+    "pickCharacter": "Seni temsil eden bir karakter seç!",
+    "continue": "Devam",
+    "howToPlay": "Nasıl Oynanır",
+    "howToPlayDesc": "Mini oyunları bulmak için \"Oyunlar\"a dokun. Kelimeleri eşleştir, cümle kur ve XP kazan!",
+    "memoryMatchDesc": "İngilizce kelimeleri resimlerle eşleştir",
+    "splatWordHuntDesc": "Doğru kelime balonlarını patlat",
+    "sentenceBuilderDesc": "Kelimeleri doğru sıraya koy",
+    "iGotIt": "Anladım!",
+    "firstAchievement": "İlk Başarım!",
+    "firstRewards": "İlk ödüllerini kazandın!",
+    "xpEarned": "Kazanılan XP",
+    "dayStreak": "Gün Serisi",
+    "startPlaying": "Oynamaya Başla!",
+    "avatarLabels": {
+      "lion": "Aslan",
+      "astronaut": "Astronot",
+      "robot": "Robot",
+      "fox": "Tilki",
+      "cat": "Kedi",
+      "butterfly": "Kelebek",
+      "bear": "Ayı",
+      "owl": "Baykuş",
+      "dolphin": "Yunus",
+      "unicorn": "Tek boynuzlu at",
+      "star": "Yıldız",
+      "balloon": "Balon"
+    }
+  },
+  "streak": {
+    "xpPerDay": "Günde +500 XP",
+    "prevWeek": "Önceki hafta",
+    "nextWeek": "Sonraki hafta",
+    "thisWeek": "Bu hafta",
+    "rewardLabel": "+500"
+  }
+}

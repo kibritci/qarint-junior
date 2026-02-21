@@ -1,0 +1,222 @@
+{
+  "common": {
+    "nav": {
+      "home": "Home",
+      "games": "Games",
+      "leaderboard": "Leaderboard",
+      "profile": "Profile"
+    },
+    "profileMenu": {
+      "profileSettings": "Profile & settings",
+      "changePassword": "Change password",
+      "signOut": "Sign out"
+    },
+    "fallbackStudent": "Student",
+    "ariaHome": "Qarint Junior Home",
+    "altLogo": "Qarint Junior",
+    "selectLanguage": "Select language"
+  },
+  "home": {
+    "beta": "Beta",
+    "betaMessage": "You're one of our first testers — your feedback shapes the next version!",
+    "sendFeedback": "Send Feedback",
+    "chainBreakTitle": "Zinciri Kırma!",
+    "chainBreakHint": "Play at least once each day this week.",
+    "xpPerDay": "+500 XP per day",
+    "dayStreak": "Day Streak",
+    "totalXp": "Total XP",
+    "games": "Games",
+    "quickPlay": "Quick Play"
+  },
+  "games": {
+    "pageLabel": "Games",
+    "miniGames": "Mini Games",
+    "cambridgeBadge": "Cambridge YLE Aligned",
+    "titles": {
+      "memoryMatch": "Memory Match",
+      "splatWordHunt": "Splat Word Hunt",
+      "sentenceBuilder": "Sentence Builder",
+      "madLibs": "Mad-Libs Stories",
+      "pictureQuiz": "Picture Quiz"
+    },
+    "subtitles": {
+      "memoryMatch": "Match words with pictures",
+      "splatWordHunt": "Pop the right bubbles!",
+      "sentenceBuilder": "Build sentences by dragging",
+      "madLibs": "Fill in funny blanks!",
+      "pictureQuiz": "Name the picture!"
+    },
+    "memoryMatch": {
+      "title": "Memory Match",
+      "description": "Match words with pictures",
+      "moves": "Moves",
+      "matched": "Matched",
+      "playAgain": "Play Again",
+      "congratulations": "Congratulations!",
+      "completedInMoves": "You completed the game in {moves} moves!"
+    },
+    "splatWordHunt": {
+      "title": "Splat Word Hunt",
+      "description": "Pop the bubbles with the correct word!",
+      "findAll": "Find all",
+      "time": "Time",
+      "score": "Score",
+      "pointsEarned": "points earned",
+      "timesUp": "Time's Up!",
+      "playAgain": "Play Again",
+      "play": "Play"
+    },
+    "sentenceBuilder": {
+      "title": "Sentence Builder",
+      "buildSentence": "Build the Sentence",
+      "tapOrder": "Tap words in the correct order",
+      "totalPointsEarned": "total points earned",
+      "finish": "Finish",
+      "next": "Next →",
+      "correctSentence": "Correct",
+      "amazing": "Amazing!",
+      "playAgain": "Play Again"
+    },
+    "madLibs": {
+      "title": "Mad-Libs Stories",
+      "fillInStory": "Fill in the Story",
+      "totalPointsEarned": "total points earned",
+      "finishAllStories": "Finish All Stories",
+      "nextStory": "Next Story →",
+      "playAgain": "Play Again",
+      "oopsTryAgain": "Oops! Try again!",
+      "allStoriesComplete": "All Stories Complete!"
+    },
+    "pictureQuiz": {
+      "title": "Picture Quiz",
+      "tapPlayToStart": "Tap Play to start!",
+      "amazing": "Amazing!",
+      "goodJob": "Good job!",
+      "keepPracticing": "Keep practicing!",
+      "correct": "Correct",
+      "xpEarned": "XP Earned",
+      "accuracy": "Accuracy",
+      "playAgain": "Play Again",
+      "play": "Play",
+      "timesUp": "Time's up!",
+      "notQuite": "Not quite! The answer is: {answer}",
+      "correctFeedback": "Correct! +{xp} XP",
+      "completedIn": "Completed in {seconds}s"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "description": "Customize your name, avatar, and color. This is how you appear on the leaderboard.",
+    "chainBreakTitle": "Zinciri Kırma",
+    "chainSwipeDescription": "Swipe to see weeks — from your first week up to this week + 1.",
+    "totalXp": "Total XP",
+    "dayStreak": "Day Streak",
+    "displayName": "Display name",
+    "displayNamePlaceholder": "Your name",
+    "profileSaved": "Profile saved!",
+    "saveProfile": "Save profile",
+    "saving": "Saving...",
+    "changePassword": "Change password",
+    "changePasswordHint": "Set a new password for your account. You will stay signed in.",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Confirm new password",
+    "passwordMinLength": "Password must be at least 6 characters.",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "passwordUpdated": "Password updated.",
+    "updatePassword": "Update password",
+    "updating": "Updating...",
+    "editAvatar": "Edit avatar",
+    "emoji": "Emoji",
+    "photo": "Photo",
+    "choosePhoto": "Choose a photo",
+    "maxSize": "Max {size} KB",
+    "pleaseChooseImage": "Please choose an image file.",
+    "imageTooBig": "Image must be under {size} KB.",
+    "failedToSave": "Failed to save.",
+    "cancel": "Cancel",
+    "save": "Save"
+  },
+  "profileHeader": {
+    "editAvatar": "Edit avatar"
+  },
+  "leaderboard": {
+    "title": "Leaderboard",
+    "description": "See how you compare to other students this week",
+    "weeklyLeaderboard": "Weekly Leaderboard",
+    "emptyTitle": "No one on the board yet this week.",
+    "emptyHint": "Play games to earn XP and appear here!",
+    "player": "Player",
+    "you": "(You)",
+    "xp": "XP"
+  },
+  "login": {
+    "logIn": "Log In",
+    "signUp": "Sign Up",
+    "tagline": "Learn English through fun games",
+    "accountLocked": "Account temporarily locked",
+    "tryAgainIn": "Try again in {seconds}s",
+    "completeSecurityCheck": "Please complete the security check.",
+    "tooManyAttempts": "Too many attempts. Please wait 30 seconds.",
+    "accountCreated": "Account created! Check your email to verify, then log in.",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "hello@example.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "weak": "Weak",
+    "medium": "Medium",
+    "strong": "Strong",
+    "addNumbersUppercase": " — add numbers, uppercase or symbols",
+    "pleaseWait": "Please wait...",
+    "locked": "Locked ({seconds}s)",
+    "createAccount": "Create Account",
+    "attemptsRemaining": "{count} attempts remaining",
+    "footer": "Safe and fun English learning for children"
+  },
+  "loginLayout": {
+    "title": "Log In",
+    "description": "Log in or create an account to start learning English with Qarint Junior."
+  },
+  "onboarding": {
+    "welcomeTitle": "Welcome to",
+    "welcomeSubtitle": "Learn English through fun games, earn points, and become a champion!",
+    "letsGo": "Let's Go!",
+    "chooseAvatar": "Choose Your Avatar",
+    "pickCharacter": "Pick a character that represents you!",
+    "continue": "Continue",
+    "howToPlay": "How to Play",
+    "howToPlayDesc": "Tap on \"Games\" to find fun mini-games. Match words, build sentences, and earn XP!",
+    "memoryMatchDesc": "Match English words with pictures",
+    "splatWordHuntDesc": "Pop the correct word bubbles",
+    "sentenceBuilderDesc": "Put words in the right order",
+    "iGotIt": "I Got It!",
+    "firstAchievement": "First Achievement!",
+    "firstRewards": "You earned your first rewards!",
+    "xpEarned": "XP Earned",
+    "dayStreak": "Day Streak",
+    "startPlaying": "Start Playing!",
+    "avatarLabels": {
+      "lion": "Lion",
+      "astronaut": "Astronaut",
+      "robot": "Robot",
+      "fox": "Fox",
+      "cat": "Cat",
+      "butterfly": "Butterfly",
+      "bear": "Bear",
+      "owl": "Owl",
+      "dolphin": "Dolphin",
+      "unicorn": "Unicorn",
+      "star": "Star",
+      "balloon": "Balloon"
+    }
+  },
+  "streak": {
+    "xpPerDay": "+500 XP per day",
+    "prevWeek": "Previous week",
+    "nextWeek": "Next week",
+    "thisWeek": "This week",
+    "rewardLabel": "+500"
+  }
+}

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
@@ -55,6 +56,7 @@ export default function SentenceBuilder() {
   const [totalScore, setTotalScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
 
+  const t = useTranslations('games.sentenceBuilder');
   const { addXp } = useGameStore();
   const sentence = SENTENCES[currentIndex];
 
@@ -135,14 +137,14 @@ export default function SentenceBuilder() {
 
   if (isComplete) {
     return (
-      <GameWrapper title="Sentence Builder" progress={100}>
+      <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">🏆</div>
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">Amazing!</h2>
+          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('amazing')}</h2>
           <p className="text-5xl font-display font-black text-primary mb-2">{totalScore}</p>
-          <p className="text-gray-500 mb-8">total points earned</p>
+          <p className="text-gray-500 mb-8">{t('totalPointsEarned')}</p>
           <button onClick={restart} className="btn-primary text-lg px-8 py-4">
-            Play Again
+            {t('playAgain')}
           </button>
         </div>
       </GameWrapper>
@@ -150,12 +152,12 @@ export default function SentenceBuilder() {
   }
 
   return (
-    <GameWrapper title="Sentence Builder" progress={progress}>
+    <GameWrapper title={t('title')} progress={progress}>
       {/* Info */}
       <div className="flex items-center justify-between mb-4 md:mb-6">
         <div className="min-w-0">
-          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">Build the Sentence</h2>
-          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">Tap words in the correct order</p>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{t('buildSentence')}</h2>
+          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">{t('tapOrder')}</p>
         </div>
         <div className="badge-blue flex-shrink-0">
           {currentIndex + 1} / {SENTENCES.length}
@@ -212,7 +214,7 @@ export default function SentenceBuilder() {
       <div className="flex justify-center gap-3 md:gap-4">
         {isCorrect ? (
           <button onClick={nextSentence} className="btn-primary text-base md:text-lg px-6 md:px-8">
-            {currentIndex + 1 >= SENTENCES.length ? 'Finish' : 'Next →'}
+            {currentIndex + 1 >= SENTENCES.length ? t('finish') : t('next')}
           </button>
         ) : (
           <button

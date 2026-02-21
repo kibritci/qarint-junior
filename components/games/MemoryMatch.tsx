@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
@@ -40,6 +41,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
   const [shakingCards, setShakingCards] = useState<number[]>([]);
   const [isChecking, setIsChecking] = useState(false);
 
+  const t = useTranslations('games.memoryMatch');
   const { addXp } = useGameStore();
 
   useEffect(() => {
@@ -154,35 +156,33 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
   }
 
   return (
-    <GameWrapper title="Memory Match" progress={progress}>
-      {/* Game Info */}
+    <GameWrapper title={t('title')} progress={progress}>
       <div className="flex items-center justify-between mb-4 md:mb-6">
         <div className="min-w-0">
-          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">Memory Match</h2>
-          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">Match words with pictures</p>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{t('title')}</h2>
+          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">{t('description')}</p>
         </div>
         <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           <div className="text-center">
             <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{moves}</p>
-            <p className="text-[10px] md:text-xs text-gray-400">Moves</p>
+            <p className="text-[10px] md:text-xs text-gray-400">{t('moves')}</p>
           </div>
           <div className="w-px h-6 md:h-8 bg-gray-200" />
           <div className="text-center">
             <p className="text-xl md:text-2xl font-display font-bold text-primary">{matches}/{totalPairs}</p>
-            <p className="text-[10px] md:text-xs text-gray-400">Matched</p>
+            <p className="text-[10px] md:text-xs text-gray-400">{t('matched')}</p>
           </div>
         </div>
       </div>
 
-      {/* Complete Banner */}
       {isGameComplete && (
         <div className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-200 animate-bounce-in">
           <div className="text-center">
             <p className="text-4xl mb-2">🎉</p>
-            <h3 className="text-xl font-display font-bold text-green-800 mb-1">Congratulations!</h3>
-            <p className="text-green-600 text-sm mb-4">You completed the game in {moves} moves!</p>
+            <h3 className="text-xl font-display font-bold text-green-800 mb-1">{t('congratulations')}</h3>
+            <p className="text-green-600 text-sm mb-4">{t('completedInMoves', { moves })}</p>
             <button onClick={resetGame} className="btn-primary">
-              Play Again
+              {t('playAgain')}
             </button>
           </div>
         </div>

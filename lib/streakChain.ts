@@ -40,15 +40,26 @@ export function getWeekDatesFromMonday(mondayYyyyMmDd: string): string[] {
   return out;
 }
 
-/** Kısa hafta etiketi, örn. "17–23 Feb". */
-export function getWeekLabel(mondayYyyyMmDd: string): string {
+/** Kısa hafta etiketi, örn. "17–23 Feb". Locale for month (e.g. "en", "tr"). */
+export function getWeekLabel(mondayYyyyMmDd: string, locale: string = 'en-GB'): string {
   const monday = new Date(mondayYyyyMmDd + 'T12:00:00Z');
   const sunday = new Date(monday);
   sunday.setUTCDate(monday.getUTCDate() + 6);
   const mon = monday.getUTCDate();
   const sun = sunday.getUTCDate();
-  const shortMonth = sunday.toLocaleDateString('en-GB', { month: 'short' });
+  const shortMonth = sunday.toLocaleDateString(locale, { month: 'short' });
   return `${mon}–${sun} ${shortMonth}`;
+}
+
+/** Short weekday names Mon–Sun for the given locale (Monday first). */
+export function getShortWeekdayLabels(locale: string): string[] {
+  const formatter = new Intl.DateTimeFormat(locale, { weekday: 'short' });
+  const base = new Date('2024-01-01T12:00:00Z'); // Monday
+  return Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(base);
+    d.setUTCDate(base.getUTCDate() + i);
+    return formatter.format(d);
+  });
 }
 
 /** Set of date strings (YYYY-MM-DD) that count as "active" from streak. */
@@ -73,13 +84,15 @@ export type ChainLinkType = 'inactive' | 'start' | 'mid' | 'end' | 'single';
 
 /**
  * For each of 7 week days, returns the link type: inactive, start, mid, end, or single (one active day alone).
+ * locale: optional, for day labels (e.g. "en", "tr").
  */
 export function getWeeklyChainLinkTypes(
   weekDates: string[],
   activeSet: Set<string>,
-  today: string
+  today: string,
+  locale?: string
 ): { date: string; active: boolean; linkType: ChainLinkType; dayLabel: string }[] {
-  const dayLabels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+  const dayLabels = locale ? getShortWeekdayLabels(locale) : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
   return weekDates.map((date, i) => {
     const active = activeSet.has(date);
     const prevActive = i > 0 && activeSet.has(weekDates[i - 1]);
