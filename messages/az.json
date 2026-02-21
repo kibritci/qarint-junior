@@ -176,7 +176,8 @@
     "emptyHint": "XP qazanmaq və burada görünmək üçün oyun oynayın!",
     "player": "Oyuncu",
     "you": "(Sən)",
-    "xp": "XP"
+    "xp": "XP",
+    "rateLimitMessage": "Çox sorğu. Bir az sonra yenidən cəhd edin."
   },
   "login": {
     "logIn": "Daxil ol",
@@ -248,7 +249,7 @@
       "settingsButton": "Tənzimləmələri İdarə Et"
     },
     "privacyPolicy": {
-      "text": "Qarint Junior üçün məlumat nəzarətçisi Qarint-dir.\n\nÖvladınızın təhsil səyahətini dəstəkləmək və fərdiləşdirmək üçün yalnız əsas profil məlumatları və öyrənmə gedişatı kimi minimal məlumatları toplayırıq. Profildə təyin etdiyiniz göstərici ad və avatar liderlər cədvəlində digər oyunçulara açıq göstərilir.\n\nMəlumatlar yalnız hesab aktiv olduğu müddətdə saxlanılır. Valideynlər istədikləri zaman uşaqlarının məlumatlarını yoxlamaq, idarə etmək və ya silmək hüququna malikdirlər.\n\nMəlumatlarınızı heç vaxt satmırıq. Məlumat bazasının idarə edilməsi üçün Supabase və təhlükəsizlik infrastrukturu üçün Cloudflare kimi etibarlı üçüncü tərəf xidmətlərindən istifadə edirik."
+      "text": "Qarint Junior üçün məlumat nəzarətçisi Qarint-dir.\n\nÖvladınızın təhsil səyahətini dəstəkləmək və fərdiləşdirmək üçün yalnız əsas profil məlumatları və öyrənmə gedişatı kimi minimal məlumatları toplayırıq. Profildə təyin etdiyiniz ad, məxfilik üçün qısaldılmış formada (ad və soyadın ilk hərfi, məs. \"Əli K.\") liderlər cədvəlində göstərilir. Avatarınız da digər oyunçulara görünür.\n\nMəlumatlar yalnız hesab aktiv olduğu müddətdə saxlanılır. Valideynlər istədikləri zaman uşaqlarının məlumatlarını yoxlamaq, idarə etmək və ya silmək hüququna malikdirlər.\n\nMəlumatlarınızı heç vaxt satmırıq. Məlumat bazasının idarə edilməsi üçün Supabase və təhlükəsizlik infrastrukturu üçün Cloudflare kimi etibarlı üçüncü tərəf xidmətlərindən istifadə edirik."
     },
     "termsOfUse": {
       "text": "Qarint Junior, 4-12 yaşlı uşaqlar üçün xüsusi olaraq hazırlanmış interaktiv ingilis dili öyrənmə oyunudur.\n\nHesabın yaradılması və uşağın platformadan istifadəsinə nəzarət valideynin və ya qanuni qəyyumun məsuliyyətindədir.\n\nBütün tədris materialları, dizaynlar və oyunlar Qarint-in əqli mülkiyyətidir. Kəsintisiz bir təcrübə təqdim etməyə çalışsaq da, müvəqqəti texniki fasilələrə görə məsuliyyət daşımırıq."

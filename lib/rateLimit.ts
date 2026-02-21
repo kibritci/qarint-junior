@@ -36,5 +36,6 @@ export function checkRateLimit(key: string, limit: number): boolean {
 
 export const RATE_LIMITS = {
   gamification: 30,  // per minute (XP / game completion)
-  profile: 5,         // per minute (profile updates)
+  profile: 5,        // per minute (profile updates)
+  leaderboard: 20,   // per minute (leaderboard fetches – limit scraping)
 } as const;

@@ -176,7 +176,8 @@
     "emptyHint": "¡Juega para ganar XP y aparecer aquí!",
     "player": "Jugador",
     "you": "(Tú)",
-    "xp": "XP"
+    "xp": "XP",
+    "rateLimitMessage": "Demasiadas solicitudes. Intenta de nuevo en un momento."
   },
   "login": {
     "logIn": "Iniciar sesión",
@@ -248,7 +249,7 @@
       "settingsButton": "Administrar Ajustes"
     },
     "privacyPolicy": {
-      "text": "El responsable de los datos de Qarint Junior es Qarint.\n\nRecopilamos datos mínimos, como información básica del perfil y el progreso de aprendizaje, estrictamente para apoyar y personalizar el viaje educativo de su hijo. El nombre y el avatar que configure en su perfil se muestran de forma pública en la clasificación al resto de jugadores.\n\nLos datos se conservan solo mientras la cuenta permanezca activa. Los padres tienen pleno derecho a revisar, administrar o solicitar la eliminación de los datos de sus hijos en cualquier momento.\n\nNo vendemos sus datos. Utilizamos servicios de terceros seguros y confiables como Supabase para la gestión de bases de datos y Cloudflare para la infraestructura de seguridad."
+      "text": "El responsable de los datos de Qarint Junior es Qarint.\n\nRecopilamos datos mínimos, como información básica del perfil y el progreso de aprendizaje, estrictamente para apoyar y personalizar el viaje educativo de su hijo. El nombre que configure se muestra en la clasificación de forma que respeta la privacidad (nombre y primera letra del apellido, p. ej. \"Juan G.\"). Su avatar también es visible para el resto de jugadores.\n\nLos datos se conservan solo mientras la cuenta permanezca activa. Los padres tienen pleno derecho a revisar, administrar o solicitar la eliminación de los datos de sus hijos en cualquier momento.\n\nNo vendemos sus datos. Utilizamos servicios de terceros seguros y confiables como Supabase para la gestión de bases de datos y Cloudflare para la infraestructura de seguridad."
     },
     "termsOfUse": {
       "text": "Qarint Junior es un juego interactivo para aprender inglés diseñado específicamente para niños de 4 a 12 años.\n\nLos padres o tutores legales son responsables de la creación de la cuenta y de supervisar el uso de la plataforma por parte del niño.\n\nTodo el contenido educativo, diseños y juegos son propiedad intelectual de Qarint. Aunque nos esforzamos por ofrecer un servicio ininterrumpido, no nos hacemos responsables de interrupciones técnicas temporales."

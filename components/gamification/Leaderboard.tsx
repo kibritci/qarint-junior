@@ -54,9 +54,10 @@ export default function Leaderboard({ entries, error }: LeaderboardProps) {
   const t = useTranslations('leaderboard');
 
   if (error) {
+    const message = error === 'rateLimit' ? t('rateLimitMessage') : error;
     return (
       <div className="p-6 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-sm text-red-600 dark:text-red-300">
-        {error}
+        {message}
       </div>
     );
   }
@@ -106,7 +107,7 @@ export default function Leaderboard({ entries, error }: LeaderboardProps) {
             const orderClass = entry.rank === 1 ? 'order-2' : entry.rank === 2 ? 'order-1' : 'order-3';
             return (
               <div
-                key={entry.user_id}
+                key={entry.isCurrentUser && entry.user_id ? entry.user_id : `rank-${entry.rank}`}
                 className={`flex flex-col items-center rounded-xl border-2 bg-white dark:bg-gray-800 p-3 pt-4 ${orderClass}
                   ${isFirst ? 'border-yellow-200 dark:border-yellow-600 shadow-md' : 'border-gray-100 dark:border-gray-700 mt-4'}
                 `}
@@ -138,7 +139,7 @@ export default function Leaderboard({ entries, error }: LeaderboardProps) {
 
       <div className="space-y-2">
         {rest.map((entry) => (
-          <LeaderboardRow key={entry.user_id} entry={entry} t={t} />
+          <LeaderboardRow key={entry.isCurrentUser && entry.user_id ? entry.user_id : `rank-${entry.rank}`} entry={entry} t={t} />
         ))}
       </div>
     </div>

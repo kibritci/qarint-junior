@@ -239,7 +239,8 @@
       "emptyHint": "Play games to earn XP and appear here!",
       "player": "Player",
       "you": "(You)",
-      "xp": "XP"
+      "xp": "XP",
+      "rateLimitMessage": "Too many requests. Try again in a moment."
     },
   "login": {
     "logIn": "Log In",
@@ -327,7 +328,7 @@
       "settingsButton": "Manage Settings"
     },
     "privacyPolicy": {
-      "text": "The data controller for Qarint Junior is Qarint.\n\nWe collect minimal data, such as basic profile information and learning progress, strictly to support and personalize your child's educational journey. The display name and avatar you set in your profile are shown publicly on the leaderboard to other players.\n\nData is kept only as long as the account remains active. Parents have full rights to review, manage, or request the deletion of their child's data at any time.\n\nWe do not sell your data. We use trusted, secure third-party services like Supabase for database management and Cloudflare for security infrastructure."
+      "text": "The data controller for Qarint Junior is Qarint.\n\nWe collect minimal data, such as basic profile information and learning progress, strictly to support and personalize your child's educational journey. The display name you set is shown on the leaderboard in a privacy-friendly form (first name and last initial, e.g. \"John D.\"). Your avatar is also visible to other players.\n\nData is kept only as long as the account remains active. Parents have full rights to review, manage, or request the deletion of their child's data at any time.\n\nWe do not sell your data. We use trusted, secure third-party services like Supabase for database management and Cloudflare for security infrastructure."
     },
     "termsOfUse": {
       "text": "Qarint Junior is an interactive English learning game designed specifically for children aged 4–12.\n\nParents or legal guardians are responsible for account creation and overseeing the child's use of the platform.\n\nAll educational content, designs, and games are the intellectual property of Qarint. While we strive to provide an uninterrupted experience, we are not liable for temporary technical outages."

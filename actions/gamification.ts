@@ -1,6 +1,8 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { maskDisplayName } from '@/lib/displayName';
+import { checkRateLimit, RATE_LIMITS } from '@/lib/rateLimit';
 import { AVATAR_EMOJIS, ACCENT_COLORS } from '@/lib/constants/avatar';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rateLimit';
 import { getWeekStartString as getWeekStartStringFromDate } from '@/lib/streakChain';
@@ -104,6 +106,10 @@ export async function updateGamification(xpEarned: number, gameType?: string) {
       totalXp = xpEarned;
       currentStreak = 1;
       const marketingAllowed = user.user_metadata?.marketing_emails_allowed !== false;
+      const defaultDisplayName =
+        (user.user_metadata?.display_name as string | undefined)?.trim() ||
+        user.email?.split('@')[0]?.trim() ||
+        null;
       await supabase
         .from('users_gamification')
         .insert({
@@ -112,6 +118,7 @@ export async function updateGamification(xpEarned: number, gameType?: string) {
           current_streak: currentStreak,
           last_activity_date: today,
           marketing_emails_allowed: marketingAllowed,
+          display_name: defaultDisplayName,
         });
     }
 
@@ -338,7 +345,8 @@ export async function updateProfile(updates: ProfileUpdate) {
 
 export interface LeaderboardEntry {
   rank: number;
-  user_id: string;
+  /** Only set for the current user; omitted for others to avoid exposing UUIDs. */
+  user_id?: string;
   display_name: string | null;
   avatar_emoji: string | null;
   avatar_svg_url: string | null;
@@ -381,6 +389,10 @@ export async function getLeaderboardWeekly(): Promise<{ data: LeaderboardEntry[]
 
     if (!user) return { data: [] };
 
+    if (checkRateLimit(`leaderboard:${user.id}`, RATE_LIMITS.leaderboard)) {
+      return { data: [], error: 'rateLimit' };
+    }
+
     const weekStart = getWeekStart();
 
     const { data: rows, error } = await supabase
@@ -406,10 +418,11 @@ export async function getLeaderboardWeekly(): Promise<{ data: LeaderboardEntry[]
     const entries: LeaderboardEntry[] = rows.map((row: { user_id: string; total_xp: number }, index: number) => {
       const profile = profileMap.get(row.user_id);
       const isCurrentUser = row.user_id === user.id;
-      const display_name = profile?.display_name ?? null;
+      const rawName = profile?.display_name ?? null;
+      const display_name = maskDisplayName(rawName) ?? rawName;
       return {
         rank: index + 1,
-        user_id: row.user_id,
+        ...(isCurrentUser ? { user_id: row.user_id } : {}),
         display_name,
         avatar_emoji: profile?.avatar_emoji ?? null,
         avatar_svg_url: profile?.avatar_svg_url ?? null,
