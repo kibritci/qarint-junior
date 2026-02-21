@@ -26,7 +26,7 @@ export default function Rive404() {
   );
 
   return (
-    <div className="flex flex-col items-center pt-0 pb-10 md:pb-14 px-4 w-full max-w-[500px] mx-auto -mt-1">
+    <div className="min-h-full flex flex-col items-center justify-center pt-0 pb-10 md:pb-14 px-4 w-full max-w-[500px] mx-auto -mt-1">
       <div className="relative w-full max-w-[320px] aspect-square flex items-center justify-center overflow-hidden leading-none shrink-0 [&_canvas]:block [&_canvas]:object-cover">
         <RiveComponent
           className="w-full h-full"
