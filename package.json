@@ -12,6 +12,7 @@
   "dependencies": {
     "@heroicons/react": "^2.1.0",
     "@rive-app/react-canvas": "^4.27.0",
+    "@rive-app/react-webgl": "^4.27.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.39.0",
     "canvas-confetti": "^1.9.2",

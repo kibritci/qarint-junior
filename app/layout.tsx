@@ -10,7 +10,7 @@ import dynamic from 'next/dynamic';
 const RiveMascot = dynamic(() => import('@/components/rive/RiveMascot'), {
   ssr: false,
   loading: () => (
-    <div className="fixed bottom-20 left-4 z-30 md:bottom-6 md:left-6 w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center" aria-hidden>
+    <div className="fixed bottom-0 left-0 z-30 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center" aria-hidden>
       <span className="text-4xl md:text-5xl">🦁</span>
     </div>
   ),
@@ -111,9 +111,9 @@ export default async function RootLayout({
               <div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
                 <Header />
                 <main className="flex-1 bg-gray-50/50 dark:bg-gray-900/80 pb-20 md:pb-0">{children}</main>
+                <RiveMascot />
                 <Footer />
                 <CookieBanner />
-                <RiveMascot />
               </div>
             </ParentalLockWrapper>
           </NextIntlClientProvider>

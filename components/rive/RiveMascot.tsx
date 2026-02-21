@@ -11,7 +11,8 @@ const MASCOT_SRC = '/rive/mascot.riv';
 const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';
 
 function RiveMascotCanvas() {
-  const { rive, RiveComponent } = useRive(
+  const [loaded, setLoaded] = useState(false);
+  const { RiveComponent } = useRive(
     {
       src: MASCOT_SRC,
       artboard: 'Artboard',
@@ -21,19 +22,22 @@ function RiveMascotCanvas() {
         fit: Fit.Contain,
         alignment: Alignment.Center,
       }),
-      onLoad: () => {
-        console.log('[Rive] Mascot loaded successfully');
-      },
-      onLoadError: (e) => {
-        console.error('[Rive] Load error:', e);
-      },
+      onLoad: () => setLoaded(true),
     },
     { shouldResizeCanvasToContainer: true }
   );
-  if (!rive) {
-    return <span className="text-4xl md:text-5xl">🦁</span>;
-  }
-  return <RiveComponent className="w-full h-full" style={{ width: '100%', height: '100%' }} />;
+
+  return (
+    <div className="relative w-full h-full">
+      <RiveComponent
+        className="w-full h-full"
+        style={{ width: '100%', height: '100%', opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}
+      />
+      {!loaded && (
+        <span className="absolute inset-0 flex items-center justify-center text-4xl md:text-5xl">🦁</span>
+      )}
+    </div>
+  );
 }
 
 export default function RiveMascot() {
@@ -41,7 +45,6 @@ export default function RiveMascot() {
   const t = useTranslations('home');
   const containerRef = useRef<HTMLDivElement>(null);
   const [isReady, setIsReady] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [bubbleOpen, setBubbleOpen] = useState(false);
 
   useEffect(() => {
@@ -60,60 +63,44 @@ export default function RiveMascot() {
     return () => observer.disconnect();
   }, []);
 
-  const handleBubbleClick = () => setBubbleOpen((o) => !o);
-
   if (pathname === '/login' || pathname.startsWith('/auth')) return null;
 
   return (
     <div
-      className="fixed bottom-20 left-4 z-30 md:bottom-6 md:left-6 flex flex-col items-start gap-0"
-      onMouseEnter={() => setIsHovering(true)}
-      onMouseLeave={() => setIsHovering(false)}
+      className="fixed bottom-0 left-0 z-30 flex flex-col items-start w-fit"
       style={{ touchAction: 'manipulation' }}
+      onMouseEnter={() => setBubbleOpen(true)}
+      onMouseLeave={() => setBubbleOpen(false)}
     >
-      {/* Konuşma baloncuğu – feedback yönlendirmesi */}
-      <button
-        type="button"
-        onClick={handleBubbleClick}
+      {/* Konuşma baloncuğu – hover veya tıklama ile açılır, sol alta yaslı */}
+      <div
         className={`
-          mb-1 px-3 py-2 rounded-2xl text-left shadow-lg border transition-all duration-200
-          bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600
-          hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]
-          max-w-[180px] md:max-w-[200px]
-          ${bubbleOpen ? 'rounded-br-md' : 'rounded-br-2xl'}
+          mb-0 transition-all duration-300 origin-bottom-left
+          ${bubbleOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-90 translate-y-2 pointer-events-none'}
         `}
-        aria-label={t('sendFeedback')}
       >
-        <p className="text-xs font-medium text-gray-700 dark:text-gray-200 leading-snug">
-          {t('betaMessage')}
-        </p>
-        <span className="text-[10px] font-semibold text-primary dark:text-primary-400 mt-0.5 inline-block">
-          {t('sendFeedback')} →
-        </span>
-      </button>
+        <a
+          href={FEEDBACK_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setBubbleOpen((o) => !o)}
+          className="block px-3 py-2 rounded-2xl rounded-bl-md text-left shadow-lg border bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-600 hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 max-w-[180px] md:max-w-[200px]"
+          aria-label={t('sendFeedback')}
+        >
+          <p className="text-xs font-medium text-gray-700 dark:text-gray-200 leading-snug">
+            {t('betaMessage')}
+          </p>
+          <span className="text-[10px] font-semibold text-primary dark:text-primary-400 mt-0.5 inline-block">
+            {t('sendFeedback')} →
+          </span>
+        </a>
+      </div>
 
-      {bubbleOpen && (
-        <div className="mb-1 w-full max-w-[180px] md:max-w-[200px] rounded-xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 shadow-lg p-2">
-          <a
-            href={FEEDBACK_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block text-center text-xs font-semibold text-primary dark:text-primary-400 py-1.5 px-2 rounded-lg hover:bg-primary-50 dark:hover:bg-primary-900/30 transition-colors"
-          >
-            {t('sendFeedback')}
-          </a>
-        </div>
-      )}
-
-      {/* Rive karakter – container ref burada, boyut alınca RiveMascotCanvas mount */}
+      {/* Rive karakter – sol alt köşe sıfıra sıfır */}
       <div
         ref={containerRef}
-        className={`
-          w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center
-          cursor-pointer select-none
-          transition-colors duration-200
-          ${isHovering ? 'bg-primary-50/80 dark:bg-primary-900/20' : 'bg-transparent'}
-        `}
+        className="w-28 h-28 md:w-32 md:h-32 flex items-center justify-center cursor-pointer select-none"
+        onClick={() => setBubbleOpen((o) => !o)}
         aria-hidden
       >
         {isReady ? (

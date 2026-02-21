@@ -17,15 +17,15 @@ export default async function Home() {
 
   return (
     <>
-      <div className="p-4 md:p-8">
+      <div className="px-4 pt-0 pb-4 md:px-8 md:pt-0 md:pb-8">
         <div className="max-w-4xl mx-auto">
           {/* Don't break the chain — weekly streak */}
-        <div className="mb-6 md:mb-8">
-          <div className="flex flex-col items-center">
-            <div className="relative mb-3 flex justify-center">
+        <div className="mb-6 md:mb-8 max-w-[570px] mx-auto">
+          <div className="flex flex-col items-center -mt-2">
+            <div className="relative flex justify-center">
               <StreakFireRive streakCount={currentStreak} />
             </div>
-            <h2 className="text-center text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">
+            <h2 className="text-center text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100 mt-1 mb-2">
               {t('chainBreakTitle')}
             </h2>
             <p className="text-center text-sm text-gray-600 dark:text-gray-300 mb-1">
@@ -47,7 +47,7 @@ export default async function Home() {
         </div>
 
         {/* Quick Stats */}
-        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8 max-w-[570px]">
+        <div className="grid grid-cols-3 gap-3 md:gap-4 mb-6 md:mb-8 max-w-[570px] mx-auto">
           <div className="card-game p-3 md:p-5">
             <div className="flex flex-col md:flex-row items-center md:items-center gap-2 md:gap-3 text-center md:text-left">
               <div className="w-9 h-9 md:w-10 md:h-10 bg-blue-50 dark:bg-blue-900/40 rounded-xl flex items-center justify-center flex-shrink-0">
