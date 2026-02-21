@@ -11,7 +11,6 @@ import {
   TrophyIcon,
   UserCircleIcon,
   Cog6ToothIcon,
-  KeyIcon,
   ArrowRightStartOnRectangleIcon,
   LockClosedIcon,
   LanguageIcon,
@@ -197,45 +196,44 @@ export default function Header() {
                   className="absolute right-0 top-full mt-1.5 w-60 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 z-[100]"
                   role="menu"
                 >
-                  <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700">
-                    <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">{userName || t('fallbackStudent')}</p>
-                    <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{userEmail}</p>
-                  </div>
                   <Link
                     href="/profile"
                     onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center gap-3 px-4 py-3 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     role="menuitem"
                   >
-                    <UserCircleIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
-                    <span>{t('profileMenu.profile')}</span>
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl shrink-0 overflow-hidden ${!avatarUrl ? 'bg-gray-100 dark:bg-gray-700' : ''}`}>
+                      {avatarUrl ? (
+                        <Image src={avatarUrl} alt="" width={40} height={40} className="w-full h-full object-cover" unoptimized />
+                      ) : (
+                        avatarEmoji
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 truncate">{userName || t('fallbackStudent')}</p>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 truncate">{userEmail}</p>
+                    </div>
                   </Link>
                   <Link
                     href="/settings"
                     onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center gap-3 px-4 py-2.5 mt-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     role="menuitem"
                   >
                     <Cog6ToothIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
                     <span>{t('profileMenu.settings')}</span>
                   </Link>
-                  <Link
-                    href="/settings#password"
-                    onClick={() => setProfileOpen(false)}
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
-                    role="menuitem"
-                  >
-                    <KeyIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
-                    <span>{t('profileMenu.changePassword')}</span>
-                  </Link>
-                  <div className="border-t border-gray-100 dark:border-gray-700 my-2" />
-                  {/* Dil — menü satırı: ikon + select + chevron (kenara yaslanmadan) */}
+                  <div className="border-t border-gray-100 dark:border-gray-700 mt-2 pt-2" />
+                  {/* Dil — sol: etiket, sağ: seçili dil (kısaltma) + ok */}
                   <div
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <LanguageIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
-                    <div className="flex-1 min-w-0 relative flex items-center">
+                    <div className="flex items-center gap-3">
+                      <LanguageIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
+                      <span>{t('profileMenu.languagePreference')}</span>
+                    </div>
+                    <div className="relative flex items-center gap-1">
                       <select
                         id="profile-locale"
                         value={locale}
@@ -246,38 +244,41 @@ export default function Header() {
                             router.refresh();
                           }
                         }}
-                        className="w-full appearance-none bg-transparent border-0 py-0 pr-7 text-gray-900 dark:text-gray-100 focus:ring-0 focus:outline-none cursor-pointer"
+                        className="appearance-none bg-transparent border-0 py-0 pl-0 pr-6 text-gray-900 dark:text-gray-100 focus:ring-0 focus:outline-none cursor-pointer text-right font-medium"
                       >
                         {(Object.keys(LOCALE_LABELS) as Locale[]).map((loc) => (
                           <option key={loc} value={loc}>
-                            {LOCALE_LABELS[loc]}
+                            {loc.toUpperCase()}
                           </option>
                         ))}
                       </select>
                       <ChevronDownIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none absolute right-0 top-1/2 -translate-y-1/2" aria-hidden />
                     </div>
                   </div>
-                  {/* Tema — menü satırı: ikon + select + chevron */}
+                  {/* Tema — sol: etiket, sağ: seçili tema */}
                   <div
-                    className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                    className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                     onClick={(e) => e.stopPropagation()}
                   >
-                    <SwatchIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
-                    <div className="flex-1 min-w-0 relative flex items-center">
+                    <div className="flex items-center gap-3">
+                      <SwatchIcon className="w-5 h-5 text-gray-400 dark:text-gray-500 shrink-0" />
+                      <span>{t('profileMenu.theme')}</span>
+                    </div>
+                    <div className="relative flex items-center gap-1">
                       <select
                         id="profile-theme"
                         value={themeValue ?? 'system'}
                         onChange={(e) => setTheme(e.target.value as 'system' | 'light' | 'dark')}
-                        className="w-full appearance-none bg-transparent border-0 py-0 pr-7 text-gray-900 dark:text-gray-100 focus:ring-0 focus:outline-none cursor-pointer"
+                        className="appearance-none bg-transparent border-0 py-0 pl-0 pr-6 text-gray-900 dark:text-gray-100 focus:ring-0 focus:outline-none cursor-pointer text-right font-medium"
                       >
-                        <option value="system">{t('profileMenu.themeSystem')}</option>
-                        <option value="light">{t('profileMenu.themeLight')}</option>
-                        <option value="dark">{t('profileMenu.themeDark')}</option>
+                        <option value="system">{t('profileMenu.themeSystemShort')}</option>
+                        <option value="light">{t('profileMenu.themeLightShort')}</option>
+                        <option value="dark">{t('profileMenu.themeDarkShort')}</option>
                       </select>
                       <ChevronDownIcon className="w-4 h-4 text-gray-400 dark:text-gray-500 pointer-events-none absolute right-0 top-1/2 -translate-y-1/2" aria-hidden />
                     </div>
                   </div>
-                  <div className="border-t border-gray-100 dark:border-gray-700 my-2" />
+                  <div className="border-t border-gray-100 dark:border-gray-700 mt-2 pt-2" />
                   <button
                     type="button"
                     onClick={() => { setProfileOpen(false); handleSignOut(); }}

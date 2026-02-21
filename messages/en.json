@@ -13,10 +13,15 @@
       "changePassword": "Change password",
       "signOut": "Sign out",
       "language": "Language",
+      "languagePreference": "Language",
       "theme": "Theme",
+      "themeColor": "Theme",
       "themeSystem": "System",
+      "themeSystemShort": "System",
       "themeLight": "Light",
-      "themeDark": "Dark"
+      "themeLightShort": "Light",
+      "themeDark": "Dark",
+      "themeDarkShort": "Dark"
     },
     "fallbackStudent": "Student",
     "ariaHome": "Qarint Junior Home",

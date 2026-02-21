@@ -13,10 +13,15 @@
       "changePassword": "Şifre değiştir",
       "signOut": "Çıkış yap",
       "language": "Dil",
+      "languagePreference": "Dil tercihi",
       "theme": "Tema",
+      "themeColor": "Tema rengi",
       "themeSystem": "Sisteme göre",
+      "themeSystemShort": "Sistem",
       "themeLight": "Açık",
-      "themeDark": "Koyu"
+      "themeLightShort": "Açık",
+      "themeDark": "Koyu",
+      "themeDarkShort": "Koyu"
     },
     "fallbackStudent": "Öğrenci",
     "ariaHome": "Qarint Junior Ana Sayfa",
