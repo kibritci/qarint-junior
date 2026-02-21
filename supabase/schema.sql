@@ -15,15 +15,15 @@ CREATE TABLE IF NOT EXISTS users_gamification (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Vocabulary Words Table
+-- Vocabulary Words Table (multilingual: translations JSONB)
 CREATE TABLE IF NOT EXISTS vocabulary_words (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  word TEXT NOT NULL,
-  translation TEXT NOT NULL,
+  word TEXT NOT NULL UNIQUE,
   openmoji_hex TEXT NOT NULL,
   category TEXT NOT NULL,
   level TEXT CHECK (level IN ('pre_a1_starters', 'a1_movers', 'a2_flyers')),
   is_cultural_value BOOLEAN DEFAULT FALSE,
+  translations JSONB DEFAULT '{}',
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

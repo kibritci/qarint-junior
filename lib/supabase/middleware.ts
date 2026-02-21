@@ -29,14 +29,17 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const isAuthPage = request.nextUrl.pathname === '/login';
-  const isCallbackRoute = request.nextUrl.pathname.startsWith('/auth/');
+  const pathname = request.nextUrl.pathname;
+  const isAuthPage = pathname === '/login';
+  const isCallbackRoute = pathname.startsWith('/auth/');
+  const isOnboardingPage = pathname === '/onboarding';
+  const isPublicLegalPage = ['/privacy', '/terms', '/parents'].includes(pathname);
 
   if (isCallbackRoute) {
     return supabaseResponse;
   }
 
-  if (!user && !isAuthPage) {
+  if (!user && !isAuthPage && !isPublicLegalPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/login';
     return NextResponse.redirect(url);
@@ -45,6 +48,14 @@ export async function updateSession(request: NextRequest) {
   if (user && isAuthPage) {
     const url = request.nextUrl.clone();
     url.pathname = '/';
+    return NextResponse.redirect(url);
+  }
+
+  // First-time users: redirect to onboarding (unless already there)
+  const hasSeenOnboarding = user?.user_metadata?.has_seen_onboarding === true;
+  if (user && !hasSeenOnboarding && !isOnboardingPage) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/onboarding';
     return NextResponse.redirect(url);
   }
 

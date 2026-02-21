@@ -19,7 +19,9 @@ interface ChainStreakProps {
   /** Bu tarihlerde oyun oynanmış; weekStart ile birlikte kullanılır */
   activeDates?: string[];
   showRewardLabel?: boolean;
+  /** compact: small (32px). large: big chain for profile carousel (56px). default: 40px */
   compact?: boolean;
+  size?: 'compact' | 'normal' | 'large';
 }
 
 function getSvgForType(linkType: string): string {
@@ -44,6 +46,7 @@ export default function ChainStreak({
   activeDates = [],
   showRewardLabel = true,
   compact = false,
+  size: sizeMode = 'normal',
 }: ChainStreakProps) {
   const locale = useLocale();
   const t = useTranslations('streak');
@@ -56,29 +59,35 @@ export default function ChainStreak({
     : getActiveDatesInStreak(lastActivityDate, currentStreak, today);
   const links = getWeeklyChainLinkTypes(weekDates, activeSet, today, locale);
 
-  const size = compact ? 32 : 40;
-  const gap = compact ? 'gap-0.5' : 'gap-1';
+  const size = compact ? 32 : sizeMode === 'large' ? 56 : 40;
+  const textSize = compact ? 'text-[9px]' : sizeMode === 'large' ? 'text-xs' : 'text-[10px]';
+  const rewardTextSize = sizeMode === 'large' ? 'text-xs' : 'text-[10px]';
   const lastActiveIndex = links.map((l) => l.active).lastIndexOf(true);
 
   return (
-    <div className="flex flex-col items-center">
-      <div className={`flex items-end justify-center ${gap}`}>
+    <div className="flex flex-col items-center overflow-hidden">
+      <div className="flex items-end justify-center gap-0 [-webkit-backface-visibility:contain] [backface-visibility:contain]">
         {links.map(({ date, active, linkType, dayLabel }, i) => (
-          <div key={date} className="flex flex-col items-center">
-            {/* Sabit yükseklik: +500 görünse de görünmese de halkalar aynı hizada */}
-            <div className="h-5 min-h-5 flex items-center justify-center mb-0.5">
+          <div
+            key={date}
+            className={`flex flex-col items-center flex-shrink-0 ${i > 0 ? '-ml-[3px]' : ''}`}
+            style={i > 0 ? { minWidth: 0 } : undefined}
+          >
+            <div className={`flex items-center justify-center mb-0.5 leading-none ${sizeMode === 'large' ? 'h-6 min-h-6' : 'h-5 min-h-5'}`}>
               {showRewardLabel && active && i === lastActiveIndex ? (
-                <span className="text-[10px] font-bold text-green-600">{t('rewardLabel')}</span>
+                <span className={`${rewardTextSize} font-bold text-green-600 dark:text-green-400`}>{t('rewardLabel')}</span>
               ) : null}
             </div>
-            <Image
-              src={getSvgForType(linkType)}
-              alt={active ? `${dayLabel} done` : dayLabel}
-              width={size}
-              height={size}
-              className="flex-shrink-0"
-            />
-            <span className={`mt-1 ${compact ? 'text-[9px]' : 'text-[10px]'} font-medium text-gray-500`}>
+            <div className="relative inline-flex items-center justify-center">
+              <Image
+                src={getSvgForType(linkType)}
+                alt={active ? `${dayLabel} done` : dayLabel}
+                width={size}
+                height={size}
+                className="flex-shrink-0"
+              />
+            </div>
+            <span className={`mt-1 ${textSize} font-medium text-gray-500 dark:text-gray-400`}>
               {dayLabel}
             </span>
           </div>

@@ -6,16 +6,20 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed:vocabulary": "node scripts/csv-to-vocabulary-sql.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.0",
+    "@rive-app/react-canvas": "^4.27.0",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.39.0",
     "canvas-confetti": "^1.9.2",
     "framer-motion": "^11.0.0",
     "next": "^14.2.0",
     "next-intl": "^4.8.3",
+    "next-themes": "^0.4.6",
+    "nprogress": "^0.2.0",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",
     "zustand": "^4.5.0"
@@ -23,6 +27,7 @@
   "devDependencies": {
     "@types/canvas-confetti": "^1.6.4",
     "@types/node": "^20.11.0",
+    "@types/nprogress": "^0.2.3",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.0",

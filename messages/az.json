@@ -4,25 +4,40 @@
       "home": "Ana səhifə",
       "games": "Oyunlar",
       "leaderboard": "Liderlər",
-      "profile": "Profil"
+      "profile": "Profil",
+      "settings": "Parametrlər"
     },
     "profileMenu": {
-      "profileSettings": "Profil və parametrlər",
+      "profile": "Profil",
+      "settings": "Parametrlər",
       "changePassword": "Şifrəni dəyiş",
-      "signOut": "Çıxış"
+      "signOut": "Çıxış",
+      "language": "Dil",
+      "theme": "Tema",
+      "themeSystem": "Sistemə uyğun",
+      "themeLight": "Açıq",
+      "themeDark": "Qaranlıq"
     },
     "fallbackStudent": "Tələbə",
     "ariaHome": "Qarint Junior Ana səhifə",
     "altLogo": "Qarint Junior",
-    "selectLanguage": "Dil seçin"
+    "selectLanguage": "Dil seçin",
+    "footerPrivacy": "Məxfilik",
+    "footerTerms": "İstifadə Qaydaları",
+    "footerForParents": "Valideynlər üçün",
+    "footer404EasterEgg": "İtirilmiş səhifə 🐣",
+    "unlock": "Kilidi aç"
   },
   "home": {
     "beta": "Beta",
     "betaMessage": "Siz ilk test istifadəçilərimizdənsiniz — rəyiniz növbəti versiyanı formalaşdırır!",
     "sendFeedback": "Rəy göndər",
-    "chainBreakTitle": "Zinciri Kırma!",
+    "betaModalTitle": "Siz də Beta-da bizimləsiniz! 🎉",
+    "betaModalDescription": "İlk test istifadəçilərimizdənsiniz. Fikriniz və rəyiniz növbəti versiyanı formalaşdırır — təcrübənizi bölüşməyinizi çox istəyirik!",
+    "betaModalClose": "Bağla",
+    "chainBreakTitle": "Zənciri qırma!",
     "chainBreakHint": "Bu həftə hər gün ən azı bir dəfə oynayın.",
-    "xpPerDay": "Gündə +500 XP",
+    "xpPerDay": "Hər gün oynayanda 500 XP",
     "dayStreak": "Gün seriyası",
     "totalXp": "Ümumi XP",
     "games": "Oyunlar",
@@ -32,6 +47,8 @@
     "pageLabel": "Oyunlar",
     "miniGames": "Mini oyunlar",
     "cambridgeBadge": "Cambridge YLE uyğundur",
+    "topicQuestion": "Nə öyrənmək istəyirsən?",
+    "gameQuestion": "Necə oynamaq istəyirsən?",
     "selectTopic": "Mövzu seç",
     "selectLevel": "Səviyyə",
     "pickGame": "Oyunu seç",
@@ -63,6 +80,7 @@
       "madLibs": "Mad-Libs hekayələr",
       "pictureQuiz": "Şəkil viktorinası"
     },
+    "playedCount": "{count} dəfə oynadın",
     "subtitles": {
       "memoryMatch": "Sözləri şəkillərlə uyğunlaşdırın",
       "splatWordHunt": "Düzgün balonları partladın!",
@@ -79,7 +97,7 @@
   "profile": {
     "title": "Profil",
     "description": "Adınızı, avatarınızı və rənginizi fərdiləşdirin. Liderlər cədvəlində belə görünəcəksiniz.",
-    "chainBreakTitle": "Zinciri Kırma",
+    "chainBreakTitle": "Zənciri qırma",
     "chainSwipeDescription": "Həftələr arasında sürüşdürün — ilk həftədən bu həftə + 1-ə qədər.",
     "totalXp": "Ümumi XP",
     "dayStreak": "Gün seriyası",
@@ -99,6 +117,8 @@
     "updatePassword": "Şifrəni yenilə",
     "updating": "Yenilənir...",
     "editAvatar": "Avatarı redaktə et",
+    "editNameAndPassword": "Adınızı və ya şifrənizi dəyişin",
+    "editProfile": "Profili redaktə et",
     "emoji": "Emoji",
     "photo": "Foto",
     "choosePhoto": "Foto seçin",
@@ -107,9 +127,22 @@
     "imageTooBig": "Şəkil {size} KB-dan kiçik olmalıdır.",
     "failedToSave": "Saxlanılmadı.",
     "cancel": "Ləğv et",
-    "save": "Saxla"
+    "save": "Saxla",
+    "analytics": {
+      "weeklyXp": "Haftalık XP",
+      "gameDistribution": "Oynanılan oyunlar",
+      "recentActivity": "Son aktivitələr",
+      "noDataWeekly": "Hələ haftalıq məlumat yoxdur. Oynadıqca burada görünəcək.",
+      "noDataGames": "Hələ oyun məlumatı yoxdur.",
+      "noDataActivity": "Hələ aktivlik yoxdur."
+    }
   },
   "profileHeader": { "editAvatar": "Avatarı redaktə et" },
+  "settings": {
+    "title": "Parametrlər",
+    "description": "Görünən adınızı və şifrənizi dəyişin.",
+    "backToProfile": "Profile qayıt"
+  },
   "leaderboard": {
     "heroTitle": "Əla gedirsin!",
     "heroSubtitle": "Həftəlik sıralamada haradasan? Oyun oyna, XP qazan, siyahıda qalx.",
@@ -148,11 +181,13 @@
     "createAccount": "Hesab yarat",
     "attemptsRemaining": "{count} cəhd qaldı",
     "footer": "Uşaqlar üçün təhlükəsiz və əyləncəli ingilis dili öyrənmə",
+    "poweredBy": "Qarint LLC tərəfindən təqdim olunur",
     "onboarding": {
       "headline": "Qarint Junior ilə nələr edə bilərsən?",
-      "feature1": "Əyləncəli mini oyunlar oyna, yeni sözlər öyrən",
+      "feature1": "Söz ehtiyatını inkişaf etdir, mini oyunlarla əylən",
       "feature2": "XP və nişanlar qazan, liderlər cədvəlində qalx",
-      "feature3": "Təhlükəsiz və dostcasına — uşaqlar üçün"
+      "feature3": "İdrak və motor bacarıqlarını dəstəkləyir — uşaqlar üçün təhlükəsiz",
+      "promptPlaceholder": "Qarint Junior ilə oyun oynayın və ingilis dilini öyrənin"
     }
   },
   "loginLayout": { "title": "Daxil ol", "description": "Qarint Junior ilə ingilis dilini öyrənməyə başlamaq üçün daxil olun və ya hesab yaradın." },
@@ -178,10 +213,46 @@
     "avatarLabels": { "lion": "Şir", "astronaut": "Kosmonavt", "robot": "Robot", "fox": "Tülkü", "cat": "Pişik", "butterfly": "Kəpənək", "bear": "Ayı", "owl": "Bayquş", "dolphin": "Delfin", "unicorn": "Təkbuynuz", "star": "Ulduz", "balloon": "Şar" }
   },
   "streak": {
-    "xpPerDay": "Gündə +500 XP",
+    "xpPerDay": "Hər gün oynayanda 500 XP",
     "prevWeek": "Əvvəlki həftə",
     "nextWeek": "Növbəti həftə",
     "thisWeek": "Bu həftə",
     "rewardLabel": "+500"
+  },
+  "legal": {
+    "cookieBanner": {
+      "title": "Kuki (Cookie) Seçimləri",
+      "description": "Sessiyanızı təhlükəsiz saxlamaq, dil və mövzu seçimlərinizi yadda saxlamaq üçün zəruri kukilərdən istifadə edirik. Həmçinin platformamızı qorumaq məqsədilə CAPTCHA kimi təhlükəsizlik yönümlü istəyə bağlı kukilər də istifadə olunur.",
+      "acceptButton": "Hamısını Qəbul Et",
+      "settingsButton": "Tənzimləmələri İdarə Et"
+    },
+    "privacyPolicy": {
+      "text": "Qarint Junior üçün məlumat nəzarətçisi Qarint-dir.\n\nÖvladınızın təhsil səyahətini dəstəkləmək və fərdiləşdirmək üçün yalnız əsas profil məlumatları və öyrənmə gedişatı kimi minimal məlumatları toplayırıq.\n\nMəlumatlar yalnız hesab aktiv olduğu müddətdə saxlanılır. Valideynlər istədikləri zaman uşaqlarının məlumatlarını yoxlamaq, idarə etmək və ya silmək hüququna malikdirlər.\n\nMəlumatlarınızı heç vaxt satmırıq. Məlumat bazasının idarə edilməsi üçün Supabase və təhlükəsizlik infrastrukturu üçün Cloudflare kimi etibarlı üçüncü tərəf xidmətlərindən istifadə edirik."
+    },
+    "termsOfUse": {
+      "text": "Qarint Junior, 4-12 yaşlı uşaqlar üçün xüsusi olaraq hazırlanmış interaktiv ingilis dili öyrənmə oyunudur.\n\nHesabın yaradılması və uşağın platformadan istifadəsinə nəzarət valideynin və ya qanuni qəyyumun məsuliyyətindədir.\n\nBütün tədris materialları, dizaynlar və oyunlar Qarint-in əqli mülkiyyətidir. Kəsintisiz bir təcrübə təqdim etməyə çalışsaq da, müvəqqəti texniki fasilələrə görə məsuliyyət daşımırıq."
+    },
+    "registration": {
+      "checkboxLabel": "Qarint Junior və ingilis dili təhsil məzmunları haqqında məlumatlandırma və tanıtım e-poçtları almaq istəyirəm.",
+      "checkboxHint": "İstədiyiniz zaman abunəlikdən çıxa bilərsiniz."
+    },
+    "parentInfo": {
+      "title": "Valideynlər üçün: Məzmun keyfiyyəti və dəyərlər",
+      "point0": "Bütün məzmunumuz Cambridge YLE standartlarına uyğundur və 4-12 yaş qrupu üçün xüsusi olaraq hazırlanıb.",
+      "point1": "Oyunlarımızda heç bir zorakılıq, zərərli elementlər və ya mənfi ifadələr yoxdur.",
+      "point2": "Məzmunumuz dürüstlük, paylaşmaq və hörmət kimi əsas insani dəyərləri aşılayır.",
+      "point3": "Xal itirmək qorxusu olmayan, tamamilə təhsilə və inkişafa yönəlmiş oyun strukturu.",
+      "point4": "Məlumat təhlükəsizliyi və uşaq təhlükəsizliyi standartlarına tam riayət."
+    },
+    "parentalLock": {
+      "settingDescription": "Valideyn nəzarəti rejimi: Açıq olduqda yalnız oyunlardan istifadə etmək olar; profil və digər bölmələr kilidlənir. Kilidi açmaq üçün doğum tarixiniz tələb olunur.",
+      "toggleLabelLocked": "Valideyn kilidi (uşaq rejimi)",
+      "toggleLabelUnlocked": "Valideyn rejimi",
+      "modalTitle": "Valideyn kilidini açmaq üçün doğum tarixinizi daxil edin.",
+      "modalSubmit": "Kilidi aç",
+      "modalCancel": "Ləğv et",
+      "modalError": "Doğum tarixi uyğun gəlmədi. Xahiş edirik, qeydiyyat zamanı qeyd etdiyiniz doğum tarixini daxil edin.",
+      "birthDatePlaceholder": "Doğum tarixi"
+    }
   }
 }

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,11 +6,21 @@
 
 @layer base {
   body {
-    @apply bg-white text-gray-900 font-body antialiased;
+    @apply bg-white text-gray-900 font-body text-body antialiased
+           dark:bg-gray-900 dark:text-gray-100;
   }
 
-  h1, h2, h3, h4 {
-    @apply font-display;
+  h1 {
+    @apply font-display text-heading-1 font-extrabold;
+  }
+  h2 {
+    @apply font-display text-heading-2 font-bold;
+  }
+  h3 {
+    @apply font-display text-heading-3 font-bold;
+  }
+  h4 {
+    @apply font-display text-heading-4 font-semibold;
   }
 }
 
@@ -18,7 +28,9 @@
   .card-game {
     @apply bg-white rounded-2xl shadow-card border border-gray-100
            hover:shadow-card-hover hover:-translate-y-1
-           transition-all duration-300 ease-out;
+           transition-all duration-300 ease-out
+           dark:bg-gray-800 dark:border-gray-700 dark:shadow-none
+           dark:hover:shadow-lg dark:hover:border-gray-600;
   }
 
   .btn-primary {
@@ -26,14 +38,16 @@
            rounded-xl px-6 py-3
            hover:bg-primary-600 active:scale-95
            transition-all duration-200 ease-out
-           shadow-sm hover:shadow-md;
+           shadow-sm hover:shadow-md
+           dark:bg-primary-500 dark:hover:bg-primary-400;
   }
 
   .btn-secondary {
     @apply bg-gray-100 text-gray-700 font-display font-semibold
            rounded-xl px-6 py-3
            hover:bg-gray-200 active:scale-95
-           transition-all duration-200 ease-out;
+           transition-all duration-200 ease-out
+           dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600;
   }
 
   .game-card-face {
@@ -44,19 +58,23 @@
 
   .game-card-back {
     @apply game-card-face border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100
-           hover:border-gray-300 hover:shadow-md;
+           hover:border-gray-300 hover:shadow-md
+           dark:border-gray-600 dark:from-gray-700 dark:to-gray-800 dark:hover:border-gray-500;
   }
 
   .game-card-front {
-    @apply game-card-face border-primary-200 bg-white shadow-md;
+    @apply game-card-face border-primary-200 bg-white shadow-md
+           dark:border-primary-500 dark:bg-gray-800;
   }
 
   .game-card-matched {
-    @apply game-card-face border-green-300 bg-green-50 opacity-60;
+    @apply game-card-face border-green-300 bg-green-50 opacity-60
+           dark:border-green-600 dark:bg-green-900/50;
   }
 
   .progress-bar {
-    @apply h-3 bg-gray-100 rounded-full overflow-hidden;
+    @apply h-3 bg-gray-100 rounded-full overflow-hidden
+           dark:bg-gray-700;
   }
 
   .progress-bar-fill {
@@ -70,15 +88,18 @@
   }
 
   .badge-primary {
-    @apply badge bg-primary-50 text-primary;
+    @apply badge bg-primary-50 text-primary
+           dark:bg-primary-900/40 dark:text-primary-200;
   }
 
   .badge-blue {
-    @apply badge bg-blue-50 text-blue-600;
+    @apply badge bg-blue-50 text-blue-600
+           dark:bg-blue-900/40 dark:text-blue-200;
   }
 
   .badge-green {
-    @apply badge bg-green-50 text-green-600;
+    @apply badge bg-green-50 text-green-600
+           dark:bg-green-900/40 dark:text-green-200;
   }
 }
 
@@ -88,6 +109,9 @@
   }
   .safe-area-top {
     padding-top: env(safe-area-inset-top);
+  }
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
   }
   .touch-manipulation {
     touch-action: manipulation;
@@ -101,8 +125,57 @@
   }
 }
 
+/* Login: grainy gradient panel (SVG noise + animated gradient) */
+.login-grainy-panel {
+  isolation: isolate;
+  background:
+    linear-gradient(
+      135deg,
+      #fef2f2 0%,
+      #fce7f3 25%,
+      #e0e7ff 50%,
+      #fef3c7 75%,
+      #fecdd3 100%
+    );
+  background-size: 200% 200%;
+  animation: gradient-shift 20s ease-in-out infinite;
+}
+.dark .login-grainy-panel {
+  background:
+    linear-gradient(
+      135deg,
+      #1f1f2e 0%,
+      #2d1f2e 25%,
+      #1f2235 50%,
+      #2d2a1f 75%,
+      #2e1f24 100%
+    );
+}
+.login-grainy-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/noise.svg");
+  background-repeat: repeat;
+  opacity: 0.4;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
+}
+
 @media (max-width: 767px) {
   .card-game {
     @apply hover:translate-y-0 hover:shadow-card;
   }
+}
+
+/* Navigation progress bar (NProgress) – primary renk, üstte ince çizgi */
+#nprogress .bar {
+  background: #E11D48 !important;
+  height: 3px !important;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #E11D48, 0 0 5px #E11D48 !important;
+}
+#nprogress .spinner {
+  display: none !important;
 }

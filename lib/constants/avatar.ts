@@ -4,6 +4,7 @@ export const AVATAR_EMOJIS = [
   '🐱', '🐶', '🐻', '🐼', '🦉', '🦁', '🐸', '🦋',
   '⭐', '🌈', '🔥', '💎', '🎯', '🧩', '📖', '✍️',
   '🎨', '🎵', '⚽', '🎮', '🖼️', '🌸', '🌻', '🍀',
+  '🎈', // balloon (onboarding)
 ];
 
 /** Accent colors (Tailwind-compatible class or hex for profile) */

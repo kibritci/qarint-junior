@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
+import { XP_PER_BLANK } from '@/lib/gameXp';
 import GameWrapper from './GameWrapper';
 
 interface Story {
@@ -152,8 +153,8 @@ export default function MadLibsGame() {
       newAnswers[currentBlank] = option;
       setAnswers(newAnswers);
       setWrongReaction(null);
-      addXp(10);
-      setTotalScore((prev) => prev + 10);
+      addXp(XP_PER_BLANK);
+      setTotalScore((prev) => prev + XP_PER_BLANK);
 
       confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } });
 
@@ -185,7 +186,7 @@ export default function MadLibsGame() {
     const next = currentStory + 1;
     if (next >= STORIES.length) {
       setIsAllComplete(true);
-      updateGamification(totalScore);
+      updateGamification(totalScore, 'mad-libs');
       confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
     } else {
       initStory(next);
@@ -205,9 +206,9 @@ export default function MadLibsGame() {
       <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">📖</div>
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('allStoriesComplete')}</h2>
+          <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('allStoriesComplete')}</h2>
           <p className="text-5xl font-display font-black text-primary mb-2">{totalScore}</p>
-          <p className="text-gray-500 mb-8">{t('totalPointsEarned')}</p>
+          <p className="text-gray-500 dark:text-gray-400 mb-8">{t('totalPointsEarned')}</p>
           <button onClick={restart} className="btn-primary text-lg px-8 py-4">
             {t('playAgain')}
           </button>
@@ -221,8 +222,8 @@ export default function MadLibsGame() {
       {/* Header */}
       <div className="flex items-center justify-between mb-4 md:mb-6">
         <div className="min-w-0">
-          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{t('fillInStory')}</h2>
-          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">Pick the right word - wrong ones are funny!</p>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100">{t('fillInStory')}</h2>
+          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">{t('pickRightWordHint')}</p>
         </div>
         <div className="badge-green flex-shrink-0">
           Story {currentStory + 1} / {STORIES.length}
@@ -230,7 +231,7 @@ export default function MadLibsGame() {
       </div>
 
       {/* Story Text */}
-      <div className="p-4 md:p-6 bg-white rounded-xl md:rounded-2xl border border-gray-100 shadow-card mb-4 md:mb-6">
+      <div className="p-4 md:p-6 bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl border border-gray-100 dark:border-gray-700 shadow-card mb-4 md:mb-6">
         <div className="text-base md:text-xl leading-relaxed font-body">
           {(() => {
             let blankIdx = 0;
@@ -246,10 +247,10 @@ export default function MadLibsGame() {
                     className={`
                       inline-block mx-1 px-3 py-1 rounded-lg font-display font-bold
                       ${answer
-                        ? 'bg-green-100 text-green-700 border border-green-200'
+                        ? 'bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800'
                         : isCurrentBlank
                           ? 'bg-primary-50 text-primary border-2 border-primary-200 animate-pulse-glow'
-                          : 'bg-gray-100 text-gray-400 border border-gray-200'
+                          : 'bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-gray-600'
                       }
                     `}
                   >
@@ -267,22 +268,22 @@ export default function MadLibsGame() {
       {wrongReaction && (
         <div className="mb-4 md:mb-6 p-4 md:p-5 bg-orange-50 rounded-xl md:rounded-2xl border border-orange-200 text-center animate-funny-shake">
           <p className="text-3xl md:text-4xl mb-1 md:mb-2">{wrongReaction.emoji}</p>
-          <p className="text-sm md:text-base text-orange-700 font-display font-bold">{wrongReaction.text}</p>
-          <p className="text-xs md:text-sm text-orange-500 mt-1">Try another word!</p>
+          <p className="text-sm md:text-base text-orange-700 dark:text-orange-300 font-display font-bold">{wrongReaction.text}</p>
+          <p className="text-xs md:text-sm text-orange-500 mt-1">{t('tryAnotherWord')}</p>
         </div>
       )}
 
       {/* Options */}
       {!isStoryComplete && (
         <div className="mb-4 md:mb-6">
-          <p className="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 text-center">Pick the right word:</p>
+          <p className="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 text-center">{t('pickRightWord')}</p>
           <div className="flex flex-wrap gap-2 md:gap-3 justify-center">
             {story.blanks[currentBlank]?.options.map((option) => (
               <button
                 key={option}
                 onClick={() => handleOptionClick(option)}
-                className="px-4 md:px-6 py-2.5 md:py-3 bg-white rounded-lg md:rounded-xl border-2 border-gray-200
-                           font-display font-bold text-sm md:text-base text-gray-700
+                className="px-4 md:px-6 py-2.5 md:py-3 bg-white dark:bg-gray-800 rounded-lg md:rounded-xl border-2 border-gray-200 dark:border-gray-600
+                           font-display font-bold text-sm md:text-base text-gray-700 dark:text-gray-300
                            shadow-card active:scale-95 transition-all duration-200 cursor-pointer"
               >
                 {option}
@@ -296,8 +297,8 @@ export default function MadLibsGame() {
       {isStoryComplete && (
         <div className="text-center animate-bounce-in">
           <div className="mb-4 p-4 bg-green-50 rounded-xl border border-green-200">
-            <p className="text-green-700 font-display font-bold">
-              ✅ Story complete! Great job!
+            <p className="text-green-700 dark:text-green-300 font-display font-bold">
+              ✅ {t('storyCompleteGreatJob')}
             </p>
           </div>
           <button onClick={nextStory} className="btn-primary text-lg px-8">

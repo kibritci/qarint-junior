@@ -4,25 +4,40 @@
       "home": "Inicio",
       "games": "Juegos",
       "leaderboard": "Clasificación",
-      "profile": "Perfil"
+      "profile": "Perfil",
+      "settings": "Ajustes"
     },
     "profileMenu": {
-      "profileSettings": "Perfil y ajustes",
+      "profile": "Perfil",
+      "settings": "Ajustes",
       "changePassword": "Cambiar contraseña",
-      "signOut": "Cerrar sesión"
+      "signOut": "Cerrar sesión",
+      "language": "Idioma",
+      "theme": "Tema",
+      "themeSystem": "Según sistema",
+      "themeLight": "Claro",
+      "themeDark": "Oscuro"
     },
     "fallbackStudent": "Estudiante",
     "ariaHome": "Qarint Junior Inicio",
     "altLogo": "Qarint Junior",
-    "selectLanguage": "Seleccionar idioma"
+    "selectLanguage": "Seleccionar idioma",
+    "footerPrivacy": "Privacidad",
+    "footerTerms": "Términos de uso",
+    "footerForParents": "Para padres",
+    "footer404EasterEgg": "Página perdida 🐣",
+    "unlock": "Desbloquear"
   },
   "home": {
     "beta": "Beta",
     "betaMessage": "¡Eres uno de nuestros primeros probadores — tu opinión da forma a la próxima versión!",
     "sendFeedback": "Enviar opinión",
-    "chainBreakTitle": "Zinciri Kırma!",
+    "betaModalTitle": "¡Estás en nuestra Beta! 🎉",
+    "betaModalDescription": "Eres uno de nuestros primeros probadores. Tu opinión y comentarios dan forma a la próxima versión — nos encantaría conocer tu experiencia.",
+    "betaModalClose": "Cerrar",
+    "chainBreakTitle": "¡No rompas la cadena!",
     "chainBreakHint": "Juega al menos una vez cada día esta semana.",
-    "xpPerDay": "+500 XP al día",
+    "xpPerDay": "500 XP al jugar cada día",
     "dayStreak": "Racha diaria",
     "totalXp": "Total XP",
     "games": "Juegos",
@@ -32,6 +47,8 @@
     "pageLabel": "Juegos",
     "miniGames": "Mini juegos",
     "cambridgeBadge": "Alineado con Cambridge YLE",
+    "topicQuestion": "¿Qué quieres aprender?",
+    "gameQuestion": "¿Cómo quieres jugar?",
     "selectTopic": "Elegir tema",
     "selectLevel": "Nivel",
     "pickGame": "Elegir juego",
@@ -63,6 +80,7 @@
       "madLibs": "Historias Mad-Libs",
       "pictureQuiz": "Quiz de imágenes"
     },
+    "playedCount": "Jugado {count}",
     "subtitles": {
       "memoryMatch": "Empareja palabras con imágenes",
       "splatWordHunt": "¡Revienta las burbujas correctas!",
@@ -79,7 +97,7 @@
   "profile": {
     "title": "Perfil",
     "description": "Personaliza tu nombre, avatar y color. Así aparecerás en la clasificación.",
-    "chainBreakTitle": "Zinciri Kırma",
+    "chainBreakTitle": "No rompas la cadena",
     "chainSwipeDescription": "Desliza para ver las semanas — desde tu primera semana hasta esta + 1.",
     "totalXp": "Total XP",
     "dayStreak": "Racha diaria",
@@ -99,6 +117,8 @@
     "updatePassword": "Actualizar contraseña",
     "updating": "Actualizando...",
     "editAvatar": "Editar avatar",
+    "editNameAndPassword": "Cambiar nombre o contraseña",
+    "editProfile": "Editar perfil",
     "emoji": "Emoji",
     "photo": "Foto",
     "choosePhoto": "Elegir foto",
@@ -107,9 +127,22 @@
     "imageTooBig": "La imagen debe ser menor de {size} KB.",
     "failedToSave": "Error al guardar.",
     "cancel": "Cancelar",
-    "save": "Guardar"
+    "save": "Guardar",
+    "analytics": {
+      "weeklyXp": "XP semanal",
+      "gameDistribution": "Juegos jugados",
+      "recentActivity": "Actividad reciente",
+      "noDataWeekly": "Aún no hay datos semanales. Aparecerán al jugar.",
+      "noDataGames": "Aún no hay datos de juegos.",
+      "noDataActivity": "Aún no hay actividad."
+    }
   },
   "profileHeader": { "editAvatar": "Editar avatar" },
+  "settings": {
+    "title": "Ajustes",
+    "description": "Cambia tu nombre visible y contraseña.",
+    "backToProfile": "Volver al perfil"
+  },
   "leaderboard": {
     "heroTitle": "¡Lo estás haciendo genial!",
     "heroSubtitle": "Mira en qué puesto estás esta semana. Juega, gana XP y sube en la lista.",
@@ -148,11 +181,13 @@
     "createAccount": "Crear cuenta",
     "attemptsRemaining": "{count} intentos restantes",
     "footer": "Aprendizaje de inglés seguro y divertido para niños",
+    "poweredBy": "Desarrollado por Qarint LLC",
     "onboarding": {
       "headline": "¿Qué puedes hacer con Qarint Junior?",
-      "feature1": "Juega a mini-juegos y aprende palabras nuevas",
+      "feature1": "Amplía vocabulario y diviértete con mini-juegos",
       "feature2": "Gana XP e insignias y sube en el ranking",
-      "feature3": "Seguro y amigable — hecho para niños"
+      "feature3": "Favorece habilidades cognitivas y motoras — seguro para niños",
+      "promptPlaceholder": "Juega y aprende inglés con Qarint Junior"
     }
   },
   "loginLayout": { "title": "Iniciar sesión", "description": "Inicia sesión o crea una cuenta para aprender inglés con Qarint Junior." },
@@ -178,10 +213,46 @@
     "avatarLabels": { "lion": "León", "astronaut": "Astronauta", "robot": "Robot", "fox": "Zorro", "cat": "Gato", "butterfly": "Mariposa", "bear": "Oso", "owl": "Búho", "dolphin": "Delfín", "unicorn": "Unicornio", "star": "Estrella", "balloon": "Globo" }
   },
   "streak": {
-    "xpPerDay": "+500 XP al día",
+    "xpPerDay": "500 XP al jugar cada día",
     "prevWeek": "Semana anterior",
     "nextWeek": "Semana siguiente",
     "thisWeek": "Esta semana",
     "rewardLabel": "+500"
+  },
+  "legal": {
+    "cookieBanner": {
+      "title": "Preferencias de Cookies",
+      "description": "Utilizamos cookies esenciales para mantener su sesión segura, recordar su idioma y guardar su tema. También usamos cookies opcionales con fines de seguridad (como CAPTCHA) para proteger nuestra plataforma.",
+      "acceptButton": "Aceptar Todo",
+      "settingsButton": "Administrar Ajustes"
+    },
+    "privacyPolicy": {
+      "text": "El responsable de los datos de Qarint Junior es Qarint.\n\nRecopilamos datos mínimos, como información básica del perfil y el progreso de aprendizaje, estrictamente para apoyar y personalizar el viaje educativo de su hijo.\n\nLos datos se conservan solo mientras la cuenta permanezca activa. Los padres tienen pleno derecho a revisar, administrar o solicitar la eliminación de los datos de sus hijos en cualquier momento.\n\nNo vendemos sus datos. Utilizamos servicios de terceros seguros y confiables como Supabase para la gestión de bases de datos y Cloudflare para la infraestructura de seguridad."
+    },
+    "termsOfUse": {
+      "text": "Qarint Junior es un juego interactivo para aprender inglés diseñado específicamente para niños de 4 a 12 años.\n\nLos padres o tutores legales son responsables de la creación de la cuenta y de supervisar el uso de la plataforma por parte del niño.\n\nTodo el contenido educativo, diseños y juegos son propiedad intelectual de Qarint. Aunque nos esforzamos por ofrecer un servicio ininterrumpido, no nos hacemos responsables de interrupciones técnicas temporales."
+    },
+    "registration": {
+      "checkboxLabel": "Deseo recibir correos electrónicos informativos y promocionales sobre Qarint Junior y contenidos de educación en inglés.",
+      "checkboxHint": "Puede darse de baja en cualquier momento."
+    },
+    "parentInfo": {
+      "title": "Para los padres: Calidad del contenido y valores",
+      "point0": "Todo el contenido está alineado con los estándares de Cambridge YLE y adaptado cuidadosamente para niños de 4 a 12 años.",
+      "point1": "Absolutamente nada de violencia, elementos dañinos o lenguaje inapropiado.",
+      "point2": "Nuestros juegos promueven activamente valores fundamentales como la honestidad, el compartir y el respeto mutuo.",
+      "point3": "Un sistema de juego centrado en la educación donde los niños aprenden a su propio ritmo, sin el estrés de perder puntos.",
+      "point4": "Estricto cumplimiento de los protocolos de privacidad de datos y seguridad infantil."
+    },
+    "parentalLock": {
+      "settingDescription": "Modo de control parental: Cuando está activado, solo se puede acceder a los juegos; el perfil y otras áreas están bloqueadas. Se requiere su fecha de nacimiento para desbloquear.",
+      "toggleLabelLocked": "Bloqueo parental (Modo infantil)",
+      "toggleLabelUnlocked": "Modo para padres",
+      "modalTitle": "Ingrese su fecha de nacimiento para desbloquear.",
+      "modalSubmit": "Desbloquear",
+      "modalCancel": "Cancelar",
+      "modalError": "La fecha de nacimiento no coincide. Por favor, ingrese la fecha de nacimiento proporcionada durante el registro.",
+      "birthDatePlaceholder": "Fecha de nacimiento"
+    }
   }
 }

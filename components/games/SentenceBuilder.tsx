@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
+import { XP_PER_SENTENCE } from '@/lib/gameXp';
 import GameWrapper from './GameWrapper';
 
 interface Sentence {
@@ -91,8 +92,8 @@ export default function SentenceBuilder() {
 
     if (wrong.length === 0) {
       setIsCorrect(true);
-      addXp(20);
-      setTotalScore((prev) => prev + 20);
+      addXp(XP_PER_SENTENCE);
+      setTotalScore((prev) => prev + XP_PER_SENTENCE);
       confetti({ particleCount: 80, spread: 90, origin: { y: 0.6 } });
       speakWord(correct.join(' '));
     } else {
@@ -112,7 +113,7 @@ export default function SentenceBuilder() {
     const next = currentIndex + 1;
     if (next >= SENTENCES.length) {
       setIsComplete(true);
-      updateGamification(totalScore);
+      updateGamification(totalScore, 'sentence-builder');
       confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
       return;
     }
@@ -140,7 +141,7 @@ export default function SentenceBuilder() {
       <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">🏆</div>
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('amazing')}</h2>
+          <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('amazing')}</h2>
           <p className="text-5xl font-display font-black text-primary mb-2">{totalScore}</p>
           <p className="text-gray-500 mb-8">{t('totalPointsEarned')}</p>
           <button onClick={restart} className="btn-primary text-lg px-8 py-4">
@@ -156,7 +157,7 @@ export default function SentenceBuilder() {
       {/* Info */}
       <div className="flex items-center justify-between mb-4 md:mb-6">
         <div className="min-w-0">
-          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{t('buildSentence')}</h2>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100">{t('buildSentence')}</h2>
           <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">{t('tapOrder')}</p>
         </div>
         <div className="badge-blue flex-shrink-0">
@@ -167,12 +168,12 @@ export default function SentenceBuilder() {
       {/* Hint */}
       <div className="mb-4 md:mb-6 p-3 md:p-4 bg-amber-50 rounded-xl border border-amber-200">
         <p className="text-xs md:text-sm text-amber-700 font-medium">
-          💡 Hint: {sentence.hint}
+          💡 {t('hintLabel')}: {sentence.hint}
         </p>
       </div>
 
       {/* Drop Zones */}
-      <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 min-h-[52px] md:min-h-[60px] p-3 md:p-4 bg-gray-50 rounded-xl md:rounded-2xl border-2 border-dashed border-gray-200">
+      <div className="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 min-h-[52px] md:min-h-[60px] p-3 md:p-4 bg-gray-50 dark:bg-gray-800 rounded-xl md:rounded-2xl border-2 border-dashed border-gray-200 dark:border-gray-600">
         {placedWords.map((word, index) => (
           <button
             key={index}
@@ -183,8 +184,8 @@ export default function SentenceBuilder() {
               ${wrongSlots.includes(index)
                 ? 'animate-spring-back border-red-300 bg-red-50 text-red-600'
                 : word
-                  ? 'border-primary-200 bg-white text-gray-800 shadow-sm active:scale-95 cursor-pointer'
-                  : 'border-dashed border-gray-300 bg-white text-gray-300'
+                  ? 'border-primary-200 dark:border-primary-600 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 shadow-sm active:scale-95 cursor-pointer'
+                  : 'border-dashed border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-300 dark:text-gray-500'
               }
             `}
           >
@@ -200,8 +201,8 @@ export default function SentenceBuilder() {
             <button
               key={`${word}-${i}`}
               onClick={() => handleWordClick(word)}
-              className="px-4 md:px-5 h-10 md:h-12 bg-white rounded-lg md:rounded-xl border-2 border-gray-200
-                         font-display font-bold text-xs md:text-sm text-gray-700
+              className="px-4 md:px-5 h-10 md:h-12 bg-white dark:bg-gray-800 rounded-lg md:rounded-xl border-2 border-gray-200 dark:border-gray-600
+                         font-display font-bold text-xs md:text-sm text-gray-700 dark:text-gray-300
                          shadow-card active:scale-95 transition-all duration-200 cursor-pointer"
             >
               {word}

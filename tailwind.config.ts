@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -26,8 +27,20 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['"Nunito"', 'sans-serif'],
-        body: ['"Inter"', 'sans-serif'],
+        display: ['var(--font-nunito)', 'sans-serif'],
+        body: ['var(--font-nunito)', 'sans-serif'],
+        friendly: ['"Quicksand"', 'sans-serif'],
+      },
+      fontSize: {
+        "heading-1": ["2.25rem", { lineHeight: "2.5rem" }],
+        "heading-2": ["1.875rem", { lineHeight: "2.25rem" }],
+        "heading-3": ["1.5rem", { lineHeight: "1.75rem" }],
+        "heading-4": ["1.25rem", { lineHeight: "1.5rem" }],
+        "body-lg": ["1.125rem", { lineHeight: "1.75rem" }],
+        body: ["1rem", { lineHeight: "1.5rem" }],
+        "body-sm": ["0.875rem", { lineHeight: "1.25rem" }],
+        caption: ["0.75rem", { lineHeight: "1rem" }],
+        label: ["0.6875rem", { lineHeight: "1rem" }],
       },
       keyframes: {
         "funny-shake": {
@@ -87,6 +100,15 @@ const config: Config = {
           "25%": { transform: "rotate(-8deg)" },
           "75%": { transform: "rotate(8deg)" },
         },
+        "gradient-shift": {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
+        "flame-flicker": {
+          "0%, 100%": { transform: "scale(1)", opacity: "1" },
+          "50%": { transform: "scale(1.04)", opacity: "0.92" },
+        },
       },
       animation: {
         "funny-shake": "funny-shake 0.6s ease-in-out",
@@ -100,6 +122,11 @@ const config: Config = {
         "slide-up": "slide-up 0.4s ease-out",
         "slide-in-left": "slide-in-left 0.25s ease-out",
         "wiggle": "wiggle 0.3s ease-in-out",
+        "gradient-shift": "gradient-shift 20s ease-in-out infinite",
+        "flame-flicker": "flame-flicker 1.5s ease-in-out infinite",
+      },
+      backgroundSize: {
+        "gradient-move": "200% 200%",
       },
       boxShadow: {
         'card': '0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',

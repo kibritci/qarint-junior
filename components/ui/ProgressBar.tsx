@@ -34,10 +34,10 @@ export default function ProgressBar({
     <div className={`w-full ${className}`}>
       {showLabel && (
         <div className="flex justify-between mb-1">
-          <span className="text-xs font-semibold text-gray-500">{Math.round(percent)}%</span>
+          <span className="text-xs font-semibold text-gray-500 dark:text-gray-400">{Math.round(percent)}%</span>
         </div>
       )}
-      <div className={`${sizeMap[size]} bg-gray-100 rounded-full overflow-hidden`}>
+      <div className={`${sizeMap[size]} bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden`}>
         <div
           className={`h-full bg-gradient-to-r ${colorMap[color]} rounded-full transition-all duration-500 ease-out`}
           style={{ width: `${percent}%` }}

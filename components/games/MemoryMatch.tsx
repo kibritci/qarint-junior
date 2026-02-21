@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
+import { XP_PER_MATCH } from '@/lib/gameXp';
 import { VocabularyWord } from '@/types';
 import GameWrapper from './GameWrapper';
 
@@ -46,7 +47,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
 
   useEffect(() => {
     if (words.length === 0) return;
-    const gameWords = words.slice(0, 6);
+    const gameWords = words.slice(0, 4);
     const gameCards: Card[] = [];
 
     gameWords.forEach((word) => {
@@ -103,7 +104,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
           );
           setFlippedCards([]);
           setIsChecking(false);
-          addXp(10);
+          addXp(XP_PER_MATCH);
 
           confetti({ particleCount: 60, spread: 80, origin: { y: 0.7 } });
 
@@ -111,7 +112,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
             const next = prev + 1;
             if (next === totalPairs) {
               setIsGameComplete(true);
-              updateGamification(next * 10);
+              updateGamification(next * XP_PER_MATCH, 'memory-match');
               confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
             }
             return next;
@@ -150,46 +151,54 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
   if (cards.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
-        <div className="animate-pulse text-gray-400 font-display text-lg">Loading game...</div>
+        <div className="animate-pulse text-gray-400 dark:text-gray-500 font-display text-lg">Loading game...</div>
       </div>
     );
   }
 
-  return (
-    <GameWrapper title={t('title')} progress={progress}>
-      <div className="flex items-center justify-between mb-4 md:mb-6">
-        <div className="min-w-0">
-          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{t('title')}</h2>
-          <p className="text-xs md:text-sm text-gray-400 mt-0.5 md:mt-1">{t('description')}</p>
-        </div>
-        <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
-          <div className="text-center">
-            <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{moves}</p>
-            <p className="text-[10px] md:text-xs text-gray-400">{t('moves')}</p>
-          </div>
-          <div className="w-px h-6 md:h-8 bg-gray-200" />
-          <div className="text-center">
-            <p className="text-xl md:text-2xl font-display font-bold text-primary">{matches}/{totalPairs}</p>
-            <p className="text-[10px] md:text-xs text-gray-400">{t('matched')}</p>
-          </div>
-        </div>
+  const headerTrailing = (
+    <div className="flex items-center gap-2 md:gap-3">
+      <div className="text-center">
+        <p className="text-base md:text-lg font-display font-bold text-gray-900 dark:text-gray-100 tabular-nums">{moves}</p>
+        <p className="text-[10px] md:text-xs text-gray-400 dark:text-gray-500">{t('moves')}</p>
       </div>
+      <div className="w-px h-5 md:h-6 bg-gray-200 dark:bg-gray-600" />
+      <div className="text-center">
+        <p className="text-base md:text-lg font-display font-bold text-primary tabular-nums">{matches}/{totalPairs}</p>
+        <p className="text-[10px] md:text-xs text-gray-400 dark:text-gray-500">{t('matched')}</p>
+      </div>
+    </div>
+  );
 
+  return (
+    <GameWrapper title={t('title')} progress={progress} headerTrailing={headerTrailing}>
+      <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">{t('description')}</p>
+
+      {/* Completion bottom sheet (Duolingo style) */}
       {isGameComplete && (
-        <div className="mb-6 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-2xl border border-green-200 animate-bounce-in">
-          <div className="text-center">
-            <p className="text-4xl mb-2">🎉</p>
-            <h3 className="text-xl font-display font-bold text-green-800 mb-1">{t('congratulations')}</h3>
-            <p className="text-green-600 text-sm mb-4">{t('completedInMoves', { moves })}</p>
-            <button onClick={resetGame} className="btn-primary">
-              {t('playAgain')}
-            </button>
+        <>
+          <div className="fixed inset-0 bg-black/30 z-50" aria-hidden />
+          <div
+            className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 rounded-t-2xl shadow-[0_-4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_-4px_20px_rgba(0,0,0,0.3)] px-4 pt-5 pb-6 safe-area-bottom animate-slide-up"
+            role="dialog"
+            aria-labelledby="memory-complete-title"
+          >
+            <div className="max-w-sm mx-auto text-center">
+              <p className="text-3xl mb-2" aria-hidden>🎉</p>
+              <h3 id="memory-complete-title" className="text-lg font-display font-bold text-green-800 mb-1">
+                {t('congratulations')}
+              </h3>
+              <p className="text-green-600 text-sm mb-4">{t('completedInMoves', { moves })}</p>
+              <button onClick={resetGame} className="btn-primary w-full sm:w-auto">
+                {t('playAgain')}
+              </button>
+            </div>
           </div>
-        </div>
+        </>
       )}
 
-      {/* Card Grid */}
-      <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+      {/* Card Grid - 4 pairs = 8 cards, 4x2 */}
+      <div className="grid grid-cols-4 gap-1.5 md:gap-2 max-w-sm mx-auto">
         {cards.map((card, index) => {
           const isShaking = shakingCards.includes(index);
           const isRevealed = card.isFlipped || card.isMatched;
@@ -200,13 +209,13 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
               onClick={() => handleCardClick(index)}
               disabled={card.isMatched || isChecking}
               className={`
-                aspect-square rounded-xl md:rounded-2xl border-2 flex items-center justify-center p-2 md:p-3
+                aspect-square rounded-lg md:rounded-xl border-2 flex items-center justify-center p-1.5 md:p-2
                 transition-all duration-300 ease-out cursor-pointer select-none
                 ${isShaking ? 'animate-funny-shake' : ''}
                 ${card.isMatched
                   ? 'border-green-300 bg-green-50 scale-95 opacity-60'
                   : isRevealed
-                    ? 'border-primary-200 bg-white shadow-game scale-[1.02]'
+                    ? 'border-primary-200 dark:border-primary-600 bg-white dark:bg-gray-800 shadow-game scale-[1.02]'
                     : 'border-gray-200 bg-gradient-to-br from-gray-50 to-gray-100 hover:border-gray-300 hover:shadow-md active:scale-95'
                 }
                 disabled:cursor-default
@@ -215,7 +224,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
               {isRevealed ? (
                 <div className="animate-flip-in">
                   {card.type === 'word' ? (
-                    <span className="text-sm md:text-xl font-display font-bold text-gray-800 break-all leading-tight">
+                    <span className="text-[10px] md:text-sm font-display font-bold text-gray-800 dark:text-gray-200 break-all leading-tight">
                       {card.word}
                     </span>
                   ) : (
@@ -223,12 +232,12 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
                     <img
                       src={`https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/${card.openmoji_hex}.svg`}
                       alt={card.word}
-                      className="w-10 h-10 md:w-16 md:h-16"
+                      className="w-8 h-8 md:w-12 md:h-12"
                     />
                   )}
                 </div>
               ) : (
-                <span className="text-2xl md:text-3xl opacity-30 transition-opacity">❓</span>
+                <span className="text-lg md:text-2xl opacity-30 transition-opacity">❓</span>
               )}
             </button>
           );

@@ -7,14 +7,17 @@ import { createClient } from '@/lib/supabase/client';
 
 interface ProfileFormProps {
   initialDisplayName: string;
-  totalXp: number;
-  currentStreak: number;
+  totalXp?: number;
+  currentStreak?: number;
+  /** Show XP and streak stat cards (profile page). Omit or false on settings. */
+  showStats?: boolean;
 }
 
 export default function ProfileForm({
   initialDisplayName,
-  totalXp,
-  currentStreak,
+  totalXp = 0,
+  currentStreak = 0,
+  showStats = true,
 }: ProfileFormProps) {
   const t = useTranslations('profile');
   const [displayName, setDisplayName] = useState(initialDisplayName);
@@ -48,20 +51,21 @@ export default function ProfileForm({
 
   return (
     <div className="space-y-6">
-      {/* Stats */}
-      <div className="grid grid-cols-2 gap-3">
-        <div className="card-game p-4">
-          <p className="text-2xl font-display font-bold text-gray-900">{totalXp}</p>
-          <p className="text-xs text-gray-500">{t('totalXp')}</p>
+      {showStats && (
+        <div className="grid grid-cols-2 gap-3">
+          <div className="card-game p-4">
+            <p className="text-2xl font-display font-bold text-gray-900 dark:text-gray-100">{totalXp}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{t('totalXp')}</p>
+          </div>
+          <div className="card-game p-4">
+            <p className="text-2xl font-display font-bold text-gray-900 dark:text-gray-100">{currentStreak}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400">{t('dayStreak')}</p>
+          </div>
         </div>
-        <div className="card-game p-4">
-          <p className="text-2xl font-display font-bold text-gray-900">{currentStreak}</p>
-          <p className="text-xs text-gray-500">{t('dayStreak')}</p>
-        </div>
-      </div>
+      )}
 
       <div>
-        <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+        <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">
           {t('displayName')}
         </label>
         <input
@@ -70,15 +74,15 @@ export default function ProfileForm({
           onChange={(e) => setDisplayName(e.target.value)}
           placeholder={t('displayNamePlaceholder')}
           maxLength={30}
-          className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm
-                     placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
+          className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-gray-100
+                     placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/40"
         />
       </div>
 
       {message && (
         <div
           className={`p-3 rounded-xl text-sm font-medium
-            ${message.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}
+            ${message.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-300'}`}
         >
           {message.text}
         </div>
@@ -93,14 +97,14 @@ export default function ProfileForm({
         {saving ? t('saving') : t('saveProfile')}
       </button>
 
-      <section id="password" className="pt-8 border-t border-gray-200">
-        <h2 className="text-lg font-display font-bold text-gray-900 mb-2">{t('changePassword')}</h2>
-        <p className="text-sm text-gray-500 mb-4">
+      <section id="password" className="pt-8 border-t border-gray-200 dark:border-gray-700">
+        <h2 className="text-lg font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('changePassword')}</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
           {t('changePasswordHint')}
         </p>
         <div className="space-y-3">
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">
               {t('newPassword')}
             </label>
             <input
@@ -109,12 +113,12 @@ export default function ProfileForm({
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="••••••••"
               minLength={6}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm
-                         placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-gray-100
+                         placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
           </div>
           <div>
-            <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">
+            <label className="block text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-1.5">
               {t('confirmPassword')}
             </label>
             <input
@@ -123,14 +127,14 @@ export default function ProfileForm({
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="••••••••"
               minLength={6}
-              className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm
-                         placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full px-4 py-3 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-900 dark:text-gray-100
+                         placeholder:text-gray-400 dark:placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/20"
             />
           </div>
           {passwordMessage && (
             <div
               className={`p-3 rounded-xl text-sm font-medium
-                ${passwordMessage.type === 'success' ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-600'}`}
+                ${passwordMessage.type === 'success' ? 'bg-green-50 dark:bg-green-900/30 text-green-700 dark:text-green-300' : 'bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-300'}`}
             >
               {passwordMessage.text}
             </div>
@@ -160,8 +164,8 @@ export default function ProfileForm({
               }
             }}
             disabled={passwordSaving || !newPassword || !confirmPassword}
-            className="w-full py-3 rounded-xl border border-gray-200 bg-white text-sm font-semibold text-gray-700
-                       hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full py-3 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-sm font-semibold text-gray-700 dark:text-gray-300
+                       hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {passwordSaving ? t('updating') : t('updatePassword')}
           </button>

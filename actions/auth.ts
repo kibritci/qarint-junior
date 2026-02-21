@@ -14,3 +14,11 @@ export async function getUser() {
   const { data: { user } } = await supabase.auth.getUser();
   return user;
 }
+
+export async function setOnboardingComplete() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return { error: 'Not authenticated' };
+  await supabase.auth.updateUser({ data: { has_seen_onboarding: true } });
+  return { success: true };
+}

@@ -6,13 +6,12 @@ import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
+import { XP_CORRECT_QUIZ, XP_FAST_BONUS_QUIZ } from '@/lib/gameXp';
 import GameWrapper from './GameWrapper';
 import { getRandomQuizQuestions, IMAGE_BASE_PATH } from '@/lib/data/quizImages';
 
 const QUESTIONS_PER_ROUND = 10;
 const TIME_PER_QUESTION = 6;
-const XP_CORRECT = 10;
-const XP_FAST_BONUS = 5;
 
 type Phase = 'idle' | 'playing' | 'feedback' | 'results';
 
@@ -114,8 +113,8 @@ export default function PictureQuiz() {
     setPhase('feedback');
 
     if (correct) {
-      const bonus = timeLeft >= 4 ? XP_FAST_BONUS : 0;
-      const earned = XP_CORRECT + bonus;
+      const bonus = timeLeft >= 4 ? XP_FAST_BONUS_QUIZ : 0;
+      const earned = XP_CORRECT_QUIZ + bonus;
       setScore(prev => prev + earned);
       setCorrectCount(prev => prev + 1);
       addXp(earned);
@@ -130,7 +129,7 @@ export default function PictureQuiz() {
     if (next >= questions.length) {
       setTotalTime(Math.round((Date.now() - startTimeRef.current) / 1000));
       setPhase('results');
-      updateGamification(score);
+      updateGamification(score, 'picture-quiz');
       confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
       return;
     }
@@ -151,11 +150,11 @@ export default function PictureQuiz() {
       <GameWrapper title={t('title')} progress={0}>
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4">
           <div className="text-5xl md:text-6xl mb-4 md:mb-6 animate-bounce-in">🖼️</div>
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 md:mb-3">{t('title')}</h2>
-          <p className="text-sm md:text-base text-gray-500 mb-2 max-w-md">
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2 md:mb-3">{t('title')}</h2>
+          <p className="text-sm md:text-base text-gray-500 dark:text-gray-400 mb-2 max-w-md">
             {t('tapPlayToStart')}
           </p>
-          <p className="text-xs md:text-sm text-gray-400 mb-6 md:mb-8">
+          <p className="text-xs md:text-sm text-gray-400 dark:text-gray-500 mb-6 md:mb-8">
             {QUESTIONS_PER_ROUND} questions per round &middot; Answer fast for bonus XP!
           </p>
           <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
@@ -176,7 +175,7 @@ export default function PictureQuiz() {
       <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4 animate-bounce-in">
           <div className="text-5xl md:text-6xl mb-3 md:mb-4">{emoji}</div>
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-4 md:mb-6">{message}</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6">{message}</h2>
 
           <div className="grid grid-cols-3 gap-3 md:gap-5 mb-6 md:mb-8 w-full max-w-sm">
             <div className="bg-green-50 rounded-xl p-3 md:p-4">
@@ -193,7 +192,7 @@ export default function PictureQuiz() {
             </div>
           </div>
 
-          <p className="text-sm text-gray-400 mb-6">{t('completedIn', { seconds: totalTime })}</p>
+          <p className="text-sm text-gray-400 dark:text-gray-500 mb-6">{t('completedIn', { seconds: totalTime })}</p>
 
           <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
             {t('playAgain')}
@@ -213,17 +212,17 @@ export default function PictureQuiz() {
     <GameWrapper title={t('title')} progress={progress}>
       {/* Question counter */}
       <div className="flex items-center justify-between mb-3 md:mb-4">
-        <h2 className="text-lg md:text-xl font-display font-bold text-gray-900">
-          What is this?
+        <h2 className="text-lg md:text-xl font-display font-bold text-gray-900 dark:text-gray-100">
+          {t('whatIsThis')}
         </h2>
-        <span className="text-sm md:text-base font-display font-bold text-gray-400">
+        <span className="text-sm md:text-base font-display font-bold text-gray-400 dark:text-gray-500">
           {currentIndex + 1}/{questions.length}
         </span>
       </div>
 
       {/* Image */}
       <div className="relative w-full max-w-sm mx-auto mb-4 md:mb-5">
-        <div className="aspect-square relative rounded-2xl overflow-hidden bg-white border-2 border-gray-100 shadow-card">
+        <div className="aspect-square relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-card">
           <Image
             src={`${IMAGE_BASE_PATH}/${currentQuestion.image.filename}`}
             alt="Quiz image"
@@ -237,14 +236,14 @@ export default function PictureQuiz() {
 
       {/* Timer Bar */}
       <div className="w-full max-w-sm mx-auto mb-5 md:mb-6">
-        <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
           <div
             className={`h-full rounded-full transition-all duration-1000 ease-linear ${timerColor}`}
             style={{ width: `${timerPercent}%` }}
           />
         </div>
         <p className={`text-center text-xs font-bold mt-1 ${
-          timeLeft <= 2 ? 'text-red-500' : 'text-gray-400'
+          timeLeft <= 2 ? 'text-red-500' : 'text-gray-400 dark:text-gray-500'
         }`}>
           {timeLeft}s
         </p>
@@ -253,7 +252,7 @@ export default function PictureQuiz() {
       {/* Options */}
       <div className="flex flex-col gap-2.5 md:gap-3 max-w-sm mx-auto">
         {currentQuestion.options.map((option) => {
-          let btnClass = 'bg-white border-2 border-gray-200 text-gray-800 active:scale-[0.98]';
+          let btnClass = 'bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 text-gray-800 dark:text-gray-200 active:scale-[0.98]';
 
           if (selectedAnswer !== null) {
             if (option === currentQuestion.correct) {
@@ -261,7 +260,7 @@ export default function PictureQuiz() {
             } else if (option === selectedAnswer && !isCorrectAnswer) {
               btnClass = 'bg-red-50 border-2 border-red-300 text-red-600 animate-funny-shake';
             } else {
-              btnClass = 'bg-gray-50 border-2 border-gray-100 text-gray-400';
+              btnClass = 'bg-gray-50 dark:bg-gray-700 border-2 border-gray-100 dark:border-gray-600 text-gray-400 dark:text-gray-500';
             }
           }
 
@@ -289,7 +288,7 @@ export default function PictureQuiz() {
           {isCorrectAnswer ? (
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 rounded-full border border-green-200">
               <span className="text-green-600 font-display font-bold text-sm">
-                ✓ {t('correctFeedback', { xp: timeLeft >= 4 ? XP_CORRECT + XP_FAST_BONUS : XP_CORRECT })}
+                ✓ {t('correctFeedback', { xp: timeLeft >= 4 ? XP_CORRECT_QUIZ + XP_FAST_BONUS_QUIZ : XP_CORRECT_QUIZ })}
               </span>
             </div>
           ) : (

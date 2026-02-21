@@ -12,8 +12,8 @@ export default function Card({ children, className = '', hover = true, onClick }
     <div
       onClick={onClick}
       className={`
-        bg-white rounded-2xl shadow-card border border-gray-100
-        ${hover ? 'hover:shadow-card-hover hover:-translate-y-1' : ''}
+        bg-white dark:bg-gray-800 rounded-2xl shadow-card border border-gray-100 dark:border-gray-700
+        ${hover ? 'hover:shadow-card-hover hover:-translate-y-1 dark:hover:shadow-lg dark:hover:border-gray-600' : ''}
         transition-all duration-300 ease-out
         ${onClick ? 'cursor-pointer' : ''}
         ${className}

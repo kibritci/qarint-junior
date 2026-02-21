@@ -1,19 +1,23 @@
-import { getTranslations } from 'next-intl/server';
+import { Suspense } from 'react';
 import { getLeaderboardWeekly } from '@/actions/gamification';
 import Leaderboard from '@/components/gamification/Leaderboard';
+import LeaderboardHero from '@/components/gamification/LeaderboardHero';
+import LeaderboardSkeleton from '@/components/gamification/LeaderboardSkeleton';
+
+async function LeaderboardContent() {
+  const { data: entries, error } = await getLeaderboardWeekly();
+  const list = entries ?? [];
+  return <Leaderboard entries={list} error={error} />;
+}
 
 export default async function LeaderboardPage() {
-  const t = await getTranslations('leaderboard');
-  const { data: entries, error } = await getLeaderboardWeekly();
-
   return (
     <div className="p-6 md:p-8">
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('title')}</h1>
-          <p className="text-sm text-gray-500">{t('description')}</p>
-        </div>
-        <Leaderboard entries={entries ?? []} error={error} />
+      <div className="max-w-lg mx-auto">
+        <LeaderboardHero />
+        <Suspense fallback={<LeaderboardSkeleton />}>
+          <LeaderboardContent />
+        </Suspense>
       </div>
     </div>
   );

@@ -6,17 +6,17 @@ import { useRouter } from 'next/navigation';
 import { LanguageIcon, CheckIcon } from '@heroicons/react/24/outline';
 import type { Locale } from '@/i18n/request';
 
-const LOCALE_LABELS: Record<Locale, string> = {
+export const LOCALE_LABELS: Record<Locale, string> = {
   en: 'English',
   tr: 'Türkçe',
   az: 'Azərbaycan',
   es: 'Español',
 };
 
-const COOKIE_NAME = 'NEXT_LOCALE';
+export const COOKIE_NAME = 'NEXT_LOCALE';
 const COOKIE_MAX_AGE = 365 * 24 * 60 * 60; // 1 year
 
-function setLocaleCookie(locale: Locale) {
+export function setLocaleCookie(locale: Locale) {
   document.cookie = `${COOKIE_NAME}=${locale}; path=/; max-age=${COOKIE_MAX_AGE}; SameSite=Lax`;
 }
 
@@ -50,7 +50,7 @@ export default function LanguageSwitcher() {
       <button
         type="button"
         onClick={() => setOpen((o) => !o)}
-        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+        className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
         aria-label={t('selectLanguage')}
         aria-expanded={open}
         aria-haspopup="true"
@@ -60,7 +60,7 @@ export default function LanguageSwitcher() {
       </button>
       {open && (
         <div
-          className="absolute right-0 top-full mt-1 py-1 bg-white rounded-xl shadow-lg border border-gray-100 z-[100] min-w-[140px]"
+          className="absolute right-0 top-full mt-1 py-1 bg-white dark:bg-gray-800 rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 z-[100] min-w-[140px]"
           role="menu"
         >
           {(Object.keys(LOCALE_LABELS) as Locale[]).map((loc) => (
@@ -68,7 +68,7 @@ export default function LanguageSwitcher() {
               key={loc}
               type="button"
               onClick={() => handleSelect(loc)}
-              className="flex items-center justify-between w-full px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
+              className="flex items-center justify-between w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
               role="menuitem"
             >
               <span>{LOCALE_LABELS[loc]}</span>

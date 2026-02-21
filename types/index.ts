@@ -1,11 +1,21 @@
 export interface VocabularyWord {
   id: string;
   word: string;
-  translation: string;
+  /** Translations by locale: tr, az, es, en */
+  translations: Record<string, string>;
   openmoji_hex: string;
   category: string;
   level: 'pre_a1_starters' | 'a1_movers' | 'a2_flyers';
   is_cultural_value: boolean;
+}
+
+/** Get translation for a locale; falls back to English word or first available */
+export function getVocabularyTranslation(
+  word: VocabularyWord,
+  locale: string
+): string {
+  const t = word.translations?.[locale] ?? word.translations?.en ?? word.word;
+  return t ?? word.word;
 }
 
 export interface UserGamification {

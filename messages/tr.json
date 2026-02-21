@@ -4,25 +4,40 @@
       "home": "Ana Sayfa",
       "games": "Oyunlar",
       "leaderboard": "Liderlik",
-      "profile": "Profil"
+      "profile": "Profil",
+      "settings": "Ayarlar"
     },
     "profileMenu": {
-      "profileSettings": "Profil ve ayarlar",
+      "profile": "Profil",
+      "settings": "Ayarlar",
       "changePassword": "Şifre değiştir",
-      "signOut": "Çıkış yap"
+      "signOut": "Çıkış yap",
+      "language": "Dil",
+      "theme": "Tema",
+      "themeSystem": "Sisteme göre",
+      "themeLight": "Açık",
+      "themeDark": "Koyu"
     },
     "fallbackStudent": "Öğrenci",
     "ariaHome": "Qarint Junior Ana Sayfa",
     "altLogo": "Qarint Junior",
-    "selectLanguage": "Dil seç"
+    "selectLanguage": "Dil seç",
+    "footerPrivacy": "Gizlilik",
+    "footerTerms": "Kullanım Koşulları",
+    "footerForParents": "Ebeveynler İçin",
+    "footer404EasterEgg": "Kayıp sayfa 🐣",
+    "unlock": "Kilidi Aç"
   },
   "home": {
     "beta": "Beta",
     "betaMessage": "İlk test kullanıcılarımızdan birisiniz — geri bildiriminiz bir sonraki sürümü şekillendirir!",
     "sendFeedback": "Geri Bildirim Gönder",
+    "betaModalTitle": "Siz de Beta'da bizimlesiniz! 🎉",
+    "betaModalDescription": "İlk test kullanıcılarımızdan birisiniz. Düşünceniz ve geri bildiriminiz bir sonraki sürümü şekillendiriyor — lütfen deneyiminizi paylaşın!",
+    "betaModalClose": "Kapat",
     "chainBreakTitle": "Zinciri Kırma!",
     "chainBreakHint": "Bu hafta her gün en az bir kez oyna.",
-    "xpPerDay": "Günde +500 XP",
+    "xpPerDay": "Her gün oynayınca 500 XP",
     "dayStreak": "Gün Serisi",
     "totalXp": "Toplam XP",
     "games": "Oyunlar",
@@ -32,6 +47,8 @@
     "pageLabel": "Oyunlar",
     "miniGames": "Mini Oyunlar",
     "cambridgeBadge": "Cambridge YLE Uyumlu",
+    "topicQuestion": "Ne öğrenmek istiyorsun?",
+    "gameQuestion": "Nasıl oynamak istiyorsun?",
     "selectTopic": "Konu seç",
     "selectLevel": "Seviye",
     "pickGame": "Oyunu seç",
@@ -56,6 +73,7 @@
       "a1_movers": "Orta",
       "a2_flyers": "Zor"
     },
+    "playedCount": "{count} kez oynadın",
     "titles": {
       "memoryMatch": "Hafıza Eşleştirme",
       "splatWordHunt": "Kelime Avı",
@@ -159,6 +177,8 @@
     "updatePassword": "Şifreyi güncelle",
     "updating": "Güncelleniyor...",
     "editAvatar": "Avatarı düzenle",
+    "editNameAndPassword": "Adını veya şifreni değiştir",
+    "editProfile": "Profili düzenle",
     "emoji": "Emoji",
     "photo": "Fotoğraf",
     "choosePhoto": "Fotoğraf seç",
@@ -167,12 +187,25 @@
     "imageTooBig": "Resim {size} KB'dan küçük olmalı.",
     "failedToSave": "Kaydedilemedi.",
     "cancel": "İptal",
-    "save": "Kaydet"
+    "save": "Kaydet",
+    "analytics": {
+      "weeklyXp": "Haftalık XP",
+      "gameDistribution": "Oynanan oyunlar",
+      "recentActivity": "Son aktiviteler",
+      "noDataWeekly": "Henüz haftalık veri yok. Oyun oynadıkça burada görünecek.",
+      "noDataGames": "Henüz oyun verisi yok.",
+      "noDataActivity": "Henüz aktivite yok."
+    }
   },
   "profileHeader": {
     "editAvatar": "Avatarı düzenle"
   },
-"leaderboard": {
+  "settings": {
+    "title": "Ayarlar",
+    "description": "Görünen adını ve şifreni değiştir.",
+    "backToProfile": "Profile dön"
+  },
+  "leaderboard": {
       "heroTitle": "Harika gidiyorsun!",
       "heroSubtitle": "Haftalık sıralamada neredesin? Oyun oyna, XP kazan, listede yüksel.",
       "title": "Liderlik",
@@ -210,11 +243,13 @@
     "createAccount": "Hesap Oluştur",
     "attemptsRemaining": "{count} deneme hakkı kaldı",
     "footer": "Çocuklar için güvenli ve eğlenceli İngilizce öğrenme",
+    "poweredBy": "Qarint LLC tarafından sunulmaktadır",
     "onboarding": {
       "headline": "Qarint Junior ile neler yapabilirsin?",
-      "feature1": "Eğlenceli mini oyunlar oyna, yeni kelimeler öğren",
+      "feature1": "Kelime dağarcığını geliştir, mini oyunlarla eğlen",
       "feature2": "XP ve rozet kazan, liderlik tablosunda yüksel",
-      "feature3": "Güvenli ve arkadaş canlısı — çocuklar için"
+      "feature3": "Bilişsel ve motor becerilerini destekler — çocuklar için güvenli",
+      "promptPlaceholder": "Qarint Junior ile oyun oyna ve İngilizce öğren"
     }
   },
   "loginLayout": {
@@ -256,10 +291,46 @@
     }
   },
   "streak": {
-    "xpPerDay": "Günde +500 XP",
+    "xpPerDay": "Her gün oynayınca 500 XP",
     "prevWeek": "Önceki hafta",
     "nextWeek": "Sonraki hafta",
     "thisWeek": "Bu hafta",
     "rewardLabel": "+500"
+  },
+  "legal": {
+    "cookieBanner": {
+      "title": "Çerez Tercihleri",
+      "description": "Oturumunuzu güvenli tutmak, dil ve tema tercihlerinizi hatırlamak için zorunlu çerezler kullanıyoruz. Ayrıca platformumuzu korumak amacıyla CAPTCHA gibi güvenlik odaklı isteğe bağlı çerezler de kullanılmaktadır.",
+      "acceptButton": "Tümünü Kabul Et",
+      "settingsButton": "Ayarları Yönet"
+    },
+    "privacyPolicy": {
+      "text": "Qarint Junior için veri sorumlusu Qarint'tir.\n\nÇocuğunuzun eğitim yolculuğunu desteklemek ve kişiselleştirmek amacıyla yalnızca temel profil bilgileri ve öğrenme ilerlemesi gibi asgari düzeyde veri topluyoruz.\n\nVeriler yalnızca hesap aktif olduğu sürece saklanır. Ebeveynler istedikleri zaman çocuklarının verilerini inceleme, yönetme veya silme hakkına sahiptir.\n\nVerilerinizi asla satmıyoruz. Veritabanı yönetimi için Supabase ve güvenlik altyapısı için Cloudflare gibi güvenilir ve standartlara uygun üçüncü taraf hizmetler kullanıyoruz."
+    },
+    "termsOfUse": {
+      "text": "Qarint Junior, 4-12 yaş arası çocuklar için özel olarak tasarlanmış etkileşimli bir İngilizce öğrenme oyunudur.\n\nHesabın oluşturulması ve çocuğun platformu kullanımının gözetimi ebeveynin veya yasal velinin sorumluluğundadır.\n\nTüm eğitim içerikleri, tasarımlar ve oyunlar Qarint'in fikri mülkiyetidir. Kesintisiz bir deneyim sunmak için çalışıyoruz, ancak olası geçici teknik aksaklıklardan sorumlu tutulamayız."
+    },
+    "registration": {
+      "checkboxLabel": "Qarint Junior ve İngilizce eğitim içerikleri hakkında bilgilendirme ve tanıtım e-postaları almak istiyorum.",
+      "checkboxHint": "İstediğiniz zaman abonelikten çıkabilirsiniz."
+    },
+    "parentInfo": {
+      "title": "Ebeveynler için: İçerik kalitesi ve değerler",
+      "point0": "Tüm içeriklerimiz Cambridge YLE standartlarına uygundur ve 4-12 yaş grubu için özenle hazırlanmıştır.",
+      "point1": "Oyunlarımızda şiddet, zararlı unsurlar veya olumsuz ifadeler kesinlikle bulunmaz.",
+      "point2": "İçeriklerimiz dürüstlük, paylaşım ve saygı gibi temel insani değerleri aşılar.",
+      "point3": "Puan düşürme veya kaybetme korkusu olmayan, tamamen eğitime ve gelişime odaklı oyun kurgusu.",
+      "point4": "Üst düzey veri güvenliği ve çocuk güvenliği standartlarına tavizsiz uyum."
+    },
+    "parentalLock": {
+      "settingDescription": "Ebeveyn denetim modu: Açıkken yalnızca oyunlar kullanılabilir; profil ve diğer alanlar kilitlenir. Kilidi açmak için doğum tarihiniz sorulur.",
+      "toggleLabelLocked": "Ebeveyn kilidi (çocuk modu)",
+      "toggleLabelUnlocked": "Ebeveyn modu",
+      "modalTitle": "Ebeveyn kilidini açmak için doğum tarihinizi girin.",
+      "modalSubmit": "Kilidi aç",
+      "modalCancel": "İptal",
+      "modalError": "Doğum tarihi eşleşmedi. Lütfen kayıtta belirttiğiniz doğum tarihini girin.",
+      "birthDatePlaceholder": "Doğum tarihi"
+    }
   }
 }

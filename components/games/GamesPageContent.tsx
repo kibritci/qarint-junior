@@ -1,95 +1,96 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { GAMES, GAME_ID_TO_TITLE_KEY } from '@/lib/gamesConfig';
+import { getGamePlayCounts } from '@/actions/gamification';
 import {
   MEMORY_MATCH_CATEGORIES,
-  GAME_LEVEL_IDS,
   TOPIC_THEMES,
   type GameCategoryId,
-  type GameLevelId,
 } from '@/lib/vocabularyConfig';
 
-function buildGameHref(baseHref: string, category: string, level: string): string {
-  const params = new URLSearchParams();
-  if (category && category !== 'any') params.set('category', category);
-  if (level && level !== 'any') params.set('level', level);
-  const qs = params.toString();
-  return qs ? `${baseHref}?${qs}` : baseHref;
-}
-
 const TOPIC_IDS: (GameCategoryId | 'any')[] = ['any', ...MEMORY_MATCH_CATEGORIES];
+
+function buildGameHref(baseHref: string, category: string): string {
+  if (!category || category === 'any') return baseHref;
+  return `${baseHref}?category=${encodeURIComponent(category)}`;
+}
 
 export default function GamesPageContent() {
   const t = useTranslations('games');
   const [category, setCategory] = useState<GameCategoryId | 'any'>('any');
-  const [level, setLevel] = useState<GameLevelId>('any');
+  const [playCounts, setPlayCounts] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    getGamePlayCounts().then(({ data }) => setPlayCounts(data ?? {}));
+  }, []);
 
   return (
     <div className="p-4 md:p-8">
-      <div className="max-w-5xl mx-auto">
-        {/* Üst: Başlık + Cambridge badge (sol) | Seviye dropdown (sağ) */}
-        <div className="mb-6 md:mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-xs md:text-sm text-gray-400">{t('pageLabel')}</span>
-            </div>
-            <h1 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2">
-              {t('miniGames')}
-            </h1>
-            <div className="badge-blue">
-              <span>{t('cambridgeBadge')}</span>
-            </div>
-          </div>
-          <label className="flex flex-col gap-1.5 shrink-0 sm:mt-1">
-            <span className="text-xs md:text-sm font-semibold text-gray-600">{t('selectLevel')}</span>
-            <select
-              value={level}
-              onChange={(e) => setLevel(e.target.value as GameLevelId)}
-              aria-label={t('selectLevel')}
-              className="rounded-xl border-2 border-gray-200 bg-white px-4 py-2.5 text-sm font-semibold text-gray-800 shadow-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 min-w-[140px]"
-            >
-              {GAME_LEVEL_IDS.map((id) => (
-                <option key={id} value={id}>
-                  {t(`levels.${id}`)}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-
-        {/* Orta: Oyun kategorisi – hangi oyun */}
-        <div className="mb-8">
-          <p className="text-xs md:text-sm font-semibold text-gray-600 mb-3">{t('pickGame')}</p>
-          <div className="flex flex-wrap gap-2 md:gap-3">
-            {GAMES.map((game) => (
-              <Link
-                key={game.id}
-                href={buildGameHref(game.href, category, level)}
-                className={`
-                  inline-flex items-center gap-2 shrink-0
-                  px-4 py-3 md:px-5 md:py-3.5 rounded-xl
-                  border-2 border-white/80 shadow-md
-                  bg-gradient-to-br ${game.gradient}
-                  text-white font-semibold text-sm md:text-base
-                  hover:scale-[1.03] active:scale-[0.98]
-                  transition-all duration-200
-                `}
-              >
-                <span className="text-lg md:text-xl" aria-hidden>{game.emoji}</span>
-                <span>{t(`titles.${GAME_ID_TO_TITLE_KEY[game.id] ?? game.id}`)}</span>
-              </Link>
-            ))}
+      <div className="max-w-4xl mx-auto">
+        {/* Başlık + Cambridge badge */}
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">
+            {t('miniGames')}
+          </h1>
+          <div className="badge-blue inline-flex">
+            <span>{t('cambridgeBadge')}</span>
           </div>
         </div>
 
-        {/* Alt: Konu seçimi – alttan konu seçilince yukarıdaki oyunlar bu konuyla açılır */}
-        <div>
-          <p className="text-xs md:text-sm font-semibold text-gray-600 mb-3">{t('selectTopic')}</p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
-            {TOPIC_IDS.map((id, i) => {
+        {/* Ana içerik: Oyunlar büyük kartlar (Duolingo tarzı) */}
+        <section className="mb-8" aria-labelledby="games-heading">
+          <h2 id="games-heading" className="sr-only">
+            {t('pickGame')}
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
+            {GAMES.map((game) => {
+              const count = playCounts[game.id] ?? 0;
+              const subtitleKey = GAME_ID_TO_TITLE_KEY[game.id] ?? game.id;
+              return (
+                <Link
+                  key={game.id}
+                  href={buildGameHref(game.href, category)}
+                  className={`
+                    card-game p-5 md:p-6 flex flex-col md:flex-row md:items-center gap-4
+                    group hover:shadow-card-hover
+                  `}
+                >
+                  <div
+                    className={`w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br ${game.gradient} flex items-center justify-center flex-shrink-0 shadow-sm group-hover:scale-105 transition-transform`}
+                  >
+                    <span className="text-2xl md:text-3xl" aria-hidden>
+                      {game.emoji}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="font-display font-bold text-gray-900 dark:text-gray-100 text-lg md:text-xl mb-0.5">
+                      {t(`titles.${subtitleKey}`)}
+                    </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {t(`subtitles.${subtitleKey}`)}
+                    </p>
+                    {count > 0 && (
+                      <p className="text-xs font-semibold text-primary mt-1.5">
+                        {t('playedCount', { count })}
+                      </p>
+                    )}
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* Konu: ikincil, tek satır */}
+        <section className="border-t border-gray-100 dark:border-gray-800 pt-6" aria-labelledby="topic-heading">
+          <p id="topic-heading" className="text-xs font-semibold text-gray-500 dark:text-gray-400 mb-2">
+            {t('selectTopic')}
+          </p>
+          <div className="flex flex-wrap gap-2">
+            {TOPIC_IDS.map((id) => {
               const theme = TOPIC_THEMES[id];
               const isActive = category === id;
               return (
@@ -100,24 +101,19 @@ export default function GamesPageContent() {
                   aria-pressed={isActive}
                   aria-label={t(`topics.${id}`)}
                   className={`
-                    flex flex-col items-center justify-center gap-2 md:gap-3
-                    min-h-[100px] md:min-h-[120px] rounded-2xl
-                    border-2 transition-all duration-200
-                    hover:scale-[1.02] active:scale-[0.98] shadow-sm
+                    inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold
+                    border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]
                     ${theme.bg} ${theme.border} ${theme.text}
-                    ${isActive ? 'ring-2 ring-offset-2 ring-primary shadow-md' : 'hover:shadow'}
+                    ${isActive ? 'ring-2 ring-offset-2 ring-primary' : ''}
                   `}
-                  style={{ animationDelay: `${i * 50}ms`, animationFillMode: 'both' }}
                 >
-                  <span className="text-3xl md:text-4xl" aria-hidden>{theme.emoji}</span>
-                  <span className="text-sm md:text-base font-bold text-center px-1">
-                    {t(`topics.${id}`)}
-                  </span>
+                  <span aria-hidden>{theme.emoji}</span>
+                  {t(`topics.${id}`)}
                 </button>
               );
             })}
           </div>
-        </div>
+        </section>
       </div>
     </div>
   );

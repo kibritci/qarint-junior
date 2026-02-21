@@ -5,8 +5,9 @@ import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
 import { updateGamification } from '@/actions/gamification';
+import { XP_PER_CORRECT_SPLAT } from '@/lib/gameXp';
 import GameWrapper from './GameWrapper';
-import { VOCABULARY, getWordsByCategory, CATEGORIES as ALL_CATS } from '@/lib/data/cambridgeYLE';
+import { VOCABULARY, getWordsByCategory, shuffleWords } from '@/lib/data/cambridgeYLE';
 
 interface Bubble {
   id: number;
@@ -20,24 +21,31 @@ interface Bubble {
   wrongPop: boolean;
 }
 
-function buildCategories() {
-  const gameCats = ['animals', 'food', 'family', 'nature', 'clothes', 'transport', 'sports', 'home'];
-  return gameCats
+type CategoryOption = {
+  id: string;
+  name: string;
+  correct: { word: string; emoji: string }[];
+  wrong: { word: string; emoji: string }[];
+};
+
+const SPLAT_CATEGORY_IDS = ['animals', 'food', 'family', 'nature', 'clothes', 'transport', 'sports', 'home'] as const;
+
+function buildCategories(): CategoryOption[] {
+  return SPLAT_CATEGORY_IDS
     .filter((cat) => getWordsByCategory(cat).length >= 4)
     .map((cat) => {
       const words = getWordsByCategory(cat).filter((w) => !w.openmoji_hex.includes('-'));
       const otherWords = VOCABULARY.filter((w) => w.category !== cat && !w.openmoji_hex.includes('-'));
-      const shuffledCorrect = [...words].sort(() => Math.random() - 0.5).slice(0, 6);
-      const shuffledWrong = [...otherWords].sort(() => Math.random() - 0.5).slice(0, 6);
+      const shuffledCorrect = shuffleWords(words).slice(0, 6).map((w) => ({ word: w.word, emoji: w.openmoji_hex }));
+      const shuffledWrong = shuffleWords(otherWords).slice(0, 6).map((w) => ({ word: w.word, emoji: w.openmoji_hex }));
       return {
+        id: cat,
         name: cat.charAt(0).toUpperCase() + cat.slice(1),
-        correct: shuffledCorrect.map((w) => ({ word: w.word, emoji: w.openmoji_hex })),
-        wrong: shuffledWrong.map((w) => ({ word: w.word, emoji: w.openmoji_hex })),
+        correct: shuffledCorrect,
+        wrong: shuffledWrong,
       };
     });
 }
-
-const CATEGORIES = buildCategories();
 
 function speakWord(word: string) {
   if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
@@ -49,14 +57,29 @@ function speakWord(word: string) {
   }
 }
 
-export default function SplatGame() {
+interface SplatGameProps {
+  /** Oyunlar sayfasından seçilen kategori (örn. animals, nature). */
+  initialCategoryId?: string | null;
+}
+
+export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
   const t = useTranslations('games.splatWordHunt');
+  const [gameSetup] = useState(() => {
+    const all = buildCategories();
+    const categories =
+      initialCategoryId && all.some((c) => c.id === initialCategoryId)
+        ? all.filter((c) => c.id === initialCategoryId)
+        : all;
+    const category = categories[Math.floor(Math.random() * categories.length)];
+    return { categories, category };
+  });
+  const { categories, category: initialCategory } = gameSetup;
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [category, setCategory] = useState(CATEGORIES[0]);
+  const [currentCategory, setCurrentCategory] = useState(initialCategory);
   const nextId = useRef(0);
   const animRef = useRef<number>(0);
   const lastSpawn = useRef(0);
@@ -65,7 +88,7 @@ export default function SplatGame() {
 
   const spawnBubble = useCallback(() => {
     const isCorrect = Math.random() > 0.45;
-    const pool = isCorrect ? category.correct : category.wrong;
+    const pool = isCorrect ? currentCategory.correct : currentCategory.wrong;
     const item = pool[Math.floor(Math.random() * pool.length)];
 
     const bubble: Bubble = {
@@ -80,7 +103,7 @@ export default function SplatGame() {
       wrongPop: false,
     };
     setBubbles((prev) => [...prev.filter((b) => b.y > -10 && !b.popped), bubble]);
-  }, [category]);
+  }, [currentCategory]);
 
   useEffect(() => {
     if (!isPlaying || isGameOver) return;
@@ -126,8 +149,8 @@ export default function SplatGame() {
     speakWord(bubble.word);
 
     if (bubble.isCorrect) {
-      setScore((prev) => prev + 10);
-      addXp(10);
+      setScore((prev) => prev + XP_PER_CORRECT_SPLAT);
+      addXp(XP_PER_CORRECT_SPLAT);
       setBubbles((prev) =>
         prev.map((b) => (b.id === bubble.id ? { ...b, popped: true } : b))
       );
@@ -145,8 +168,8 @@ export default function SplatGame() {
   };
 
   const startGame = () => {
-    const cat = CATEGORIES[Math.floor(Math.random() * CATEGORIES.length)];
-    setCategory(cat);
+    const cat = categories[Math.floor(Math.random() * categories.length)];
+    setCurrentCategory(cat);
     setBubbles([]);
     setScore(0);
     setTimeLeft(60);
@@ -157,7 +180,7 @@ export default function SplatGame() {
   };
 
   const finishGame = () => {
-    updateGamification(score);
+    updateGamification(score, 'splat-word-hunt');
   };
 
   useEffect(() => {
@@ -171,11 +194,11 @@ export default function SplatGame() {
       <GameWrapper title={t('title')} progress={0}>
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4">
           <div className="text-5xl md:text-6xl mb-4 md:mb-6 animate-bounce-in">🎯</div>
-          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 mb-2 md:mb-3">Splat Word Hunt</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2 md:mb-3">{t('title')}</h2>
           <p className="text-sm md:text-base text-gray-500 mb-2 max-w-md">
-            Bubbles will float up with words inside. Tap only the ones that belong to the category!
+            {t('intro')}
           </p>
-          <p className="text-xs md:text-sm text-gray-400 mb-6 md:mb-8">60 seconds - no point loss for wrong taps</p>
+          <p className="text-xs md:text-sm text-gray-400 mb-6 md:mb-8">{t('introHint')}</p>
           <button onClick={startGame} className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
             {t('play')}
           </button>
@@ -189,7 +212,7 @@ export default function SplatGame() {
       <GameWrapper title={t('title')} progress={100}>
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">🎉</div>
-          <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('timesUp')}</h2>
+          <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('timesUp')}</h2>
           <p className="text-5xl font-display font-black text-primary mb-2">{score}</p>
           <p className="text-gray-500 mb-8">{t('pointsEarned')}</p>
           <button onClick={startGame} className="btn-primary text-lg px-8 py-4">
@@ -205,16 +228,16 @@ export default function SplatGame() {
       <div className="flex items-center justify-between mb-3 md:mb-4">
         <div className="min-w-0">
           <p className="text-xs md:text-sm text-gray-400">{t('findAll')}</p>
-          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900">{category.name}</h2>
+          <h2 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100">{currentCategory.name}</h2>
         </div>
         <div className="flex items-center gap-3 md:gap-4 flex-shrink-0">
           <div className="text-center">
             <p className="text-xl md:text-2xl font-display font-bold text-primary">{timeLeft}s</p>
             <p className="text-[10px] md:text-xs text-gray-400">{t('time')}</p>
           </div>
-          <div className="w-px h-6 md:h-8 bg-gray-200" />
+          <div className="w-px h-6 md:h-8 bg-gray-200 dark:bg-gray-600" />
           <div className="text-center">
-            <p className="text-xl md:text-2xl font-display font-bold text-gray-900">{score}</p>
+            <p className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100">{score}</p>
             <p className="text-[10px] md:text-xs text-gray-400">{t('score')}</p>
           </div>
         </div>
@@ -230,7 +253,7 @@ export default function SplatGame() {
               className={`
                 absolute flex flex-col items-center justify-center
                 w-16 h-16 md:w-24 md:h-24 rounded-full
-                bg-white shadow-lg border-2
+                bg-white dark:bg-gray-800 shadow-lg border-2
                 transition-transform duration-150
                 cursor-pointer select-none
                 ${bubble.wrongPop
@@ -250,7 +273,7 @@ export default function SplatGame() {
                 alt={bubble.word}
                 className="w-7 h-7 md:w-10 md:h-10"
               />
-              <span className="text-[9px] md:text-xs font-display font-bold text-gray-700 mt-0.5 leading-none">
+              <span className="text-[9px] md:text-xs font-display font-bold text-gray-700 dark:text-gray-300 mt-0.5 leading-none">
                 {bubble.word}
               </span>
             </button>

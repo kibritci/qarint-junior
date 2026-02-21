@@ -394,9 +394,45 @@ export function getCulturalValueWords(): WordEntry[] {
   return VOCABULARY.filter((w) => w.is_cultural_value);
 }
 
-export function getWordsForGame(count: number, category?: string): WordEntry[] {
+/** Seviye sırası: Pre A1 → A1 → A2 (kolaydan zora) */
+const LEVEL_ORDER: WordEntry['level'][] = ['pre_a1_starters', 'a1_movers', 'a2_flyers'];
+
+/** Dizi karıştırma (Fisher-Yates) – oyunlarda tutarlı rastgele sıra için */
+export function shuffleWords<T>(arr: T[]): T[] {
+  const out = [...arr];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+export type GetWordsForGameOptions = {
+  category?: string;
+  /** Sadece bu seviye (örn. 'pre_a1_starters'). Verilmezse tüm seviyeler. */
+  level?: WordEntry['level'];
+  /** Bu seviyeye kadar (dahil). Örn. 'a1_movers' = Pre A1 + A1. Verilmezse tüm seviyeler. */
+  levelMax?: WordEntry['level'];
+};
+
+export function getWordsForGame(
+  count: number,
+  category?: string,
+  options?: GetWordsForGameOptions
+): WordEntry[] {
   let pool = category ? getWordsByCategory(category) : VOCABULARY;
   pool = pool.filter((w) => !w.openmoji_hex.includes('-'));
-  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+
+  if (options?.level) {
+    pool = pool.filter((w) => w.level === options.level);
+  } else if (options?.levelMax) {
+    const maxIndex = LEVEL_ORDER.indexOf(options.levelMax);
+    if (maxIndex >= 0) {
+      const allowed = new Set(LEVEL_ORDER.slice(0, maxIndex + 1));
+      pool = pool.filter((w) => allowed.has(w.level));
+    }
+  }
+
+  const shuffled = shuffleWords(pool);
   return shuffled.slice(0, count);
 }

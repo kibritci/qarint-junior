@@ -4,25 +4,40 @@
       "home": "Home",
       "games": "Games",
       "leaderboard": "Leaderboard",
-      "profile": "Profile"
+      "profile": "Profile",
+      "settings": "Settings"
     },
     "profileMenu": {
-      "profileSettings": "Profile & settings",
+      "profile": "Profile",
+      "settings": "Settings",
       "changePassword": "Change password",
-      "signOut": "Sign out"
+      "signOut": "Sign out",
+      "language": "Language",
+      "theme": "Theme",
+      "themeSystem": "System",
+      "themeLight": "Light",
+      "themeDark": "Dark"
     },
     "fallbackStudent": "Student",
     "ariaHome": "Qarint Junior Home",
     "altLogo": "Qarint Junior",
-    "selectLanguage": "Select language"
+    "selectLanguage": "Select language",
+    "footerPrivacy": "Privacy",
+    "footerTerms": "Terms of Use",
+    "footerForParents": "For Parents",
+    "footer404EasterEgg": "Lost page 🐣",
+    "unlock": "Unlock"
   },
   "home": {
     "beta": "Beta",
     "betaMessage": "You're one of our first testers — your feedback shapes the next version!",
     "sendFeedback": "Send Feedback",
-    "chainBreakTitle": "Zinciri Kırma!",
+    "betaModalTitle": "You're part of our Beta! 🎉",
+    "betaModalDescription": "You're one of our first testers. Your thoughts and feedback are shaping the next version — we'd love to hear about your experience!",
+    "betaModalClose": "Close",
+    "chainBreakTitle": "Don't break the chain!",
     "chainBreakHint": "Play at least once each day this week.",
-    "xpPerDay": "+500 XP per day",
+    "xpPerDay": "500 XP when you play each day",
     "dayStreak": "Day Streak",
     "totalXp": "Total XP",
     "games": "Games",
@@ -32,6 +47,8 @@
     "pageLabel": "Games",
     "miniGames": "Mini Games",
     "cambridgeBadge": "Cambridge YLE Aligned",
+    "topicQuestion": "What do you want to learn?",
+    "gameQuestion": "How do you want to play?",
     "selectTopic": "Select topic",
     "selectLevel": "Level",
     "pickGame": "Pick a game",
@@ -63,6 +80,7 @@
       "madLibs": "Mad-Libs Stories",
       "pictureQuiz": "Picture Quiz"
     },
+    "playedCount": "Played {count}",
     "subtitles": {
       "memoryMatch": "Match words with pictures",
       "splatWordHunt": "Pop the right bubbles!",
@@ -139,7 +157,7 @@
   "profile": {
     "title": "Profile",
     "description": "Customize your name, avatar, and color. This is how you appear on the leaderboard.",
-    "chainBreakTitle": "Zinciri Kırma",
+    "chainBreakTitle": "Don't break the chain",
     "chainSwipeDescription": "Swipe to see weeks — from your first week up to this week + 1.",
     "totalXp": "Total XP",
     "dayStreak": "Day Streak",
@@ -159,6 +177,8 @@
     "updatePassword": "Update password",
     "updating": "Updating...",
     "editAvatar": "Edit avatar",
+    "editNameAndPassword": "Change name or password",
+    "editProfile": "Edit profile",
     "emoji": "Emoji",
     "photo": "Photo",
     "choosePhoto": "Choose a photo",
@@ -167,12 +187,25 @@
     "imageTooBig": "Image must be under {size} KB.",
     "failedToSave": "Failed to save.",
     "cancel": "Cancel",
-    "save": "Save"
+    "save": "Save",
+    "analytics": {
+      "weeklyXp": "Weekly XP",
+      "gameDistribution": "Games played",
+      "recentActivity": "Recent activity",
+      "noDataWeekly": "No weekly data yet. It will show here as you play.",
+      "noDataGames": "No game data yet.",
+      "noDataActivity": "No activity yet."
+    }
   },
   "profileHeader": {
     "editAvatar": "Edit avatar"
   },
-"leaderboard": {
+  "settings": {
+    "title": "Settings",
+    "description": "Change your display name and password.",
+    "backToProfile": "Back to profile"
+  },
+  "leaderboard": {
       "heroTitle": "You're doing great!",
       "heroSubtitle": "See where you rank this week. Play games, earn XP, and climb the list.",
       "title": "Leaderboard",
@@ -210,11 +243,13 @@
     "createAccount": "Create Account",
     "attemptsRemaining": "{count} attempts remaining",
     "footer": "Safe and fun English learning for children",
+    "poweredBy": "Powered by Qarint LLC",
     "onboarding": {
       "headline": "What you can do with Qarint Junior",
-      "feature1": "Play fun mini-games and learn new words",
-      "feature2": "Earn XP, badges and climb the leaderboard",
-      "feature3": "Safe and friendly — made for kids"
+      "feature1": "Build vocabulary and have fun with mini-games",
+      "feature2": "Earn XP and badges — climb the leaderboard",
+      "feature3": "Supports cognitive and motor skills — safe for kids",
+      "promptPlaceholder": "Play games and learn English with Qarint Junior"
     }
   },
   "loginLayout": {
@@ -256,10 +291,46 @@
     }
   },
   "streak": {
-    "xpPerDay": "+500 XP per day",
+    "xpPerDay": "500 XP when you play each day",
     "prevWeek": "Previous week",
     "nextWeek": "Next week",
     "thisWeek": "This week",
     "rewardLabel": "+500"
+  },
+  "legal": {
+    "cookieBanner": {
+      "title": "Cookie Preferences",
+      "description": "We use essential cookies to keep your session secure, remember your language, and save your theme. We also use optional cookies for security purposes (like CAPTCHA) to protect our platform.",
+      "acceptButton": "Accept All",
+      "settingsButton": "Manage Settings"
+    },
+    "privacyPolicy": {
+      "text": "The data controller for Qarint Junior is Qarint.\n\nWe collect minimal data, such as basic profile information and learning progress, strictly to support and personalize your child's educational journey.\n\nData is kept only as long as the account remains active. Parents have full rights to review, manage, or request the deletion of their child's data at any time.\n\nWe do not sell your data. We use trusted, secure third-party services like Supabase for database management and Cloudflare for security infrastructure."
+    },
+    "termsOfUse": {
+      "text": "Qarint Junior is an interactive English learning game designed specifically for children aged 4–12.\n\nParents or legal guardians are responsible for account creation and overseeing the child's use of the platform.\n\nAll educational content, designs, and games are the intellectual property of Qarint. While we strive to provide an uninterrupted experience, we are not liable for temporary technical outages."
+    },
+    "registration": {
+      "checkboxLabel": "I would like to receive informational and promotional emails about Qarint Junior and English education content.",
+      "checkboxHint": "You can unsubscribe at any time."
+    },
+    "parentInfo": {
+      "title": "For Parents: Content Quality & Values",
+      "point0": "All content is aligned with Cambridge YLE standards and carefully tailored for children aged 4-12.",
+      "point1": "Absolutely no violence, harmful elements, or inappropriate language.",
+      "point2": "Our games actively promote core values such as honesty, sharing, and mutual respect.",
+      "point3": "Education-focused gameplay where children learn at their own pace, without the stress of losing points.",
+      "point4": "Strict adherence to data privacy and child safety protocols."
+    },
+    "parentalLock": {
+      "settingDescription": "Parental control mode: When active, only games are accessible; profile and other areas are locked. Your date of birth is required to unlock.",
+      "toggleLabelLocked": "Parental Lock (Child Mode)",
+      "toggleLabelUnlocked": "Parent Mode",
+      "modalTitle": "Enter your date of birth to unlock.",
+      "modalSubmit": "Unlock",
+      "modalCancel": "Cancel",
+      "modalError": "Date of birth does not match. Please enter the date of birth provided during registration.",
+      "birthDatePlaceholder": "Date of Birth"
+    }
   }
 }

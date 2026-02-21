@@ -100,27 +100,27 @@ export default function EditAvatarModal({
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white rounded-2xl shadow-xl max-w-sm w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between p-4 border-b border-gray-100">
-          <h3 className="text-lg font-display font-bold text-gray-900">{t('editAvatar')}</h3>
-          <button type="button" onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100">
-            <XMarkIcon className="w-5 h-5 text-gray-500" />
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl max-w-sm w-full max-h-[90vh] overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-4 border-b border-gray-100 dark:border-gray-700">
+          <h3 className="text-lg font-display font-bold text-gray-900 dark:text-gray-100">{t('editAvatar')}</h3>
+          <button type="button" onClick={onClose} className="p-1.5 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+            <XMarkIcon className="w-5 h-5 text-gray-500 dark:text-gray-400" />
           </button>
         </div>
 
         <div className="p-4 space-y-4">
-          <div className="flex rounded-xl bg-gray-100 p-1">
+          <div className="flex rounded-xl bg-gray-100 dark:bg-gray-700 p-1">
             <button
               type="button"
               onClick={() => setTab('emoji')}
-              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${tab === 'emoji' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'}`}
+              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${tab === 'emoji' ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 shadow-sm' : 'text-gray-500 dark:text-gray-400'}`}
             >
               {t('emoji')}
             </button>
             <button
               type="button"
               onClick={() => setTab('photo')}
-              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${tab === 'photo' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500'}`}
+              className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-colors ${tab === 'photo' ? 'bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 shadow-sm' : 'text-gray-500 dark:text-gray-400'}`}
             >
               {t('photo')}
             </button>
@@ -134,7 +134,7 @@ export default function EditAvatarModal({
                   type="button"
                   onClick={() => setSelectedEmoji(emoji)}
                   className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl transition-all
-                    ${selectedEmoji === emoji ? 'bg-primary-100 border-2 border-primary' : 'bg-gray-100 hover:bg-gray-50'}`}
+                    ${selectedEmoji === emoji ? 'bg-primary-100 dark:bg-primary-900/40 border-2 border-primary dark:border-primary-500' : 'bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600'}`}
                 >
                   {emoji}
                 </button>
@@ -154,25 +154,25 @@ export default function EditAvatarModal({
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
-                className="w-full py-4 border-2 border-dashed border-gray-200 rounded-xl text-sm text-gray-500 hover:border-primary/40 hover:bg-gray-50 transition-colors"
+                className="w-full py-4 border-2 border-dashed border-gray-200 dark:border-gray-600 rounded-xl text-sm text-gray-500 dark:text-gray-400 hover:border-primary/40 dark:hover:border-primary-500 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               >
                 {photoPreview ? (
-                  <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-100">
+                  <div className="relative w-24 h-24 mx-auto rounded-full overflow-hidden bg-gray-100 dark:bg-gray-700">
                     <Image src={photoPreview} alt="Preview" fill className="object-cover" unoptimized />
                   </div>
                 ) : (
                   t('choosePhoto')
                 )}
               </button>
-              <p className="text-[11px] text-gray-400 mt-2 text-center">{t('maxSize', { size: 500 })}</p>
+              <p className="text-[11px] text-gray-400 dark:text-gray-500 mt-2 text-center">{t('maxSize', { size: 500 })}</p>
             </div>
           )}
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
         </div>
 
-        <div className="p-4 border-t border-gray-100 flex gap-2">
-          <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-50">
+        <div className="p-4 border-t border-gray-100 dark:border-gray-700 flex gap-2">
+          <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 text-sm font-semibold text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700">
             {t('cancel')}
           </button>
           <button

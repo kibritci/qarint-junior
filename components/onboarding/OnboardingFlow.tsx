@@ -2,10 +2,13 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import NProgress from 'nprogress';
 import { useTranslations } from 'next-intl';
 import { Avatar } from '@/components/ui';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+import { setOnboardingComplete } from '@/actions/auth';
+import { updateProfile } from '@/actions/gamification';
 
 const AVATARS = [
   { emoji: '🦁', labelKey: 'avatarLabels.lion' as const },
@@ -65,7 +68,16 @@ export default function OnboardingFlow() {
     speakText('Congratulations! You earned your first points!');
   };
 
-  const handleFinish = () => {
+  const handleSkip = async () => {
+    await setOnboardingComplete();
+    NProgress.start();
+    router.push('/games');
+  };
+
+  const handleFinish = async () => {
+    await setOnboardingComplete();
+    if (selectedAvatar) await updateProfile({ avatar_emoji: selectedAvatar });
+    NProgress.start();
     router.push('/games');
   };
 
@@ -74,16 +86,25 @@ export default function OnboardingFlow() {
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center text-center p-8 animate-slide-up">
         <div className="text-8xl mb-6 animate-bounce-in">🎉</div>
-        <h1 className="text-4xl font-display font-black text-gray-900 mb-3">
+        <h1 className="text-4xl font-display font-black text-gray-900 dark:text-gray-100 mb-3">
           {t('welcomeTitle')}<br />
           <span className="text-primary">Qarint Junior!</span>
         </h1>
-        <p className="text-lg text-gray-500 mb-8 max-w-md">
+        <p className="text-lg text-gray-500 dark:text-gray-400 mb-8 max-w-md">
           {t('welcomeSubtitle')}
         </p>
-        <button onClick={handleStart} className="btn-primary text-lg px-10 py-4 animate-pulse-glow">
-          {t('letsGo')}
-        </button>
+        <div className="flex flex-col sm:flex-row gap-3 items-center">
+          <button onClick={handleStart} className="btn-primary text-lg px-10 py-4 animate-pulse-glow">
+            {t('letsGo')}
+          </button>
+          <button
+            type="button"
+            onClick={handleSkip}
+            className="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 underline"
+          >
+            {t('skipForNow')}
+          </button>
+        </div>
       </div>
     );
   }
@@ -92,8 +113,8 @@ export default function OnboardingFlow() {
   if (step === 1) {
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-slide-up">
-        <h2 className="text-3xl font-display font-bold text-gray-900 mb-2">{t('chooseAvatar')}</h2>
-        <p className="text-gray-500 mb-8">{t('pickCharacter')}</p>
+        <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('chooseAvatar')}</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-8">{t('pickCharacter')}</p>
 
         <div className="grid grid-cols-4 gap-4 mb-8">
           {AVATARS.map((avatar, i) => (
@@ -108,7 +129,7 @@ export default function OnboardingFlow() {
                 selected={selectedAvatar === avatar.emoji}
                 onClick={() => handleAvatarSelect(avatar.emoji)}
               />
-              <span className="text-xs text-gray-400">{t(avatar.labelKey)}</span>
+              <span className="text-xs text-gray-400 dark:text-gray-500">{t(avatar.labelKey)}</span>
             </div>
           ))}
         </div>
@@ -134,8 +155,8 @@ export default function OnboardingFlow() {
     return (
       <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-slide-up">
         <div className="text-6xl mb-6">{selectedAvatar}</div>
-        <h2 className="text-3xl font-display font-bold text-gray-900 mb-3">{t('howToPlay')}</h2>
-        <p className="text-gray-500 mb-8 max-w-md text-center">
+        <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-3">{t('howToPlay')}</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-md text-center">
           {t('howToPlayDesc')}
         </p>
 
@@ -143,13 +164,13 @@ export default function OnboardingFlow() {
           {tutorialGames.map((game, i) => (
             <div
               key={game.descKey}
-              className="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-card animate-slide-up"
+              className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-card animate-slide-up"
               style={{ animationDelay: `${i * 150}ms`, animationFillMode: 'both' }}
             >
               <div className="text-2xl">{game.icon}</div>
               <div>
-                <p className="font-display font-bold text-gray-900">{tGames(game.titleKey)}</p>
-                <p className="text-sm text-gray-400">{t(game.descKey)}</p>
+                <p className="font-display font-bold text-gray-900 dark:text-gray-100">{tGames(game.titleKey)}</p>
+                <p className="text-sm text-gray-400 dark:text-gray-500">{t(game.descKey)}</p>
               </div>
             </div>
           ))}
@@ -173,8 +194,8 @@ export default function OnboardingFlow() {
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-bounce-in">
       <div className="text-8xl mb-4">🏆</div>
-      <h2 className="text-3xl font-display font-black text-gray-900 mb-2">{t('firstAchievement')}</h2>
-      <p className="text-gray-500 mb-6">{t('firstRewards')}</p>
+      <h2 className="text-3xl font-display font-black text-gray-900 dark:text-gray-100 mb-2">{t('firstAchievement')}</h2>
+      <p className="text-gray-500 dark:text-gray-400 mb-6">{t('firstRewards')}</p>
 
       <div className="flex items-center gap-6 mb-8">
         <div className="flex flex-col items-center p-4 bg-orange-50 rounded-xl border border-orange-200 animate-pop-in">
