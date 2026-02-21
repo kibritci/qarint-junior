@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed:vocabulary": "node scripts/csv-to-vocabulary-sql.mjs"
+    "seed:vocabulary": "node scripts/csv-to-vocabulary-sql.mjs",
+    "upload:quiz-images": "node scripts/upload-quiz-images.mjs",
+    "check:quiz-images": "node scripts/check-quiz-images.mjs",
+    "deploy": "npm run build && node scripts/deploy-push.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.1.0",

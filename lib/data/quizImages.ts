@@ -454,4 +454,6 @@ export function getRandomQuizQuestions(count: number): { image: QuizImage; optio
   });
 }
 
-export const IMAGE_BASE_PATH = '/quiz-images';
+/** Production: Supabase Storage URL (NEXT_PUBLIC_QUIZ_IMAGES_BASE_URL). Local: /quiz-images */
+export const IMAGE_BASE_PATH =
+  process.env.NEXT_PUBLIC_QUIZ_IMAGES_BASE_URL || '/quiz-images';
