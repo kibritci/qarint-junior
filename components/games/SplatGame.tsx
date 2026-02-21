@@ -83,8 +83,20 @@ export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
   const nextId = useRef(0);
   const animRef = useRef<number>(0);
   const lastSpawn = useRef(0);
+  const hasCelebratedRef = useRef(false);
 
   const { addXp } = useGameStore();
+
+  useEffect(() => {
+    if (isGameOver && !hasCelebratedRef.current) {
+      hasCelebratedRef.current = true;
+      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
+    }
+  }, [isGameOver]);
+
+  useEffect(() => {
+    if (!isGameOver) hasCelebratedRef.current = false;
+  }, [isGameOver]);
 
   const spawnBubble = useCallback(() => {
     const isCorrect = Math.random() > 0.45;

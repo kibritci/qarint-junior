@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
@@ -132,9 +132,21 @@ export default function MadLibsGame() {
   const [isStoryComplete, setIsStoryComplete] = useState(false);
   const [isAllComplete, setIsAllComplete] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
+  const hasCelebratedRef = useRef(false);
 
   const { addXp } = useGameStore();
   const story = STORIES[currentStory];
+
+  useEffect(() => {
+    if (isAllComplete && !hasCelebratedRef.current) {
+      hasCelebratedRef.current = true;
+      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
+    }
+  }, [isAllComplete]);
+
+  useEffect(() => {
+    if (!isAllComplete) hasCelebratedRef.current = false;
+  }, [isAllComplete]);
 
   const initStory = (index: number) => {
     setCurrentStory(index);
@@ -187,7 +199,6 @@ export default function MadLibsGame() {
     if (next >= STORIES.length) {
       setIsAllComplete(true);
       updateGamification(totalScore, 'mad-libs');
-      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
     } else {
       initStory(next);
     }

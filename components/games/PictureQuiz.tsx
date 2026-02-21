@@ -43,8 +43,20 @@ export default function PictureQuiz() {
   const [totalTime, setTotalTime] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
+  const hasCelebratedRef = useRef(false);
   const t = useTranslations('games.pictureQuiz');
   const { addXp } = useGameStore();
+
+  useEffect(() => {
+    if (phase === 'results' && !hasCelebratedRef.current) {
+      hasCelebratedRef.current = true;
+      confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
+    }
+  }, [phase]);
+
+  useEffect(() => {
+    if (phase !== 'results') hasCelebratedRef.current = false;
+  }, [phase]);
 
   const currentQuestion = questions[currentIndex];
 
@@ -130,7 +142,6 @@ export default function PictureQuiz() {
       setTotalTime(Math.round((Date.now() - startTimeRef.current) / 1000));
       setPhase('results');
       updateGamification(score, 'picture-quiz');
-      confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
       return;
     }
     setCurrentIndex(next);
