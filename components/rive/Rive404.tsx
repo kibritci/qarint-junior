@@ -17,8 +17,8 @@ export default function Rive404() {
   );
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] px-4 py-10 md:py-14">
-      <div className="relative w-40 h-40 md:w-52 md:h-52 mb-5 md:mb-6 flex items-center justify-center">
+    <div className="flex flex-col items-center pt-0 pb-10 md:pb-14 px-4 w-full max-w-[770px] mx-auto">
+      <div className="relative w-40 h-40 md:w-52 md:h-52 mb-0 flex items-center justify-center">
         <RiveComponent
           className="w-full h-full"
           style={{ width: '100%', height: '100%', opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}

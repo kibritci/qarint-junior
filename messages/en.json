@@ -30,7 +30,7 @@
   },
   "lostPage": {
     "title": "Lost page",
-    "description": "This page doesn't exist, but you found it! Head back home.",
+    "description": "This page doesn't exist, but you found it! You can go back home or keep exploring from where you left off.",
     "goHome": "Go Home"
   },
   "home": {

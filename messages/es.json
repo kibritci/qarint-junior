@@ -30,7 +30,7 @@
   },
   "lostPage": {
     "title": "Página perdida",
-    "description": "Esta página no existe, ¡pero la encontraste! Vuelve al inicio.",
+    "description": "Esta página no existe, ¡pero la encontraste! Puedes volver al inicio o seguir explorando desde donde lo dejaste.",
     "goHome": "Ir al inicio"
   },
   "home": {
