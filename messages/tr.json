@@ -327,7 +327,7 @@
       "settingsButton": "Ayarları Yönet"
     },
     "privacyPolicy": {
-      "text": "Qarint Junior için veri sorumlusu Qarint'tir.\n\nÇocuğunuzun eğitim yolculuğunu desteklemek ve kişiselleştirmek amacıyla yalnızca temel profil bilgileri ve öğrenme ilerlemesi gibi asgari düzeyde veri topluyoruz.\n\nVeriler yalnızca hesap aktif olduğu sürece saklanır. Ebeveynler istedikleri zaman çocuklarının verilerini inceleme, yönetme veya silme hakkına sahiptir.\n\nVerilerinizi asla satmıyoruz. Veritabanı yönetimi için Supabase ve güvenlik altyapısı için Cloudflare gibi güvenilir ve standartlara uygun üçüncü taraf hizmetler kullanıyoruz."
+      "text": "Qarint Junior için veri sorumlusu Qarint'tir.\n\nÇocuğunuzun eğitim yolculuğunu desteklemek ve kişiselleştirmek amacıyla yalnızca temel profil bilgileri ve öğrenme ilerlemesi gibi asgari düzeyde veri topluyoruz. Profilde belirlediğiniz görünen ad ve avatar, liderlik tablosunda diğer oyunculara açık olarak gösterilir.\n\nVeriler yalnızca hesap aktif olduğu sürece saklanır. Ebeveynler istedikleri zaman çocuklarının verilerini inceleme, yönetme veya silme hakkına sahiptir.\n\nVerilerinizi asla satmıyoruz. Veritabanı yönetimi için Supabase ve güvenlik altyapısı için Cloudflare gibi güvenilir ve standartlara uygun üçüncü taraf hizmetler kullanıyoruz."
     },
     "termsOfUse": {
       "text": "Qarint Junior, 4-12 yaş arası çocuklar için özel olarak tasarlanmış etkileşimli bir İngilizce öğrenme oyunudur.\n\nHesabın oluşturulması ve çocuğun platformu kullanımının gözetimi ebeveynin veya yasal velinin sorumluluğundadır.\n\nTüm eğitim içerikleri, tasarımlar ve oyunlar Qarint'in fikri mülkiyetidir. Kesintisiz bir deneyim sunmak için çalışıyoruz, ancak olası geçici teknik aksaklıklardan sorumlu tutulamayız."

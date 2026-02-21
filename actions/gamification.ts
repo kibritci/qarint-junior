@@ -1,7 +1,6 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
-import { maskDisplayName } from '@/lib/displayName';
 import { AVATAR_EMOJIS, ACCENT_COLORS } from '@/lib/constants/avatar';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rateLimit';
 import { getWeekStartString as getWeekStartStringFromDate } from '@/lib/streakChain';
@@ -407,8 +406,7 @@ export async function getLeaderboardWeekly(): Promise<{ data: LeaderboardEntry[]
     const entries: LeaderboardEntry[] = rows.map((row: { user_id: string; total_xp: number }, index: number) => {
       const profile = profileMap.get(row.user_id);
       const isCurrentUser = row.user_id === user.id;
-      const rawName = profile?.display_name ?? null;
-      const display_name = isCurrentUser ? rawName : (maskDisplayName(rawName) ?? rawName);
+      const display_name = profile?.display_name ?? null;
       return {
         rank: index + 1,
         user_id: row.user_id,
