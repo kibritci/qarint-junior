@@ -1,11 +1,14 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
 import { updateGamification } from '@/actions/gamification';
 import { XP_PER_BLANK } from '@/lib/gameXp';
+import { showErrorToast } from '@/lib/errorToast';
 import GameWrapper from './GameWrapper';
 
 interface Story {
@@ -125,6 +128,7 @@ function speakWord(word: string) {
 
 export default function MadLibsGame() {
   const t = useTranslations('games.madLibs');
+  const tErrors = useTranslations('errors');
   const [currentStory, setCurrentStory] = useState(0);
   const [currentBlank, setCurrentBlank] = useState(0);
   const [answers, setAnswers] = useState<(string | null)[]>([]);
@@ -132,6 +136,7 @@ export default function MadLibsGame() {
   const [isStoryComplete, setIsStoryComplete] = useState(false);
   const [isAllComplete, setIsAllComplete] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const { addXp } = useGameStore();
   const story = STORIES[currentStory];
@@ -155,8 +160,6 @@ export default function MadLibsGame() {
       setWrongReaction(null);
       addXp(XP_PER_BLANK);
       setTotalScore((prev) => prev + XP_PER_BLANK);
-
-      confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } });
 
       if (currentBlank + 1 >= story.blanks.length) {
         setIsStoryComplete(true);
@@ -185,10 +188,11 @@ export default function MadLibsGame() {
   const nextStory = () => {
     const next = currentStory + 1;
     if (next >= STORIES.length) {
-      updateGamification(totalScore, 'mad-libs');
+      updateGamification(totalScore, 'mad-libs').then((res) => {
+        if (res?.error) showErrorToast(res.error, tErrors);
+      });
       setIsAllComplete(true);
-      // Confetti hemen tetikle (effect/timeout bazen çalışmayabiliyor)
-      setTimeout(() => confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } }), 100);
+      setShowConfetti(true);
     } else {
       initStory(next);
     }
@@ -198,6 +202,7 @@ export default function MadLibsGame() {
     initStory(0);
     setTotalScore(0);
     setIsAllComplete(false);
+    setShowConfetti(false);
   };
 
   const progress = ((currentStory + (isStoryComplete ? 1 : 0)) / STORIES.length) * 100;
@@ -205,6 +210,7 @@ export default function MadLibsGame() {
   if (isAllComplete) {
     return (
       <GameWrapper title={t('title')} progress={100}>
+        {showConfetti && <ConfettiRive onComplete={() => setShowConfetti(false)} />}
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">📖</div>
           <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('allStoriesComplete')}</h2>

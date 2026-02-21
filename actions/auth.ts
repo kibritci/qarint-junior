@@ -18,7 +18,7 @@ export async function getUser() {
 export async function setOnboardingComplete() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return { error: 'Not authenticated' };
+  if (!user) return { error: 'notAuthenticated' };
   await supabase.auth.updateUser({ data: { has_seen_onboarding: true } });
   return { success: true };
 }

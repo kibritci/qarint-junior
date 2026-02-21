@@ -38,6 +38,17 @@
     "description": "Bu səhifə yoxdur, amma sən tapdın! İndi ya ana səhifəyə qayıda bilərsən, ya da qaldığın yerdən kəşfə davam edə bilərsən.",
     "goHome": "Ana Səhifəyə"
   },
+  "errors": {
+    "generic": "Xəta baş verdi.",
+    "reported": "Bildirildi, yoxlayırıq.",
+    "tryAgain": "Yenidən cəhd et",
+    "network": "Bağlantı problemi. İnterneti yoxla.",
+    "auth": "Zəhmət olmasa yenidən daxil ol.",
+    "rateLimit": "Çox cəhd. Bir az sonra yenidən yoxla.",
+    "serverError": "Server xətası. Bir az sonra yenidən cəhd et.",
+    "notAuthenticated": "Davam etmək üçün daxil ol.",
+    "failedUpdate": "Dəyişikliklər saxlanılmadı. Yenidən cəhd et."
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "Siz ilk test istifadəçilərimizdənsiniz — rəyiniz növbəti versiyanı formalaşdırır!",

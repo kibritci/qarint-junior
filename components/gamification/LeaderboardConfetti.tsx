@@ -1,24 +1,19 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
-import confetti from 'canvas-confetti';
+import { useState, useEffect } from 'react';
+import dynamic from 'next/dynamic';
 
-/** Sıralama sayfası açıldığında bir kez confetti oynatır. */
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
+
+/** Sıralama sayfası açıldığında bir kez Rive confetti oynatır. */
 export default function LeaderboardConfetti() {
-  const hasFired = useRef(false);
+  const [show, setShow] = useState(false);
 
   useEffect(() => {
-    if (hasFired.current) return;
-    const tid = setTimeout(() => {
-      hasFired.current = true;
-      confetti({ particleCount: 120, spread: 100, origin: { y: 0.35 } });
-      setTimeout(() => {
-        confetti({ particleCount: 80, spread: 80, origin: { x: 0.2, y: 0.4 } });
-        confetti({ particleCount: 80, spread: 80, origin: { x: 0.8, y: 0.4 } });
-      }, 150);
-    }, 300);
+    const tid = setTimeout(() => setShow(true), 300);
     return () => clearTimeout(tid);
   }, []);
 
-  return null;
+  if (!show) return null;
+  return <ConfettiRive onComplete={() => setShow(false)} />;
 }

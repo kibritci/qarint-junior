@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
 import { updateGamification } from '@/actions/gamification';
 import { XP_PER_MATCH } from '@/lib/gameXp';
+import { showErrorToast } from '@/lib/errorToast';
 import { VocabularyWord } from '@/types';
 import GameWrapper from './GameWrapper';
 
@@ -39,11 +42,17 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
   const [matches, setMatches] = useState(0);
   const [totalPairs, setTotalPairs] = useState(0);
   const [isGameComplete, setIsGameComplete] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const [shakingCards, setShakingCards] = useState<number[]>([]);
   const [isChecking, setIsChecking] = useState(false);
 
   const t = useTranslations('games.memoryMatch');
+  const tErrors = useTranslations('errors');
   const { addXp } = useGameStore();
+
+  useEffect(() => {
+    if (isGameComplete) setShowConfetti(true);
+  }, [isGameComplete]);
 
   useEffect(() => {
     if (words.length === 0) return;
@@ -106,14 +115,13 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
           setIsChecking(false);
           addXp(XP_PER_MATCH);
 
-          confetti({ particleCount: 60, spread: 80, origin: { y: 0.7 } });
-
           setMatches((prev) => {
             const next = prev + 1;
             if (next === totalPairs) {
               setIsGameComplete(true);
-              updateGamification(next * XP_PER_MATCH, 'memory-match');
-              confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
+              updateGamification(next * XP_PER_MATCH, 'memory-match').then((res) => {
+                if (res?.error) showErrorToast(res.error, tErrors);
+              });
             }
             return next;
           });
@@ -142,6 +150,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
     setMoves(0);
     setMatches(0);
     setIsGameComplete(false);
+    setShowConfetti(false);
     setShakingCards([]);
     setIsChecking(false);
   };
@@ -175,6 +184,7 @@ export default function MemoryMatch({ words }: MemoryMatchProps) {
       <p className="text-xs md:text-sm text-gray-500 mb-3 md:mb-4">{t('description')}</p>
 
       {/* Completion bottom sheet (Duolingo style) */}
+      {showConfetti && <ConfettiRive onComplete={() => setShowConfetti(false)} />}
       {isGameComplete && (
         <>
           <div className="fixed inset-0 bg-black/30 z-50" aria-hidden />

@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { updateProfile } from '@/actions/gamification';
 import { createClient } from '@/lib/supabase/client';
+import { showErrorToast, getErrorMessage } from '@/lib/errorToast';
 
 interface ProfileFormProps {
   initialDisplayName: string;
@@ -20,6 +21,7 @@ export default function ProfileForm({
   showStats = true,
 }: ProfileFormProps) {
   const t = useTranslations('profile');
+  const tErrors = useTranslations('errors');
   const [displayName, setDisplayName] = useState(initialDisplayName);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -43,7 +45,9 @@ export default function ProfileForm({
     });
     setSaving(false);
     if (result.error) {
-      setMessage({ type: 'error', text: result.error });
+      const text = getErrorMessage(result.error, tErrors);
+      setMessage({ type: 'error', text });
+      showErrorToast(result.error, tErrors);
     } else {
       setMessage({ type: 'success', text: t('profileSaved') });
     }

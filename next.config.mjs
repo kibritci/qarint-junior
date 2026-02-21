@@ -1,4 +1,5 @@
 import createNextIntlPlugin from 'next-intl/plugin';
+import { withSentryConfig } from '@sentry/nextjs';
 
 /** @type {import('next').NextConfig} */
 const supabaseHost = process.env.NEXT_PUBLIC_SUPABASE_URL
@@ -26,7 +27,7 @@ const nextConfig = {
       "font-src 'self' https://fonts.gstatic.com",
       "img-src 'self' data: blob: https://cdn.jsdelivr.net" + (supabaseHost ? ` https://${supabaseHost}` : ''),
       "frame-src https://challenges.cloudflare.com",
-      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://unpkg.com",
+      "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://unpkg.com https://*.ingest.de.sentry.io https://*.sentry.io",
       "base-uri 'self'",
       "form-action 'self'",
     ].join('; ');
@@ -46,4 +47,9 @@ const nextConfig = {
 };
 
 const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(nextConfig);
+const sentryOptions = {
+  silent: true,
+  org: 'qarint-z6',
+  project: 'qarint-games',
+};
+export default withSentryConfig(withNextIntl(nextConfig), sentryOptions);

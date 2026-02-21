@@ -38,6 +38,17 @@
     "description": "This page doesn't exist, but you found it! You can go back home or keep exploring from where you left off.",
     "goHome": "Go Home"
   },
+  "errors": {
+    "generic": "Something went wrong.",
+    "reported": "We've been notified and are looking into it.",
+    "tryAgain": "Try again",
+    "network": "Connection problem. Please check the internet.",
+    "auth": "Please sign in again.",
+    "rateLimit": "Too many attempts. Try again later.",
+    "serverError": "Server error. Try again in a moment.",
+    "notAuthenticated": "Please sign in to continue.",
+    "failedUpdate": "We couldn't save your changes. Please try again."
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "You're one of our first testers — your feedback shapes the next version!",

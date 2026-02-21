@@ -38,6 +38,17 @@
     "description": "Esta página no existe, ¡pero la encontraste! Puedes volver al inicio o seguir explorando desde donde lo dejaste.",
     "goHome": "Ir al inicio"
   },
+  "errors": {
+    "generic": "Algo salió mal.",
+    "reported": "Lo hemos notificado y lo estamos revisando.",
+    "tryAgain": "Intentar de nuevo",
+    "network": "Problema de conexión. Comprueba internet.",
+    "auth": "Inicia sesión de nuevo.",
+    "rateLimit": "Demasiados intentos. Prueba más tarde.",
+    "serverError": "Error del servidor. Intenta en un momento.",
+    "notAuthenticated": "Inicia sesión para continuar.",
+    "failedUpdate": "No pudimos guardar los cambios. Intenta de nuevo."
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "¡Eres uno de nuestros primeros probadores — tu opinión da forma a la próxima versión!",

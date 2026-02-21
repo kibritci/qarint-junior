@@ -8,6 +8,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import ParentalLockWrapper from "./components/providers/ParentalLockWrapper";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { Toaster } from "sonner";
 
 const nunito = Nunito({
   subsets: ["latin"],
@@ -99,6 +100,7 @@ export default async function RootLayout({
             <ParentalLockWrapper>
               <AppShell>{children}</AppShell>
               <CookieBanner />
+              <Toaster richColors position="top-center" />
             </ParentalLockWrapper>
           </NextIntlClientProvider>
         </ThemeProvider>

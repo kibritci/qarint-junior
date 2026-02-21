@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useParentalLock } from '@/components/providers/ParentalLockProvider';
 import { updateProfile } from '@/actions/gamification';
 import { LockClosedIcon } from '@heroicons/react/24/outline';
+import { showErrorToast, getErrorMessage } from '@/lib/errorToast';
 
 type ParentalLockSectionProps = {
   initialParentBirthDate: string | null;
@@ -14,6 +15,7 @@ export default function ParentalLockSection({
   initialParentBirthDate,
 }: ParentalLockSectionProps) {
   const t = useTranslations('legal.parentalLock');
+  const tErrors = useTranslations('errors');
   const { lockEnabled, setLockEnabled } = useParentalLock();
   const [birthDate, setBirthDate] = useState(
     initialParentBirthDate ?? ''
@@ -33,7 +35,9 @@ export default function ParentalLockSection({
     });
     setSaving(false);
     if (result.error) {
-      setMessage({ type: 'error', text: result.error });
+      const text = getErrorMessage(result.error, tErrors);
+      setMessage({ type: 'error', text });
+      showErrorToast(result.error, tErrors);
     } else {
       setMessage({ type: 'success', text: 'Saved.' });
     }

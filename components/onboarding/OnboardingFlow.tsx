@@ -1,14 +1,17 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
 import NProgress from 'nprogress';
 import { useTranslations } from 'next-intl';
 import { Avatar } from '@/components/ui';
-import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
 import { setOnboardingComplete } from '@/actions/auth';
 import { updateProfile } from '@/actions/gamification';
+import { showErrorToast } from '@/lib/errorToast';
 
 const AVATARS = [
   { emoji: '🦁', labelKey: 'avatarLabels.lion' as const },
@@ -39,8 +42,10 @@ export default function OnboardingFlow() {
   const t = useTranslations('onboarding');
   const tGames = useTranslations('games');
   const tCommon = useTranslations('common');
+  const tErrors = useTranslations('errors');
   const [step, setStep] = useState(0);
   const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
+  const [showConfetti, setShowConfetti] = useState(false);
   const router = useRouter();
   const { addXp, incrementStreak } = useGameStore();
 
@@ -62,21 +67,32 @@ export default function OnboardingFlow() {
 
   const handleTutorialDone = () => {
     setStep(3);
+    setShowConfetti(true);
     addXp(10);
     incrementStreak();
-    confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
     speakText('Congratulations! You earned your first points!');
   };
 
   const handleSkip = async () => {
-    await setOnboardingComplete();
+    const res = await setOnboardingComplete();
+    if (res?.error) {
+      showErrorToast(res.error, tErrors);
+      return;
+    }
     NProgress.start();
     router.push('/games');
   };
 
   const handleFinish = async () => {
-    await setOnboardingComplete();
-    if (selectedAvatar) await updateProfile({ avatar_emoji: selectedAvatar });
+    const res = await setOnboardingComplete();
+    if (res?.error) {
+      showErrorToast(res.error, tErrors);
+      return;
+    }
+    if (selectedAvatar) {
+      const profileRes = await updateProfile({ avatar_emoji: selectedAvatar });
+      if (profileRes?.error) showErrorToast(profileRes.error, tErrors);
+    }
     NProgress.start();
     router.push('/games');
   };
@@ -193,6 +209,7 @@ export default function OnboardingFlow() {
   // Step 3: First Achievement
   return (
     <div className="min-h-[80vh] flex flex-col items-center justify-center p-8 animate-bounce-in">
+      {showConfetti && <ConfettiRive onComplete={() => setShowConfetti(false)} />}
       <div className="text-8xl mb-4">🏆</div>
       <h2 className="text-3xl font-display font-black text-gray-900 dark:text-gray-100 mb-2">{t('firstAchievement')}</h2>
       <p className="text-gray-500 dark:text-gray-400 mb-6">{t('firstRewards')}</p>

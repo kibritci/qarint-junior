@@ -7,6 +7,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import { AVATAR_EMOJIS } from '@/lib/constants/avatar';
 import { updateProfile } from '@/actions/gamification';
 import { createClient } from '@/lib/supabase/client';
+import { showErrorToast, getErrorMessage } from '@/lib/errorToast';
 
 const MAX_AVATAR_BYTES = 500 * 1024; // 500 KB
 
@@ -28,6 +29,7 @@ export default function EditAvatarModal({
   userId,
 }: EditAvatarModalProps) {
   const t = useTranslations('profile');
+  const tErrors = useTranslations('errors');
   const [tab, setTab] = useState<'emoji' | 'photo'>('emoji');
   const [selectedEmoji, setSelectedEmoji] = useState<string | null>(currentAvatarEmoji ?? '🦁');
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -97,7 +99,9 @@ export default function EditAvatarModal({
       onSaved();
       onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : t('failedToSave'));
+      const msg = err instanceof Error ? err.message : t('failedToSave');
+      setError(getErrorMessage(msg, tErrors));
+      if (err instanceof Error && msg) showErrorToast(msg, tErrors);
     } finally {
       setSaving(false);
     }

@@ -1,12 +1,15 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
-import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
 import { updateGamification } from '@/actions/gamification';
 import { XP_CORRECT_QUIZ, XP_FAST_BONUS_QUIZ } from '@/lib/gameXp';
+import { showErrorToast } from '@/lib/errorToast';
 import GameWrapper from './GameWrapper';
 import { getRandomQuizQuestions, IMAGE_BASE_PATH } from '@/lib/data/quizImages';
 
@@ -43,21 +46,13 @@ export default function PictureQuiz() {
   const [totalTime, setTotalTime] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
-  const hasCelebratedRef = useRef(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const t = useTranslations('games.pictureQuiz');
+  const tErrors = useTranslations('errors');
   const { addXp } = useGameStore();
 
   useEffect(() => {
-    if (phase !== 'results' || hasCelebratedRef.current) return;
-    const tid = setTimeout(() => {
-      hasCelebratedRef.current = true;
-      confetti({ particleCount: 150, spread: 100, origin: { y: 0.5 } });
-    }, 350);
-    return () => clearTimeout(tid);
-  }, [phase]);
-
-  useEffect(() => {
-    if (phase !== 'results') hasCelebratedRef.current = false;
+    if (phase === 'results') setShowConfetti(true);
   }, [phase]);
 
   const currentQuestion = questions[currentIndex];
@@ -94,6 +89,7 @@ export default function PictureQuiz() {
   }, [clearTimer]);
 
   const startGame = () => {
+    setShowConfetti(false);
     const qs = getRandomQuizQuestions(QUESTIONS_PER_ROUND);
     setQuestions(qs);
     setCurrentIndex(0);
@@ -132,7 +128,6 @@ export default function PictureQuiz() {
       setScore(prev => prev + earned);
       setCorrectCount(prev => prev + 1);
       addXp(earned);
-      confetti({ particleCount: 50, spread: 70, origin: { y: 0.6 } });
     }
 
     setTimeout(() => advanceQuestion(), correct ? 1200 : 2000);
@@ -143,7 +138,9 @@ export default function PictureQuiz() {
     if (next >= questions.length) {
       setTotalTime(Math.round((Date.now() - startTimeRef.current) / 1000));
       setPhase('results');
-      updateGamification(score, 'picture-quiz');
+      updateGamification(score, 'picture-quiz').then((res) => {
+        if (res?.error) showErrorToast(res.error, tErrors);
+      });
       return;
     }
     setCurrentIndex(next);
@@ -186,6 +183,7 @@ export default function PictureQuiz() {
 
     return (
       <GameWrapper title={t('title')} progress={100}>
+        {showConfetti && <ConfettiRive onComplete={() => setShowConfetti(false)} />}
         <div className="flex flex-col items-center justify-center min-h-[50vh] md:min-h-[60vh] text-center px-4 animate-bounce-in">
           <div className="text-5xl md:text-6xl mb-3 md:mb-4">{emoji}</div>
           <h2 className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-4 md:mb-6">{message}</h2>

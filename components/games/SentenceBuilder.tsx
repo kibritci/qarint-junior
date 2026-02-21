@@ -1,11 +1,14 @@
 'use client';
 
-import { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
 import { updateGamification } from '@/actions/gamification';
 import { XP_PER_SENTENCE } from '@/lib/gameXp';
+import { showErrorToast } from '@/lib/errorToast';
 import GameWrapper from './GameWrapper';
 
 interface Sentence {
@@ -56,22 +59,10 @@ export default function SentenceBuilder() {
   const [isCorrect, setIsCorrect] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
-  const hasCelebratedRef = useRef(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const t = useTranslations('games.sentenceBuilder');
-
-  useEffect(() => {
-    if (!isComplete || hasCelebratedRef.current) return;
-    const tid = setTimeout(() => {
-      hasCelebratedRef.current = true;
-      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
-    }, 350);
-    return () => clearTimeout(tid);
-  }, [isComplete]);
-
-  useEffect(() => {
-    if (!isComplete) hasCelebratedRef.current = false;
-  }, [isComplete]);
+  const tErrors = useTranslations('errors');
   const { addXp } = useGameStore();
   const sentence = SENTENCES[currentIndex];
 
@@ -108,7 +99,6 @@ export default function SentenceBuilder() {
       setIsCorrect(true);
       addXp(XP_PER_SENTENCE);
       setTotalScore((prev) => prev + XP_PER_SENTENCE);
-      confetti({ particleCount: 80, spread: 90, origin: { y: 0.6 } });
       speakWord(correct.join(' '));
     } else {
       setWrongSlots(wrong);
@@ -127,7 +117,10 @@ export default function SentenceBuilder() {
     const next = currentIndex + 1;
     if (next >= SENTENCES.length) {
       setIsComplete(true);
-      updateGamification(totalScore, 'sentence-builder');
+      setShowConfetti(true);
+      updateGamification(totalScore, 'sentence-builder').then((res) => {
+        if (res?.error) showErrorToast(res.error, tErrors);
+      });
       return;
     }
     setCurrentIndex(next);
@@ -145,6 +138,7 @@ export default function SentenceBuilder() {
     setWrongSlots([]);
     setTotalScore(0);
     setIsComplete(false);
+    setShowConfetti(false);
   };
 
   const progress = ((currentIndex + (isCorrect ? 1 : 0)) / SENTENCES.length) * 100;
@@ -152,6 +146,7 @@ export default function SentenceBuilder() {
   if (isComplete) {
     return (
       <GameWrapper title={t('title')} progress={100}>
+        {showConfetti && <ConfettiRive onComplete={() => setShowConfetti(false)} />}
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">🏆</div>
           <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('amazing')}</h2>

@@ -38,6 +38,17 @@
     "description": "Bu sayfa yok, ama sen buldun! Şimdi ister ana sayfaya dönebilir, kaldığın yerden keşfe devam edebilirsin.",
     "goHome": "Ana Sayfaya Dön"
   },
+  "errors": {
+    "generic": "Bir hata oluştu.",
+    "reported": "Bildirildi, inceliyoruz.",
+    "tryAgain": "Tekrar dene",
+    "network": "Bağlantı sorunu. İnterneti kontrol et.",
+    "auth": "Lütfen tekrar giriş yap.",
+    "rateLimit": "Çok fazla deneme. Biraz sonra tekrar dene.",
+    "serverError": "Sunucu hatası. Biraz sonra tekrar dene.",
+    "notAuthenticated": "Devam etmek için giriş yap.",
+    "failedUpdate": "Değişiklikler kaydedilemedi. Lütfen tekrar dene."
+  },
   "home": {
     "beta": "Beta",
     "betaMessage": "İlk test kullanıcılarımızdan birisiniz — geri bildiriminiz bir sonraki sürümü şekillendirir!",

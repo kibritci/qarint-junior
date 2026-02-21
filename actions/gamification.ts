@@ -54,9 +54,9 @@ export async function updateGamification(xpEarned: number, gameType?: string) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) return { error: 'Not authenticated' };
+    if (!user) return { error: 'notAuthenticated' };
     if (checkRateLimit(`gamification:${user.id}`, RATE_LIMITS.gamification)) {
-      return { error: 'Too many requests' };
+      return { error: 'rateLimit' };
     }
 
     await supabase
@@ -133,7 +133,7 @@ export async function updateGamification(xpEarned: number, gameType?: string) {
 
     return { success: true, totalXp, currentStreak };
   } catch {
-    return { error: 'Failed to update gamification' };
+    return { error: 'failedUpdate' };
   }
 }
 
@@ -278,9 +278,9 @@ export async function updateProfile(updates: ProfileUpdate) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 
-    if (!user) return { error: 'Not authenticated' };
+    if (!user) return { error: 'notAuthenticated' };
     if (checkRateLimit(`profile:${user.id}`, RATE_LIMITS.profile)) {
-      return { error: 'Too many requests' };
+      return { error: 'rateLimit' };
     }
 
     const { data: existing } = await supabase
@@ -333,7 +333,7 @@ export async function updateProfile(updates: ProfileUpdate) {
 
     return { success: true };
   } catch {
-    return { error: 'Failed to update profile' };
+    return { error: 'failedUpdate' };
   }
 }
 

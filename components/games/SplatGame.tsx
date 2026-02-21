@@ -1,11 +1,14 @@
 'use client';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { useTranslations } from 'next-intl';
-import confetti from 'canvas-confetti';
 import { useGameStore } from '@/store/gameStore';
+
+const ConfettiRive = dynamic(() => import('@/components/rive/ConfettiRive'), { ssr: false });
 import { updateGamification } from '@/actions/gamification';
 import { XP_PER_CORRECT_SPLAT } from '@/lib/gameXp';
+import { showErrorToast } from '@/lib/errorToast';
 import GameWrapper from './GameWrapper';
 import { VOCABULARY, getWordsByCategory, shuffleWords } from '@/lib/data/cambridgeYLE';
 
@@ -64,6 +67,7 @@ interface SplatGameProps {
 
 export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
   const t = useTranslations('games.splatWordHunt');
+  const tErrors = useTranslations('errors');
   const [gameSetup] = useState(() => {
     const all = buildCategories();
     const categories =
@@ -83,21 +87,12 @@ export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
   const nextId = useRef(0);
   const animRef = useRef<number>(0);
   const lastSpawn = useRef(0);
-  const hasCelebratedRef = useRef(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   const { addXp } = useGameStore();
 
   useEffect(() => {
-    if (!isGameOver || hasCelebratedRef.current) return;
-    const tid = setTimeout(() => {
-      hasCelebratedRef.current = true;
-      confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 } });
-    }, 350);
-    return () => clearTimeout(tid);
-  }, [isGameOver]);
-
-  useEffect(() => {
-    if (!isGameOver) hasCelebratedRef.current = false;
+    if (isGameOver) setShowConfetti(true);
   }, [isGameOver]);
 
   const spawnBubble = useCallback(() => {
@@ -168,7 +163,6 @@ export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
       setBubbles((prev) =>
         prev.map((b) => (b.id === bubble.id ? { ...b, popped: true } : b))
       );
-      confetti({ particleCount: 30, spread: 50, origin: { x: bubble.x / 100, y: bubble.y / 100 } });
     } else {
       setBubbles((prev) =>
         prev.map((b) => (b.id === bubble.id ? { ...b, wrongPop: true } : b))
@@ -189,12 +183,15 @@ export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
     setTimeLeft(60);
     setIsPlaying(true);
     setIsGameOver(false);
+    setShowConfetti(false);
     nextId.current = 0;
     lastSpawn.current = 0;
   };
 
   const finishGame = () => {
-    updateGamification(score, 'splat-word-hunt');
+    updateGamification(score, 'splat-word-hunt').then((res) => {
+      if (res?.error) showErrorToast(res.error, tErrors);
+    });
   };
 
   useEffect(() => {
@@ -224,6 +221,7 @@ export default function SplatGame({ initialCategoryId }: SplatGameProps = {}) {
   if (isGameOver) {
     return (
       <GameWrapper title={t('title')} progress={100}>
+        {showConfetti && <ConfettiRive onComplete={() => setShowConfetti(false)} />}
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center animate-bounce-in">
           <div className="text-6xl mb-4">🎉</div>
           <h2 className="text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">{t('timesUp')}</h2>
