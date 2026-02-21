@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { getLeaderboardWeekly } from '@/actions/gamification';
 import Leaderboard from '@/components/gamification/Leaderboard';
-import LeaderboardHero from '@/components/gamification/LeaderboardHero';
+import LeaderboardConfetti from '@/components/gamification/LeaderboardConfetti';
 import LeaderboardSkeleton from '@/components/gamification/LeaderboardSkeleton';
 
 async function LeaderboardContent() {
@@ -13,8 +13,8 @@ async function LeaderboardContent() {
 export default async function LeaderboardPage() {
   return (
     <div className="p-6 md:p-8">
+      <LeaderboardConfetti />
       <div className="max-w-lg mx-auto">
-        <LeaderboardHero />
         <Suspense fallback={<LeaderboardSkeleton />}>
           <LeaderboardContent />
         </Suspense>

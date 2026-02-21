@@ -1,11 +1,10 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { useTranslations } from 'next-intl';
 import confetti from 'canvas-confetti';
 
-export default function LeaderboardHero() {
-  const t = useTranslations('leaderboard');
+/** Sıralama sayfası açıldığında bir kez confetti oynatır. */
+export default function LeaderboardConfetti() {
   const hasFired = useRef(false);
 
   useEffect(() => {
@@ -21,14 +20,5 @@ export default function LeaderboardHero() {
     return () => clearTimeout(tid);
   }, []);
 
-  return (
-    <div className="text-center py-8 md:py-10 mb-6">
-      <p className="text-2xl md:text-3xl font-display font-bold text-gray-900 dark:text-gray-100 mb-2">
-        {t('heroTitle')}
-      </p>
-      <p className="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-md mx-auto">
-        {t('heroSubtitle')}
-      </p>
-    </div>
-  );
+  return null;
 }

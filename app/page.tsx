@@ -2,22 +2,8 @@ import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
 import { getUserGamification } from '@/actions/gamification';
 import ChainStreak from '@/components/streak/ChainStreak';
+import HomeStreakFire from '@/components/streak/HomeStreakFire';
 import { GAMES, GAME_ID_TO_TITLE_KEY } from '@/lib/gamesConfig';
-
-/** Ana sayfada Rive kullanmıyoruz; Ana Sayfa → Oyunlar geçişinde StreakFireRive unmount olunca
- *  Rive cleanup "e.delete is not a function" hatası veriyordu. Statik gösterim ile bu unmount engellendi. */
-function StreakFireStatic({ streakCount }: { streakCount: number }) {
-  return (
-    <div className="relative flex items-center justify-center" style={{ width: '128px', height: '203px' }}>
-      <span className="absolute inset-0 flex items-center justify-center text-5xl" aria-hidden>
-        🔥
-      </span>
-      <span className="absolute bottom-6 left-0 right-0 flex items-center justify-center font-display font-black text-4xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tabular-nums pointer-events-none">
-        {streakCount}
-      </span>
-    </div>
-  );
-}
 
 export default async function Home() {
   const t = await getTranslations('home');
@@ -34,7 +20,7 @@ export default async function Home() {
           {/* Don't break the chain — weekly streak */}
         <div className="mb-6 md:mb-8 max-w-[570px] mx-auto flex flex-col items-center -mt-2">
           <div className="relative flex justify-center">
-            <StreakFireStatic streakCount={currentStreak} />
+            <HomeStreakFire streakCount={currentStreak} />
           </div>
           <h2 className="text-center text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100 mt-1 mb-2">
             {t('chainBreakTitle')}

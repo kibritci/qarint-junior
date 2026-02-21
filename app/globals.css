@@ -125,43 +125,6 @@
   }
 }
 
-/* Login: grainy gradient panel (SVG noise + animated gradient) */
-.login-grainy-panel {
-  isolation: isolate;
-  background:
-    linear-gradient(
-      135deg,
-      #fef2f2 0%,
-      #fce7f3 25%,
-      #e0e7ff 50%,
-      #fef3c7 75%,
-      #fecdd3 100%
-    );
-  background-size: 200% 200%;
-  animation: gradient-shift 20s ease-in-out infinite;
-}
-.dark .login-grainy-panel {
-  background:
-    linear-gradient(
-      135deg,
-      #1f1f2e 0%,
-      #2d1f2e 25%,
-      #1f2235 50%,
-      #2d2a1f 75%,
-      #2e1f24 100%
-    );
-}
-.login-grainy-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("/noise.svg");
-  background-repeat: repeat;
-  opacity: 0.4;
-  mix-blend-mode: soft-light;
-  pointer-events: none;
-}
-
 @media (max-width: 767px) {
   .card-game {
     @apply hover:translate-y-0 hover:shadow-card;

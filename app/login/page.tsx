@@ -93,18 +93,25 @@ export default function LoginPage() {
 
   const renderTurnstile = useCallback(() => {
     if (!requireTurnstile || !window.turnstile || !turnstileContainerRef.current) return;
+    const theme = resolvedTheme === 'dark' ? 'dark' : 'light';
     if (turnstileWidgetId.current) {
       window.turnstile.reset(turnstileWidgetId.current);
-      return;
+      turnstileWidgetId.current = null;
     }
     turnstileWidgetId.current = window.turnstile.render(turnstileContainerRef.current, {
       sitekey: TURNSTILE_SITE_KEY,
       callback: (token: string) => setCaptchaToken(token),
       'expired-callback': () => setCaptchaToken(null),
-      theme: 'light',
+      theme,
       size: 'flexible',
     });
-  }, [requireTurnstile]);
+  }, [requireTurnstile, resolvedTheme]);
+
+  useEffect(() => {
+    if (requireTurnstile && typeof window !== 'undefined' && window.turnstile && turnstileContainerRef.current) {
+      renderTurnstile();
+    }
+  }, [resolvedTheme, requireTurnstile, renderTurnstile]);
 
   const resetCaptcha = useCallback(() => {
     setCaptchaToken(null);
@@ -186,7 +193,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen flex overflow-hidden">
+    <div className="h-screen flex overflow-hidden flex-nowrap">
       {requireTurnstile && (
         <Script
           src="https://challenges.cloudflare.com/turnstile/v0/api.js"
@@ -194,10 +201,8 @@ export default function LoginPage() {
         />
       )}
 
-      {/* Left: Form — tam ortadan 50/50, form ve inputlara dokunulmadı */}
-      <div className="w-full md:w-1/2 h-screen flex flex-col items-center justify-center p-4 md:p-8 bg-[#fafafa] dark:bg-gray-900 relative overflow-y-auto">
-        {/* Mobile: thin grainy gradient strip at top */}
-        <div className="md:hidden absolute top-0 left-0 right-0 h-24 login-grainy-panel opacity-90" aria-hidden />
+      {/* Sol: Form — her zaman görünür, ezilmez */}
+      <div className="w-full min-w-0 md:min-w-[380px] md:w-1/2 md:max-w-[50%] flex-shrink-0 h-screen flex flex-col items-center justify-center p-4 md:p-8 bg-[#fafafa] dark:bg-gray-900 relative overflow-y-auto">
         <div className="w-full max-w-sm relative z-10">
           {/* Logo */}
           <div className="text-center mb-8">
@@ -393,9 +398,9 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Right: login-cover görseli, gölge/çerçeve yok; üstte ortalı tanıtım metinleri (md+) */}
+      {/* Sağ: login-cover — form her zaman sol yarıda kalacak şekilde */}
       <div
-        className="hidden md:flex md:w-1/2 h-screen items-center justify-center min-h-0"
+        className="hidden md:flex md:w-1/2 md:min-w-0 md:flex-shrink h-screen items-center justify-center min-h-0"
         aria-hidden="true"
       >
         <div className="w-full h-full overflow-hidden relative flex flex-col">

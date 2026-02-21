@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useRive, Layout, Fit, Alignment } from '@rive-app/react-webgl';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-webgl2';
 
 const SRC = '/rive/streak-fire.riv';
 const STATE_MACHINE = 'Streak Fire';
