@@ -62,7 +62,16 @@ export default function LoginPage() {
   const supabase = createClient();
   const pwStrength = mode === 'register' ? getPasswordStrength(password) : null;
   const isLockedOut = lockoutUntil !== null && Date.now() < lockoutUntil;
+  // Lokalde ilk render'da buton açık olsun diye varsayılan true; production'da useEffect ile false yapılır
+  const [isLocalhost, setIsLocalhost] = useState(true);
   const hasTurnstile = !!TURNSTILE_SITE_KEY;
+  const requireTurnstile = hasTurnstile && !isLocalhost;
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+      setIsLocalhost(false);
+    }
+  }, []);
 
   useEffect(() => {
     if (!lockoutUntil) return;
@@ -83,7 +92,7 @@ export default function LoginPage() {
   }, [lockoutUntil]);
 
   const renderTurnstile = useCallback(() => {
-    if (!hasTurnstile || !window.turnstile || !turnstileContainerRef.current) return;
+    if (!requireTurnstile || !window.turnstile || !turnstileContainerRef.current) return;
     if (turnstileWidgetId.current) {
       window.turnstile.reset(turnstileWidgetId.current);
       return;
@@ -95,7 +104,7 @@ export default function LoginPage() {
       theme: 'light',
       size: 'flexible',
     });
-  }, [hasTurnstile]);
+  }, [requireTurnstile]);
 
   const resetCaptcha = useCallback(() => {
     setCaptchaToken(null);
@@ -117,7 +126,7 @@ export default function LoginPage() {
     e.preventDefault();
     if (isLockedOut) return;
 
-    if (hasTurnstile && !captchaToken) {
+    if (requireTurnstile && !captchaToken) {
       setError(t('completeSecurityCheck'));
       return;
     }
@@ -161,8 +170,15 @@ export default function LoginPage() {
         window.location.href = '/';
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : 'Something went wrong';
-      if (!error) setError(message);
+      const rawMessage = err instanceof Error ? err.message : (err && typeof err === 'object' && 'message' in err && typeof (err as { message: unknown }).message === 'string' ? (err as { message: string }).message : 'Something went wrong');
+      if (typeof window !== 'undefined') {
+        console.error('[Login]', rawMessage, err);
+      }
+      const isCaptchaError = /captcha|verification|disallowed/i.test(rawMessage);
+      const showMessage = isCaptchaError && typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+        ? 'Lokalde giriş için Supabase Dashboard → Authentication → Captcha korumasını kapatın (sadece geliştirme için).'
+        : rawMessage;
+      setError(showMessage);
       resetCaptcha();
     } finally {
       setLoading(false);
@@ -171,7 +187,7 @@ export default function LoginPage() {
 
   return (
     <div className="h-screen flex overflow-hidden">
-      {hasTurnstile && (
+      {requireTurnstile && (
         <Script
           src="https://challenges.cloudflare.com/turnstile/v0/api.js"
           onReady={renderTurnstile}
@@ -345,14 +361,14 @@ export default function LoginPage() {
               </div>
             )}
 
-            {/* Cloudflare Turnstile */}
-            {hasTurnstile && (
+            {/* Cloudflare Turnstile — localhost'ta atlanır, böylece lokalde giriş yapılabilir */}
+            {requireTurnstile && (
               <div ref={turnstileContainerRef} className="flex justify-center" />
             )}
 
             <button
               type="submit"
-              disabled={loading || isLockedOut || (hasTurnstile && !captchaToken)}
+              disabled={loading || isLockedOut || (requireTurnstile && !captchaToken)}
               className="w-full btn-primary py-3.5 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading
@@ -392,27 +408,27 @@ export default function LoginPage() {
             sizes="50vw"
             priority={false}
           />
-          {/* Üst kısım: ortalı tanıtım — aşağıda, yumuşak sevimli font */}
-          <div className="relative z-10 flex flex-col items-center justify-start flex-1 w-full px-6 lg:px-10 pt-20 lg:pt-28 text-center font-friendly antialiased">
+          {/* Görsel üzerinde metin — dark mode istisnası, her zaman koyu (okunaklı) */}
+          <div className="relative z-10 flex flex-col items-center justify-start flex-1 w-full px-6 lg:px-10 pt-20 lg:pt-28 text-center font-friendly antialiased text-gray-900">
             <div className="space-y-6 w-full">
-              <h2 className="text-2xl lg:text-3xl font-semibold text-gray-900 dark:text-gray-100 text-balance">
+              <h2 className="text-2xl lg:text-3xl font-semibold text-balance">
                 {t('onboarding.headline')}
               </h2>
-              <ul className="space-y-4 flex flex-col items-center">
-                <li className="flex gap-3 items-center justify-center text-gray-800 dark:text-gray-200 text-base font-medium">
+              <ul className="space-y-4 flex flex-col items-center text-gray-800">
+                <li className="flex gap-3 items-center justify-center text-base font-medium">
                   <span className="flex-shrink-0 text-primary" aria-hidden>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" /><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                   </span>
                   <span>{t('onboarding.feature1')}</span>
                 </li>
-                <li className="flex gap-3 items-center justify-center text-gray-800 dark:text-gray-200 text-base font-medium">
-                  <span className="flex-shrink-0 text-amber-500 dark:text-amber-400" aria-hidden>
+                <li className="flex gap-3 items-center justify-center text-base font-medium">
+                  <span className="flex-shrink-0 text-amber-600" aria-hidden>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" /></svg>
                   </span>
                   <span>{t('onboarding.feature2')}</span>
                 </li>
-                <li className="flex gap-3 items-center justify-center text-gray-800 dark:text-gray-200 text-base font-medium">
-                  <span className="flex-shrink-0 text-green-600 dark:text-green-400" aria-hidden>
+                <li className="flex gap-3 items-center justify-center text-base font-medium">
+                  <span className="flex-shrink-0 text-green-700" aria-hidden>
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
                   </span>
                   <span>{t('onboarding.feature3')}</span>

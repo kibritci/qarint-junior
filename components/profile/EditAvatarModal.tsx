@@ -68,15 +68,27 @@ export default function EditAvatarModal({
       } else {
         if (photoFile) {
           const supabase = createClient();
+          const { data: { user: authUser } } = await supabase.auth.getUser();
+          if (!authUser) {
+            setError(t('pleaseSignInAgain'));
+            setSaving(false);
+            return;
+          }
           const ext = photoFile.name.split('.').pop() || 'jpg';
-          const path = `${userId}/avatar.${ext}`;
+          const path = `${authUser.id}/avatar.${ext}`;
           const { error: uploadError } = await supabase.storage
             .from('avatars')
             .upload(path, photoFile, { upsert: true });
           if (uploadError) throw uploadError;
           const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(path);
-          const res = await updateProfile({ avatar_svg_url: publicUrl, avatar_emoji: null });
-          if (res.error) throw new Error(res.error);
+          // Client-side upsert so RLS sees same auth as upload (avoids Server Action cookie/session issues in prod)
+          const { error: upsertError } = await supabase
+            .from('users_gamification')
+            .upsert(
+              { user_id: authUser.id, avatar_svg_url: publicUrl, avatar_emoji: null },
+              { onConflict: 'user_id' }
+            );
+          if (upsertError) throw new Error(upsertError.message);
         } else if (currentAvatarUrl) {
           const res = await updateProfile({ avatar_svg_url: currentAvatarUrl });
           if (res.error) throw new Error(res.error);

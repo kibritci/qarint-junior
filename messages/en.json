@@ -196,6 +196,7 @@
     "pleaseChooseImage": "Please choose an image file.",
     "imageTooBig": "Image must be under {size} KB.",
     "failedToSave": "Failed to save.",
+    "pleaseSignInAgain": "Please sign in again to upload.",
     "cancel": "Cancel",
     "save": "Save",
     "analytics": {

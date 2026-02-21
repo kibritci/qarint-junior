@@ -196,6 +196,7 @@
     "pleaseChooseImage": "Lütfen bir resim dosyası seçin.",
     "imageTooBig": "Resim {size} KB'dan küçük olmalı.",
     "failedToSave": "Kaydedilemedi.",
+    "pleaseSignInAgain": "Yüklemek için lütfen tekrar giriş yapın.",
     "cancel": "İptal",
     "save": "Kaydet",
     "analytics": {
