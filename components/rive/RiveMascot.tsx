@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useRive } from '@rive-app/react-canvas';
@@ -9,6 +9,7 @@ const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';
 const MASCOT_SRC = '/rive/mascot.riv';
 
 function MascotAsset({ onError }: { onError: () => void }) {
+  const [showFallback, setShowFallback] = useState(false);
   const { rive, RiveComponent } = useRive(
     {
       src: MASCOT_SRC,
@@ -19,6 +20,21 @@ function MascotAsset({ onError }: { onError: () => void }) {
     },
     { shouldResizeCanvasToContainer: true }
   );
+
+  // Rive bazen ilk frame'de null kalıyor; kısa süre beklemeden emoji gösterme
+  useEffect(() => {
+    if (rive !== null) return;
+    const t = setTimeout(() => setShowFallback(true), 1200);
+    return () => clearTimeout(t);
+  }, [rive]);
+
+  if (rive === null && !showFallback) {
+    return (
+      <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl opacity-70" aria-hidden>
+        🦁
+      </div>
+    );
+  }
 
   if (rive === null) {
     return (

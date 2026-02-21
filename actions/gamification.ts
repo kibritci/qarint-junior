@@ -4,7 +4,6 @@ import { createClient } from '@/lib/supabase/server';
 import { maskDisplayName } from '@/lib/displayName';
 import { checkRateLimit, RATE_LIMITS } from '@/lib/rateLimit';
 import { AVATAR_EMOJIS, ACCENT_COLORS } from '@/lib/constants/avatar';
-import { checkRateLimit, RATE_LIMITS } from '@/lib/rateLimit';
 import { getWeekStartString as getWeekStartStringFromDate } from '@/lib/streakChain';
 
 const MAX_DISPLAY_NAME_LENGTH = 100;
