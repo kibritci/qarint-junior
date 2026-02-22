@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useRive, Layout, Fit, Alignment } from '@rive-app/react-webgl2';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import Skeleton from '@/components/ui/Skeleton';
 
 const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';

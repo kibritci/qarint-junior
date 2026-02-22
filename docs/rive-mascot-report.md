@@ -5,7 +5,7 @@
 | Öğe | Değer |
 |-----|--------|
 | Framework | Next.js 14 (App Router) |
-| Rive paketi | `@rive-app/react-webgl2` ^4.27.0 (mascot; canvas cleanup hatası nedeniyle webgl2 denendi) |
+| Rive paketi | `@rive-app/react-canvas` ^4.27.0 (mascot; mouse takibi bu runtime'da çalışıyor) |
 | React | 18.3 |
 | SSR | Bileşen `dynamic(..., { ssr: false })` ile yükleniyor |
 
@@ -66,7 +66,7 @@ Kod bu rehberle uyumlu olacak şekilde güncellendi: `artboard`, `autoplay` ekle
 
 ## Yapılan iyileştirmeler (devam)
 
-- **Runtime:** Mascot `@rive-app/react-canvas` → `@rive-app/react-webgl2` yapıldı (sayfa geçişlerinde `e.delete is not a function` cleanup hatası canvas runtime’a özgü olabilir; StreakFireRive webgl2 kullanıyor ve sorunsuz).
-- **Fallback:** `rive === null` iken 2,5 s sonra Skeleton yerine 🦁 emoji gösteriliyor (sonsuz skeleton kaldırıldı).
+- **Runtime:** Mascot tekrar `@rive-app/react-canvas` (mouse takibi ve animasyon bu runtime’da çalışıyor). Cleanup hatası (`e.delete is not a function`) için mascot artık hiç unmount edilmiyor: AppShell auth sayfalarında da shell + RiveMascot’u DOM’da tutuyor, login tam ekran overlay ile üstte gösteriliyor.
+- **Fallback:** `rive === null` iken 2,5 s sonra Skeleton yerine 🦁 emoji gösteriliyor.
 - **Yükleme:** `onLoad` ile `loaded` state; canvas opacity 0→1 fade-in.
-- **Layout:** `Layout(Fit.Contain, Alignment.Center)` eklendi (raporla uyumlu, 500×500 artboard).
+- **Layout:** `Layout(Fit.Contain, Alignment.Center)` (raporla uyumlu, 500×500 artboard).

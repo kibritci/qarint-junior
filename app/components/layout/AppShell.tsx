@@ -15,21 +15,34 @@ const RiveMascot = dynamic(() => import('@/components/rive/RiveMascot'), {
   ),
 });
 
-/** Login/auth sayfalarında Header/Footer/Mascot göstermez; tam ekran form görünür. */
+/**
+ * Shell her zaman DOM'da; Rive mascot unmount edilmez (cleanup "e.delete" hatasını önlemek için).
+ * Auth sayfalarında tam ekran overlay ile form gösterilir, shell arkada gizli kalır.
+ */
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAuthRoute = pathname === '/login' || pathname.startsWith('/auth/');
 
-  if (isAuthRoute) {
-    return <div className="min-h-screen bg-white dark:bg-gray-900">{children}</div>;
-  }
-
   return (
     <div className="flex min-h-screen flex-col bg-white dark:bg-gray-900">
-      <Header />
-      <main className="flex-1 bg-gray-50/50 dark:bg-gray-900/80 pb-20 md:pb-0">{children}</main>
-      <RiveMascot />
-      <Footer />
+      {isAuthRoute ? (
+        <>
+          <Header />
+          <main className="flex-1 bg-gray-50/50 dark:bg-gray-900/80 pb-20 md:pb-0" aria-hidden />
+          <RiveMascot />
+          <Footer />
+          <div className="fixed inset-0 z-40 bg-white dark:bg-gray-900" aria-hidden={false}>
+            {children}
+          </div>
+        </>
+      ) : (
+        <>
+          <Header />
+          <main className="flex-1 bg-gray-50/50 dark:bg-gray-900/80 pb-20 md:pb-0">{children}</main>
+          <RiveMascot />
+          <Footer />
+        </>
+      )}
     </div>
   );
 }
