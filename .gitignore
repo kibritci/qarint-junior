@@ -29,9 +29,9 @@ yarn-error.log*
 .env
 
 # internal setup docs (do not publish)
-SUPABASE_API_KEY_BULMA.md
-ENV_KONTROL.md
-KURULUM_REHBERI.md
+docs/SUPABASE_API_KEY_BULMA.md
+docs/ENV_KONTROL.md
+docs/KURULUM_REHBERI.md
 
 # quiz images (served via public/ but too large for git)
 /public/quiz-images/

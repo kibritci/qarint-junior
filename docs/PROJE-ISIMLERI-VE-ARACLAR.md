@@ -13,7 +13,7 @@ Bu doküman, **hangi araçta ne isim / ne ayar** olması gerektiğini tek yerde 
 | **Vercel** | Production branch: `master` | Settings → Environments → Production → Branch: **master**. |
 | **Supabase** | Proje adı: istediğin (örn. Qarint Games) | Sadece dashboard’da görünür; teknik bağlantı URL/key ile. |
 | **Supabase ↔ Vercel** | Bağlantı: Supabase proje ↔ Vercel proje `qarint-games` | Sync uyarısı çıkarsa Vercel’de aynı isimde env zaten var demektir; sorun değil. |
-| **Lokal klasör** | İstediğin (örn. `Qarint Games`) | Sadece bilgisayarında; Git/URL’leri etkilemez. |
+| **Lokal klasör** | `Qarint Games` (önerilir) | Cursor proje adı bu klasör adından gelir; "Qarint Junior" görünmesini istemiyorsan klasörü bu isimle yeniden adlandır. |
 | **package.json** | `"name": "qarint-games"` | npm/Node tarafı; Vercel/Supabase’i etkilemez ama tutarlılık için. |
 | **Domain** | `qarint.games` | Vercel’de bu projeye atanmış custom domain. |
 | **Sentry** | Proje: `qarint-games` (next.config.mjs) | Hata raporları bu projeye gider. |

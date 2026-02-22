@@ -1,9 +1,9 @@
 ---
-description: Core development rules for Qarint Junior
+description: Core development rules for Qarint Games
 globs: "**/*.{ts,tsx,css}"
 ---
 
-# Qarint Junior - Core Development Rules
+# Qarint Games - Core Development Rules
 
 ## Design System
 - Use `rounded-2xl` for cards and containers
