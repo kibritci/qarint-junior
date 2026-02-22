@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRive, Layout, Fit, Alignment } from '@rive-app/react-canvas';
 import { useTranslations } from 'next-intl';
+import Skeleton from '@/components/ui/Skeleton';
 
 const SRC = '/rive/broken-egg.riv';
 const STATE_MACHINE = 'State Machine 1';
@@ -33,7 +34,7 @@ export default function Rive404() {
           style={{ width: '100%', height: '100%', opacity: loaded ? 1 : 0, transition: 'opacity 0.3s' }}
         />
         {!loaded && (
-          <span className="absolute inset-0 flex items-center justify-center text-6xl md:text-7xl" aria-hidden>😢</span>
+          <Skeleton className="absolute inset-0 rounded-2xl" aria-hidden />
         )}
       </div>
       <h1 className="text-xl md:text-2xl font-display font-bold text-gray-900 dark:text-gray-100 mt-0 mb-2 text-center">

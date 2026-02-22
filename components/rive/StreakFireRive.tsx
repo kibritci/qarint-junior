@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRive, Layout, Fit, Alignment } from '@rive-app/react-webgl2';
+import Skeleton from '@/components/ui/Skeleton';
 
 const SRC = '/rive/streak-fire.riv';
 const STATE_MACHINE = 'Streak Fire';
@@ -35,9 +36,7 @@ function StreakFireCanvas() {
         aria-hidden
       />
       {!loaded && (
-        <span className="absolute inset-0 flex items-center justify-center text-5xl" aria-hidden>
-          🔥
-        </span>
+        <Skeleton className="absolute inset-0 rounded-2xl" aria-hidden />
       )}
     </>
   );
@@ -72,9 +71,7 @@ export default function StreakFireRive({ streakCount }: StreakFireRiveProps) {
       {isReady ? (
         <StreakFireCanvas />
       ) : (
-        <span className="absolute inset-0 flex items-center justify-center text-5xl" aria-hidden>
-          🔥
-        </span>
+        <Skeleton className="absolute inset-0 rounded-2xl" aria-hidden />
       )}
       <span
         className="absolute bottom-6 left-0 right-0 flex items-center justify-center font-display font-black text-4xl text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] tabular-nums pointer-events-none"
