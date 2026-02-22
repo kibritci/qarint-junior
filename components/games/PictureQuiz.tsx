@@ -42,6 +42,7 @@ export default function PictureQuiz() {
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const t = useTranslations('games.pictureQuiz');
   const tErrors = useTranslations('errors');
   const { addXp } = useGameStore();
@@ -49,6 +50,10 @@ export default function PictureQuiz() {
   useEffect(() => {
     if (phase === 'results') setShowConfetti(true);
   }, [phase]);
+
+  useEffect(() => {
+    setImageError(false);
+  }, [currentIndex]);
 
   const currentQuestion = questions[currentIndex];
 
@@ -85,6 +90,7 @@ export default function PictureQuiz() {
 
   const startGame = () => {
     setShowConfetti(false);
+    setImageError(false);
     const qs = getRandomQuizQuestions(QUESTIONS_PER_ROUND);
     setQuestions(qs);
     setCurrentIndex(0);
@@ -229,14 +235,22 @@ export default function PictureQuiz() {
       {/* Image */}
       <div className="relative w-full max-w-sm mx-auto mb-4 md:mb-5">
         <div className="aspect-square relative rounded-2xl overflow-hidden bg-white dark:bg-gray-800 border-2 border-gray-100 dark:border-gray-700 shadow-card">
-          <Image
-            src={`${IMAGE_BASE_PATH}/${currentQuestion.image.filename}`}
-            alt="Quiz image"
-            fill
-            className="object-contain p-4"
-            sizes="(max-width: 768px) 80vw, 384px"
-            priority
-          />
+          {!imageError ? (
+            <Image
+              src={`${IMAGE_BASE_PATH}/${currentQuestion.image.filename}`}
+              alt="Quiz image"
+              fill
+              className="object-contain p-4"
+              sizes="(max-width: 768px) 80vw, 384px"
+              priority
+              onError={() => setImageError(true)}
+            />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center p-4 text-gray-500 dark:text-gray-400">
+              <span className="text-4xl mb-2" aria-hidden>🖼️</span>
+              <span className="text-sm font-medium">{currentQuestion.image.word}</span>
+            </div>
+          )}
         </div>
       </div>
 
