@@ -23,9 +23,15 @@ echo ""
 echo "=== 3. Commit & Push ==="
 git add -A
 if git diff --staged --quiet; then
-  echo "Değişiklik yok, push atlanıyor."
+  echo "Değişiklik yok, sadece push."
+  git push origin master || true
 else
-  git commit -m "chore: deploy"
+  COMMIT_MSG="${1:-}"
+  if [ -z "$COMMIT_MSG" ]; then
+    echo "Commit mesajı gerekli. Örnek: ./deploy.sh \"fix: açıklayıcı mesaj\""
+    exit 1
+  fi
+  git commit -m "$COMMIT_MSG"
   git push origin master
   echo "Push tamamlandı. Vercel otomatik deploy alacak."
 fi

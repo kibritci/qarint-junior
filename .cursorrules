@@ -64,3 +64,8 @@
 - Implement proper error handling
 - Use Server Actions for database operations
 - Implement Row Level Security (RLS) in Supabase
+
+## Deploy & Git
+- When deploying ("yayına al" / "deploy"): the agent MUST pass a **descriptive commit message** (no generic "chore: deploy").
+- Run: `npm run deploy -- "açıklayıcı mesaj"` where the message summarizes the changes (e.g. `fix: mascot react-canvas, AppShell auth overlay` or `feat: leaderboard noindex, rate limit mesajı`).
+- Use conventional prefixes when fitting: fix:, feat:, chore:, and Turkish/English summary of what changed.
