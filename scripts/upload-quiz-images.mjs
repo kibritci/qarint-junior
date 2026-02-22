@@ -47,6 +47,17 @@ const BUCKET = 'quiz-images';
 const ALLOWED_EXT = /\.(png|jpe?g|webp)$/i;
 
 async function main() {
+  const { data: buckets } = await supabase.storage.listBuckets();
+  const exists = buckets?.some((b) => b.name === BUCKET);
+  if (!exists) {
+    const { error: createErr } = await supabase.storage.createBucket(BUCKET, { public: true });
+    if (createErr) {
+      console.error('Bucket oluşturulamadı:', createErr.message);
+      process.exit(1);
+    }
+    console.log(`Bucket '${BUCKET}' oluşturuldu.`);
+  }
+
   let files;
   try {
     files = await readdir(quizImagesDir);

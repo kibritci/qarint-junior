@@ -1,0 +1,9 @@
+Vercel → Settings → Environment Variables → ekle:
+
+Name:  NEXT_PUBLIC_QUIZ_IMAGES_BASE_URL
+Value: https://<PROJECT_REF>.supabase.co/storage/v1/object/public/quiz-images
+
+<PROJECT_REF> = Supabase Dashboard → Settings → API → Project URL içindeki proje ref
+  (örn. URL https://abcdefgh.supabase.co ise PROJECT_REF = abcdefgh)
+
+Alternatif: npm run upload:quiz-images çalıştırdıktan sonra script sonunda yazan URL'i kopyala.
