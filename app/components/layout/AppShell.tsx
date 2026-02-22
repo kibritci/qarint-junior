@@ -4,12 +4,13 @@ import { usePathname } from 'next/navigation';
 import Header from './Header';
 import Footer from './Footer';
 import dynamic from 'next/dynamic';
+import Skeleton from '@/components/ui/Skeleton';
 
 const RiveMascot = dynamic(() => import('@/components/rive/RiveMascot'), {
   ssr: false,
   loading: () => (
-    <div className="fixed bottom-0 left-0 z-30 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center" aria-hidden>
-      <span className="text-4xl md:text-5xl">🦁</span>
+    <div className="fixed bottom-0 left-0 z-30 w-28 h-28 md:w-32 md:h-32 flex items-center justify-center p-2" aria-hidden>
+      <Skeleton className="w-full h-full rounded-2xl" />
     </div>
   ),
 });

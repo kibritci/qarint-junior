@@ -4,6 +4,7 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useRive } from '@rive-app/react-canvas';
+import Skeleton from '@/components/ui/Skeleton';
 
 const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';
 const MASCOT_SRC = '/rive/mascot.riv';
@@ -37,18 +38,10 @@ function MascotAsset({
     return () => clearTimeout(t);
   }, [rive]);
 
-  if (rive === null && !showFallback) {
-    return (
-      <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl opacity-70" aria-hidden>
-        🦁
-      </div>
-    );
-  }
-
   if (rive === null) {
     return (
-      <div className="w-full h-full flex items-center justify-center text-4xl md:text-5xl" aria-hidden>
-        🦁
+      <div className="w-full h-full flex items-center justify-center" aria-hidden>
+        <Skeleton className="w-full h-full rounded-2xl" />
       </div>
     );
   }
@@ -122,7 +115,7 @@ export default function RiveMascot() {
         aria-hidden
       >
         {useFallback ? (
-          <span>🦁</span>
+          <Skeleton className="w-full h-full rounded-2xl" />
         ) : (
           <MascotAsset onError={handleMascotError} minimal={tryMinimal} />
         )}
