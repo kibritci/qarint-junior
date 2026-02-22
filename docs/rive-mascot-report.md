@@ -5,7 +5,7 @@
 | Öğe | Değer |
 |-----|--------|
 | Framework | Next.js 14 (App Router) |
-| Rive paketi | `@rive-app/react-canvas` ^4.27.0 |
+| Rive paketi | `@rive-app/react-webgl2` ^4.27.0 (mascot; canvas cleanup hatası nedeniyle webgl2 denendi) |
 | React | 18.3 |
 | SSR | Bileşen `dynamic(..., { ssr: false })` ile yükleniyor |
 
@@ -61,3 +61,12 @@ Kod bu rehberle uyumlu olacak şekilde güncellendi: `artboard`, `autoplay` ekle
 1. **Neden `rive` null kalıyor?** Dosya yükleniyor olsa bile runtime'da sessiz hata veya parse sorunu olabilir mi?
 2. **Önerilen konfigürasyon:** Bu .riv için `artboard` / `stateMachines` / `autoplay` dışında ek parametre gerekli mi?
 3. **Debug:** `onLoad` / `onLoadError` veya konsol/network'te kontrol edilmesi gereken belirli noktalar var mı?
+
+---
+
+## Yapılan iyileştirmeler (devam)
+
+- **Runtime:** Mascot `@rive-app/react-canvas` → `@rive-app/react-webgl2` yapıldı (sayfa geçişlerinde `e.delete is not a function` cleanup hatası canvas runtime’a özgü olabilir; StreakFireRive webgl2 kullanıyor ve sorunsuz).
+- **Fallback:** `rive === null` iken 2,5 s sonra Skeleton yerine 🦁 emoji gösteriliyor (sonsuz skeleton kaldırıldı).
+- **Yükleme:** `onLoad` ile `loaded` state; canvas opacity 0→1 fade-in.
+- **Layout:** `Layout(Fit.Contain, Alignment.Center)` eklendi (raporla uyumlu, 500×500 artboard).

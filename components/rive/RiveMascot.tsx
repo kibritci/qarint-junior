@@ -3,7 +3,7 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { useRive } from '@rive-app/react-canvas';
+import { useRive, Layout, Fit, Alignment } from '@rive-app/react-webgl2';
 import Skeleton from '@/components/ui/Skeleton';
 
 const FEEDBACK_FORM_URL = 'https://forms.gle/DsRaaEgUYsHNgbYU8';
@@ -18,15 +18,21 @@ function MascotAsset({
   minimal?: boolean;
 }) {
   const [showFallback, setShowFallback] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   const { rive, RiveComponent } = useRive(
     minimal
-      ? { src: MASCOT_SRC, autoplay: true, onLoadError: onError }
+      ? { src: MASCOT_SRC, autoplay: true, onLoadError: onError, onLoad: () => setLoaded(true) }
       : {
           src: MASCOT_SRC,
           artboard: 'Artboard',
           stateMachines: 'State Machine 1',
           autoplay: true,
           onLoadError: onError,
+          onLoad: () => setLoaded(true),
+          layout: new Layout({
+            fit: Fit.Contain,
+            alignment: Alignment.Center,
+          }),
         },
     { shouldResizeCanvasToContainer: true }
   );
@@ -41,7 +47,11 @@ function MascotAsset({
   if (rive === null) {
     return (
       <div className="w-full h-full flex items-center justify-center" aria-hidden>
-        <Skeleton className="w-full h-full rounded-2xl" />
+        {showFallback ? (
+          <span className="text-4xl md:text-5xl" aria-hidden>🦁</span>
+        ) : (
+          <Skeleton className="w-full h-full rounded-2xl" />
+        )}
       </div>
     );
   }
@@ -49,7 +59,12 @@ function MascotAsset({
   return (
     <RiveComponent
       className="w-full h-full"
-      style={{ width: '100%', height: '100%' }}
+      style={{
+        width: '100%',
+        height: '100%',
+        opacity: loaded ? 1 : 0,
+        transition: 'opacity 0.3s',
+      }}
     />
   );
 }
